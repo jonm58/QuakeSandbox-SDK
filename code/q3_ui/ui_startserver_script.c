@@ -179,7 +179,7 @@ static const char* saveparam_list[] = {
 "uie_minigame",
 "uie_overlay",
 "uie_randomItems",
-"uie_weaponpack",
+"uie_slickmove",
 //"uie_music",
 "uie_spawnprotect",
 "uie_elimination_lockspectator",
@@ -866,7 +866,7 @@ AddScript(va("set g_portallight %i\n", s_scriptdata.server.portallight));
 AddScript(va("set g_minigame %i\n", s_scriptdata.server.minigame));
 AddScript(va("set g_overlay %i\n", s_scriptdata.server.overlay));
 AddScript(va("set g_randomItems %i\n", s_scriptdata.server.randomItems));
-AddScript(va("set g_weaponpackmode %i\n", s_scriptdata.server.weaponpack));
+AddScript(va("set g_slickmove %i\n", s_scriptdata.server.slickmove));
 //AddScript(va("set g_music %i\n", s_scriptdata.server.music));
 AddScript(va("set g_spawnprotect %i\n", s_scriptdata.server.spawnprotect));
 AddScript(va("set elimination_lockspectator %i\n", s_scriptdata.server.elimination_lockspectator));

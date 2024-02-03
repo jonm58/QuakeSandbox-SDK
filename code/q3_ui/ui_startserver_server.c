@@ -254,7 +254,7 @@ START SERVER MENU *****
 #define ID_SERVER_POWERUPRESPAWN 546
 #define ID_SERVER_WEAPONRESPAWN 547
 #define ID_SERVER_SELECTEDMOD 548
-#define ID_SERVER_WEAPONPACK 549
+#define ID_SERVER_SLICKMOVE 549
 
 
 #define SERVER_SAVE0 "menu/art/save_0"
@@ -509,12 +509,9 @@ static const char *invulmove_list[] = {
 	0
 };
 
-static const char *weaponpack_list[] = {
-	"Weapon pack 1",
-	"Weapon pack 2",
-	"Weapon pack 3",
-	"Weapon pack 4",
-	"All",
+static const char *slickmove_list[] = {
+	"Default",
+	"Slick",
 	0
 };
 
@@ -977,8 +974,8 @@ static controlinit_t srv_other[] = {
 		"Overlay:", &s_scriptdata.server.overlay, -999999999, 999999999, NULL, 9, 9, overlay_list },
 	{ SRVCTRL_RADIO, 0, ID_SERVER_RANDOMITEMS, ITEM_ALWAYSON,
 		"Random items:", &s_scriptdata.server.randomItems, -999999999, 999999999, NULL, 9, 9, NULL },
-	{ SRVCTRL_SPIN, 0, ID_SERVER_WEAPONPACK, ITEM_ALWAYSON,
-		"Weapon pack:", &s_scriptdata.server.weaponpack, -999999999, 999999999, NULL, 9, 9, weaponpack_list },
+	{ SRVCTRL_SPIN, 0, ID_SERVER_SLICKMOVE, ITEM_ALWAYSON,
+		"Player move:", &s_scriptdata.server.slickmove, -999999999, 999999999, NULL, 9, 9, slickmove_list },
 	/*{ SRVCTRL_TEXTFIELD, 0, ID_SERVER_MUSIC, ITEM_ALWAYSON,
 		"Music:", &s_scriptdata.server.music, -9999999, 9999999, NULL, 16, 64, NULL },*/
 	{ SRVCTRL_NUMFIELD, 0, ID_SERVER_SPAWNPROTECT, ITEM_ALWAYSON,

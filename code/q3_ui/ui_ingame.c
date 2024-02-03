@@ -175,19 +175,19 @@ static void InGame_EventHandler(int id)
 
 	case ID_RESTART:
 		if(cl_language.integer == 0){
-		UI_ConfirmMenu( "RESTART ARENA?", (voidfunc_f)NULL, InGame_RestartAction );
+		UI_ConfirmMenu( "RESTART ARENA?", 0, InGame_RestartAction );
 		}
 		if(cl_language.integer == 1){
-		UI_ConfirmMenu( "РЕСТАРТ АРЕНЫ?", (voidfunc_f)NULL, InGame_RestartAction );
+		UI_ConfirmMenu( "РЕСТАРТ АРЕНЫ?", 0, InGame_RestartAction );
 		}
 		break;
 
 	case ID_QUIT:
 		if(cl_language.integer == 0){
-		UI_ConfirmMenu( "EXIT GAME?", (voidfunc_f)NULL, InGame_QuitAction );
+		UI_ConfirmMenu( "EXIT GAME?", 0, InGame_QuitAction );
 		}
 		if(cl_language.integer == 1){
-		UI_ConfirmMenu( "ВЫЙТИ ИЗ ИГРЫ?", (voidfunc_f)NULL, InGame_QuitAction );
+		UI_ConfirmMenu( "ВЫЙТИ ИЗ ИГРЫ?", 0, InGame_QuitAction );
 		}
 		break;
 
@@ -213,10 +213,10 @@ static void InGame_EventHandler(int id)
 
 	case ID_NEXTMAP:
 		if(cl_language.integer == 0){
-		UI_ConfirmMenu( "NEXT MAP?", (voidfunc_f)NULL, InGame_NextMap);
+		UI_ConfirmMenu( "NEXT MAP?", 0, InGame_NextMap);
 		}
 		if(cl_language.integer == 1){
-		UI_ConfirmMenu( "СЛЕДУЮШАЯ КАРТА?", (voidfunc_f)NULL, InGame_NextMap);
+		UI_ConfirmMenu( "СЛЕДУЮШАЯ КАРТА?", 0, InGame_NextMap);
 		}
 		break;
 
@@ -1100,26 +1100,26 @@ static void IG_TimeLimit_SubMenu( void )
 
 	DynamicMenu_SubMenuInit();
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Unlimited", 0, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("5", 5, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("10", 10, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("15", 15, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("20", 20, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("25", 25, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("30", 30, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("45", 45, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("60", 60, NULL, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("Unlimited", 0, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("5", 5, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("10", 10, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("15", 15, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("20", 20, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("25", 25, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("30", 30, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("45", 45, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("60", 60, 0, IG_TimeLimit_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Бесконечно", 0, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("5", 5, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("10", 10, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("15", 15, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("20", 20, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("25", 25, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("30", 30, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("45", 45, NULL, IG_TimeLimit_Event);
-	DynamicMenu_AddItem("60", 60, NULL, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("Бесконечно", 0, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("5", 5, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("10", 10, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("15", 15, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("20", 20, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("25", 25, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("30", 30, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("45", 45, 0, IG_TimeLimit_Event);
+	DynamicMenu_AddItem("60", 60, 0, IG_TimeLimit_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -1138,26 +1138,26 @@ static void IG_FragLimit_SubMenu( void )
 
 	DynamicMenu_SubMenuInit();
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Unlimited", 0, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("10", 10, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("15", 15, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("20", 20, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("30", 30, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("40", 40, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("50", 50, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("75", 75, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("100", 100, NULL, IG_FragLimit_Event);
+	DynamicMenu_AddItem("Unlimited", 0, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("10", 10, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("15", 15, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("20", 20, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("30", 30, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("40", 40, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("50", 50, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("75", 75, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("100", 100, 0, IG_FragLimit_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Бесконечно", 0, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("10", 10, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("15", 15, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("20", 20, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("30", 30, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("40", 40, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("50", 50, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("75", 75, NULL, IG_FragLimit_Event);
-	DynamicMenu_AddItem("100", 100, NULL, IG_FragLimit_Event);
+	DynamicMenu_AddItem("Бесконечно", 0, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("10", 10, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("15", 15, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("20", 20, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("30", 30, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("40", 40, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("50", 50, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("75", 75, 0, IG_FragLimit_Event);
+	DynamicMenu_AddItem("100", 100, 0, IG_FragLimit_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -1175,12 +1175,12 @@ static void IG_DoWarmup_SubMenu( void )
 
 	DynamicMenu_SubMenuInit();
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Enable", 1, NULL, IG_DoWarmup_Event);
-	DynamicMenu_AddItem("Disable", 0, NULL, IG_DoWarmup_Event);
+	DynamicMenu_AddItem("Enable", 1, 0, IG_DoWarmup_Event);
+	DynamicMenu_AddItem("Disable", 0, 0, IG_DoWarmup_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Включить", 1, NULL, IG_DoWarmup_Event);
-	DynamicMenu_AddItem("Отключить", 0, NULL, IG_DoWarmup_Event);
+	DynamicMenu_AddItem("Включить", 1, 0, IG_DoWarmup_Event);
+	DynamicMenu_AddItem("Отключить", 0, 0, IG_DoWarmup_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -1199,14 +1199,14 @@ static void IG_Map_SubMenu( void )
 
 	DynamicMenu_SubMenuInit();
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Restart map...", ID_RESTART, NULL, IG_UseOldInGame_Event);
-	DynamicMenu_AddItem("Disable items...", ID_ENABLEDITEMS, NULL, IG_UseOldInGame_Event);
-	DynamicMenu_AddItem("Next map...", ID_NEXTMAP, NULL, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Restart map...", ID_RESTART, 0, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Disable items...", ID_ENABLEDITEMS, 0, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Next map...", ID_NEXTMAP, 0, IG_UseOldInGame_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Рестарт карты...", ID_RESTART, NULL, IG_UseOldInGame_Event);
-	DynamicMenu_AddItem("Отключение предметов...", ID_ENABLEDITEMS, NULL, IG_UseOldInGame_Event);
-	DynamicMenu_AddItem("Следущая карта...", ID_NEXTMAP, NULL, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Рестарт карты...", ID_RESTART, 0, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Отключение предметов...", ID_ENABLEDITEMS, 0, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Следущая карта...", ID_NEXTMAP, 0, IG_UseOldInGame_Event);
 	}
 
 	depth = DynamicMenu_Depth();
@@ -1230,16 +1230,16 @@ static void IG_CallVoteMisc_SubMenu( void )
 	DynamicMenu_SubMenuInit();
 	
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Next map", CVM_NEXTMAP, NULL, IG_CallVoteMisc_Event);
-	DynamicMenu_AddItem("Map restart", CVM_MAPRESTART, NULL, IG_CallVoteMisc_Event);
-	DynamicMenu_AddItem("Warmup", 0, IG_DoWarmup_SubMenu, NULL);
-	DynamicMenu_AddItem("Timelimit", 0, IG_TimeLimit_SubMenu, NULL);
+	DynamicMenu_AddItem("Next map", CVM_NEXTMAP, 0, IG_CallVoteMisc_Event);
+	DynamicMenu_AddItem("Map restart", CVM_MAPRESTART, 0, IG_CallVoteMisc_Event);
+	DynamicMenu_AddItem("Warmup", 0, IG_DoWarmup_SubMenu, 0);
+	DynamicMenu_AddItem("Timelimit", 0, IG_TimeLimit_SubMenu, 0);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Следующая карта", CVM_NEXTMAP, NULL, IG_CallVoteMisc_Event);
-	DynamicMenu_AddItem("Рестарт карты", CVM_MAPRESTART, NULL, IG_CallVoteMisc_Event);
-	DynamicMenu_AddItem("Разминка", 0, IG_DoWarmup_SubMenu, NULL);
-	DynamicMenu_AddItem("Лимит времени", 0, IG_TimeLimit_SubMenu, NULL);
+	DynamicMenu_AddItem("Следующая карта", CVM_NEXTMAP, 0, IG_CallVoteMisc_Event);
+	DynamicMenu_AddItem("Рестарт карты", CVM_MAPRESTART, 0, IG_CallVoteMisc_Event);
+	DynamicMenu_AddItem("Разминка", 0, IG_DoWarmup_SubMenu, 0);
+	DynamicMenu_AddItem("Лимит времени", 0, IG_TimeLimit_SubMenu, 0);
 	}
 
 	if (DynamicMenu_ServerGametype() == GT_CTF) {
@@ -1247,10 +1247,10 @@ static void IG_CallVoteMisc_SubMenu( void )
 	}
 	else {
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("FragLimit", 0, IG_FragLimit_SubMenu, NULL);
+		DynamicMenu_AddItem("FragLimit", 0, IG_FragLimit_SubMenu, 0);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Лимит фрагов", 0, IG_FragLimit_SubMenu, NULL);
+		DynamicMenu_AddItem("Лимит фрагов", 0, IG_FragLimit_SubMenu, 0);
 		}
 	}
 
@@ -1281,11 +1281,11 @@ static void IG_CallVoteGameType_SubMenu( void )
 
 if(cl_language.integer == 0){
 		DynamicMenu_AddIconItem(gametypeMenu_data[i].menu, gametypeMenu_data[i].gametype,
-			icon, NULL, IG_CallVoteGameType_Event);
+			icon, 0, IG_CallVoteGameType_Event);
 }
 if(cl_language.integer == 1){
 		DynamicMenu_AddIconItem(gametypeMenu_dataru[i].menu, gametypeMenu_data[i].gametype,
-			icon, NULL, IG_CallVoteGameType_Event);
+			icon, 0, IG_CallVoteGameType_Event);
 }
 
 		if (gametypeMenu_data[i].gametype == gametype)
@@ -1313,18 +1313,18 @@ static void IG_CallVote_SubMenu( void )
 
 	depth = DynamicMenu_Depth();
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Kick...", IGCV_KICK, NULL, IG_CallVote_Event);
-	DynamicMenu_AddItem("Map...", IGCV_MAP, NULL, IG_CallVote_Event);
-	DynamicMenu_AddItem("Leader...", IGCV_LEADER, NULL, IG_CallVote_Event);
-	DynamicMenu_AddItem("Gametype", IGCV_GAMETYPE, IG_CallVoteGameType_SubMenu, NULL);
-	DynamicMenu_AddItem("Misc", 0, IG_CallVoteMisc_SubMenu, NULL);
+	DynamicMenu_AddItem("Kick...", IGCV_KICK, 0, IG_CallVote_Event);
+	DynamicMenu_AddItem("Map...", IGCV_MAP, 0, IG_CallVote_Event);
+	DynamicMenu_AddItem("Leader...", IGCV_LEADER, 0, IG_CallVote_Event);
+	DynamicMenu_AddItem("Gametype", IGCV_GAMETYPE, IG_CallVoteGameType_SubMenu, 0);
+	DynamicMenu_AddItem("Misc", 0, IG_CallVoteMisc_SubMenu, 0);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Кик...", IGCV_KICK, NULL, IG_CallVote_Event);
-	DynamicMenu_AddItem("Карта...", IGCV_MAP, NULL, IG_CallVote_Event);
-	DynamicMenu_AddItem("Лидер...", IGCV_LEADER, NULL, IG_CallVote_Event);
-	DynamicMenu_AddItem("Режим игры", IGCV_GAMETYPE, IG_CallVoteGameType_SubMenu, NULL);
-	DynamicMenu_AddItem("Другое", 0, IG_CallVoteMisc_SubMenu, NULL);
+	DynamicMenu_AddItem("Кик...", IGCV_KICK, 0, IG_CallVote_Event);
+	DynamicMenu_AddItem("Карта...", IGCV_MAP, 0, IG_CallVote_Event);
+	DynamicMenu_AddItem("Лидер...", IGCV_LEADER, 0, IG_CallVote_Event);
+	DynamicMenu_AddItem("Режим игры", IGCV_GAMETYPE, IG_CallVoteGameType_SubMenu, 0);
+	DynamicMenu_AddItem("Другое", 0, IG_CallVoteMisc_SubMenu, 0);
 	}
 
 	if (team == TEAM_SPECTATOR || team == TEAM_FREE) {
@@ -1350,24 +1350,24 @@ static void IG_Vote_SubMenu( void )
 	trap_GetConfigString(CS_VOTE_TIME, buf, MAX_INFO_STRING);
 	if (atoi(buf) != 0) {
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("Yes", IGV_YES, NULL, IG_Vote_Event);
-		DynamicMenu_AddItem("No", IGV_NO, NULL, IG_Vote_Event);
+		DynamicMenu_AddItem("Yes", IGV_YES, 0, IG_Vote_Event);
+		DynamicMenu_AddItem("No", IGV_NO, 0, IG_Vote_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Да", IGV_YES, NULL, IG_Vote_Event);
-		DynamicMenu_AddItem("Нет", IGV_NO, NULL, IG_Vote_Event);
+		DynamicMenu_AddItem("Да", IGV_YES, 0, IG_Vote_Event);
+		DynamicMenu_AddItem("Нет", IGV_NO, 0, IG_Vote_Event);
 		}
 	}
 
 	trap_GetConfigString(CS_TEAMVOTE_TIME, buf, MAX_INFO_STRING);
 	if (atoi(buf) != 0) {
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("Team Yes", IGV_TEAMYES, NULL, IG_Vote_Event);
-		DynamicMenu_AddItem("Team No", IGV_TEAMNO, NULL, IG_Vote_Event);
+		DynamicMenu_AddItem("Team Yes", IGV_TEAMYES, 0, IG_Vote_Event);
+		DynamicMenu_AddItem("Team No", IGV_TEAMNO, 0, IG_Vote_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Команда Да", IGV_TEAMYES, NULL, IG_Vote_Event);
-		DynamicMenu_AddItem("Команда Нет", IGV_TEAMNO, NULL, IG_Vote_Event);
+		DynamicMenu_AddItem("Команда Да", IGV_TEAMYES, 0, IG_Vote_Event);
+		DynamicMenu_AddItem("Команда Нет", IGV_TEAMNO, 0, IG_Vote_Event);
 		}
 	}
 
@@ -1387,26 +1387,26 @@ static void IG_Setup_SubMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Player...", IGS_PLAYER, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Model...", IGS_MODEL, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Controls...", IGS_CONTROLS, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Preferences...", IGS_OPTIONS, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Graphics...", IGS_GRAPHICS, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Display...", IGS_DISPLAY, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Sound...", IGS_SOUND, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Network...", IGS_NETWORK, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Advanced...", IGS_ADVANCED, NULL, IG_Setup_Event);
+	DynamicMenu_AddItem("Player...", IGS_PLAYER, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Model...", IGS_MODEL, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Controls...", IGS_CONTROLS, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Preferences...", IGS_OPTIONS, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Graphics...", IGS_GRAPHICS, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Display...", IGS_DISPLAY, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Sound...", IGS_SOUND, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Network...", IGS_NETWORK, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Advanced...", IGS_ADVANCED, 0, IG_Setup_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Игрок...", IGS_PLAYER, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Модель...", IGS_MODEL, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Управление...", IGS_CONTROLS, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Параметры...", IGS_OPTIONS, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Графика...", IGS_GRAPHICS, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Экран...", IGS_DISPLAY, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Звук...", IGS_SOUND, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Сеть...", IGS_NETWORK, NULL, IG_Setup_Event);
-	DynamicMenu_AddItem("Расширеные...", IGS_ADVANCED, NULL, IG_Setup_Event);
+	DynamicMenu_AddItem("Игрок...", IGS_PLAYER, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Модель...", IGS_MODEL, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Управление...", IGS_CONTROLS, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Параметры...", IGS_OPTIONS, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Графика...", IGS_GRAPHICS, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Экран...", IGS_DISPLAY, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Звук...", IGS_SOUND, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Сеть...", IGS_NETWORK, 0, IG_Setup_Event);
+	DynamicMenu_AddItem("Расширеные...", IGS_ADVANCED, 0, IG_Setup_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -1422,14 +1422,14 @@ static void IG_Actions_SubMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Demo record", IGS_RECORD, NULL, IG_Actions_Event);
-	DynamicMenu_AddItem("Stop record", IGS_STOPRECORD, NULL, IG_Actions_Event);
-	DynamicMenu_AddItem("I am stuck", IGS_KILL, NULL, IG_Actions_Event);
+	DynamicMenu_AddItem("Demo record", IGS_RECORD, 0, IG_Actions_Event);
+	DynamicMenu_AddItem("Stop record", IGS_STOPRECORD, 0, IG_Actions_Event);
+	DynamicMenu_AddItem("I am stuck", IGS_KILL, 0, IG_Actions_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Начать запись", IGS_RECORD, NULL, IG_Actions_Event);
-	DynamicMenu_AddItem("Остановка записи", IGS_STOPRECORD, NULL, IG_Actions_Event);
-	DynamicMenu_AddItem("Я застрял", IGS_KILL, NULL, IG_Actions_Event);
+	DynamicMenu_AddItem("Начать запись", IGS_RECORD, 0, IG_Actions_Event);
+	DynamicMenu_AddItem("Остановка записи", IGS_STOPRECORD, 0, IG_Actions_Event);
+	DynamicMenu_AddItem("Я застрял", IGS_KILL, 0, IG_Actions_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -1445,24 +1445,24 @@ static void IG_Save_SubMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Save: Slot 1", IGS_SAVE1, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Save: Slot 2", IGS_SAVE2, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Save: Slot 3", IGS_SAVE3, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Save: Slot 4", IGS_SAVE4, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Save: Slot 5", IGS_SAVE5, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Save: Slot 6", IGS_SAVE6, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Save: Slot 7", IGS_SAVE7, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Save: Slot 8", IGS_SAVE8, NULL, IG_Save_Event);
+	DynamicMenu_AddItem("Save: Slot 1", IGS_SAVE1, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Save: Slot 2", IGS_SAVE2, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Save: Slot 3", IGS_SAVE3, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Save: Slot 4", IGS_SAVE4, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Save: Slot 5", IGS_SAVE5, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Save: Slot 6", IGS_SAVE6, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Save: Slot 7", IGS_SAVE7, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Save: Slot 8", IGS_SAVE8, 0, IG_Save_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Сохранить: Слот 1", IGS_SAVE1, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Сохранить: Слот 2", IGS_SAVE2, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Сохранить: Слот 3", IGS_SAVE3, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Сохранить: Слот 4", IGS_SAVE4, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Сохранить: Слот 5", IGS_SAVE5, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Сохранить: Слот 6", IGS_SAVE6, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Сохранить: Слот 7", IGS_SAVE7, NULL, IG_Save_Event);
-	DynamicMenu_AddItem("Сохранить: Слот 8", IGS_SAVE8, NULL, IG_Save_Event);
+	DynamicMenu_AddItem("Сохранить: Слот 1", IGS_SAVE1, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Сохранить: Слот 2", IGS_SAVE2, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Сохранить: Слот 3", IGS_SAVE3, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Сохранить: Слот 4", IGS_SAVE4, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Сохранить: Слот 5", IGS_SAVE5, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Сохранить: Слот 6", IGS_SAVE6, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Сохранить: Слот 7", IGS_SAVE7, 0, IG_Save_Event);
+	DynamicMenu_AddItem("Сохранить: Слот 8", IGS_SAVE8, 0, IG_Save_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -1480,12 +1480,12 @@ static void IG_AddBot_SubMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Add bot...", ID_ADDBOTS, NULL, IG_UseOldInGame_Event);
-	DynamicMenu_AddItem("Remove bot...", ID_REMOVEBOTS, NULL, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Add bot...", ID_ADDBOTS, 0, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Remove bot...", ID_REMOVEBOTS, 0, IG_UseOldInGame_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Добавить бота...", ID_ADDBOTS, NULL, IG_UseOldInGame_Event);
-	DynamicMenu_AddItem("Удалить бота...", ID_REMOVEBOTS, NULL, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Добавить бота...", ID_ADDBOTS, 0, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Удалить бота...", ID_REMOVEBOTS, 0, IG_UseOldInGame_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -1505,13 +1505,13 @@ static void IG_Exit_SubMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Quit...", ID_QUIT, NULL, IG_UseOldInGame_Event);
-	DynamicMenu_AddItem("Main Menu", ID_LEAVEARENA, NULL, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Quit...", ID_QUIT, 0, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Main Menu", ID_LEAVEARENA, 0, IG_UseOldInGame_Event);
 	}
 
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Выход...", ID_QUIT, NULL, IG_UseOldInGame_Event);
-	DynamicMenu_AddItem("Главное Меню", ID_LEAVEARENA, NULL, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Выход...", ID_QUIT, 0, IG_UseOldInGame_Event);
+	DynamicMenu_AddItem("Главное Меню", ID_LEAVEARENA, 0, IG_UseOldInGame_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -1537,34 +1537,34 @@ static void IG_Start_SubMenu( void )
 
 	if (gametype < GT_TEAM || gametype == GT_LMS) {
 		if(cl_language.integer == 0){
-		DynamicMenu_AddIconItem("Join Game", DM_START_GAME, "menu/medals/medal_gauntlet", NULL, IG_Start_Event);
+		DynamicMenu_AddIconItem("Join Game", DM_START_GAME, "menu/medals/medal_gauntlet", 0, IG_Start_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddIconItem("Присоединиться к Игре", DM_START_GAME, "menu/medals/medal_gauntlet", NULL, IG_Start_Event);
+		DynamicMenu_AddIconItem("Присоединиться к Игре", DM_START_GAME, "menu/medals/medal_gauntlet", 0, IG_Start_Event);
 		}
 	}
 	else {
 		if(cl_language.integer == 0){
-		DynamicMenu_AddIconItem("Auto Join", DM_START_AUTO, "menu/medals/medal_capture", NULL, IG_Start_Event);
-		DynamicMenu_AddIconItem("Join Red", DM_START_RED, "uie_icons/iconf_red", NULL, IG_Start_Event);
-		DynamicMenu_AddIconItem("Join Blue", DM_START_BLUE, "uie_icons/iconf_blu", NULL, IG_Start_Event);
+		DynamicMenu_AddIconItem("Auto Join", DM_START_AUTO, "menu/medals/medal_capture", 0, IG_Start_Event);
+		DynamicMenu_AddIconItem("Join Red", DM_START_RED, "uie_icons/iconf_red", 0, IG_Start_Event);
+		DynamicMenu_AddIconItem("Join Blue", DM_START_BLUE, "uie_icons/iconf_blu", 0, IG_Start_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddIconItem("Авто Присоединение", DM_START_AUTO, "menu/medals/medal_capture", NULL, IG_Start_Event);
-		DynamicMenu_AddIconItem("Красная команда", DM_START_RED, "uie_icons/iconf_red", NULL, IG_Start_Event);
-		DynamicMenu_AddIconItem("Синяя команда", DM_START_BLUE, "uie_icons/iconf_blu", NULL, IG_Start_Event);
+		DynamicMenu_AddIconItem("Авто Присоединение", DM_START_AUTO, "menu/medals/medal_capture", 0, IG_Start_Event);
+		DynamicMenu_AddIconItem("Красная команда", DM_START_RED, "uie_icons/iconf_red", 0, IG_Start_Event);
+		DynamicMenu_AddIconItem("Синяя команда", DM_START_BLUE, "uie_icons/iconf_blu", 0, IG_Start_Event);
 		}
 	}
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Spectate", DM_START_SPECTATOR, NULL, IG_Start_Event);
-	DynamicMenu_AddItem("Follow #1", DM_START_FOLLOW1, NULL, IG_Start_Event);
-	DynamicMenu_AddItem("Follow #2", DM_START_FOLLOW2, NULL, IG_Start_Event);
+	DynamicMenu_AddItem("Spectate", DM_START_SPECTATOR, 0, IG_Start_Event);
+	DynamicMenu_AddItem("Follow #1", DM_START_FOLLOW1, 0, IG_Start_Event);
+	DynamicMenu_AddItem("Follow #2", DM_START_FOLLOW2, 0, IG_Start_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Наблюдать", DM_START_SPECTATOR, NULL, IG_Start_Event);
-	DynamicMenu_AddItem("Следить #1", DM_START_FOLLOW1, NULL, IG_Start_Event);
-	DynamicMenu_AddItem("Следить #2", DM_START_FOLLOW2, NULL, IG_Start_Event);
+	DynamicMenu_AddItem("Наблюдать", DM_START_SPECTATOR, 0, IG_Start_Event);
+	DynamicMenu_AddItem("Следить #1", DM_START_FOLLOW1, 0, IG_Start_Event);
+	DynamicMenu_AddItem("Следить #2", DM_START_FOLLOW2, 0, IG_Start_Event);
 	}
 
 	if (UI_CurrentPlayerTeam() == TEAM_SPECTATOR) {
@@ -1609,38 +1609,38 @@ static void InGameDynamic_InitPrimaryMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Close!", IGM_CLOSE, NULL, IG_Close_Event);
+	DynamicMenu_AddItem("Close!", IGM_CLOSE, 0, IG_Close_Event);
 	if(!ui_singlemode.integer){
-	DynamicMenu_AddItem("Actions", IGM_ACTIONS, IG_Actions_SubMenu, NULL);
+	DynamicMenu_AddItem("Actions", IGM_ACTIONS, IG_Actions_SubMenu, 0);
 	}
 	if(ui_singlemode.integer){
-	DynamicMenu_AddItem("Save", IGM_SAVE, IG_Save_SubMenu, NULL);	
+	DynamicMenu_AddItem("Save", IGM_SAVE, IG_Save_SubMenu, 0);	
 	}
-	DynamicMenu_AddItem("Start", IGM_START, IG_Start_SubMenu, NULL);
-	DynamicMenu_AddItem("Bots", IGM_BOTS, IG_AddBot_SubMenu, NULL);
-	DynamicMenu_AddItem("Team Orders...", IGM_TEAMORDERS, NULL, IG_TeamOrders_Event);
-	DynamicMenu_AddItem("Setup", IGM_SETUP, IG_Setup_SubMenu, NULL);
-	DynamicMenu_AddItem("Map", IGM_MAP, IG_Map_SubMenu, NULL);
-	DynamicMenu_AddItem("Vote", IGM_VOTE, IG_Vote_SubMenu, NULL);
-	DynamicMenu_AddItem("Call Vote", IGM_CALLVOTE, IG_CallVote_SubMenu, NULL);
-	DynamicMenu_AddItem("Exit!", IGM_EXIT, IG_Exit_SubMenu, NULL);
+	DynamicMenu_AddItem("Start", IGM_START, IG_Start_SubMenu, 0);
+	DynamicMenu_AddItem("Bots", IGM_BOTS, IG_AddBot_SubMenu, 0);
+	DynamicMenu_AddItem("Team Orders...", IGM_TEAMORDERS, 0, IG_TeamOrders_Event);
+	DynamicMenu_AddItem("Setup", IGM_SETUP, IG_Setup_SubMenu, 0);
+	DynamicMenu_AddItem("Map", IGM_MAP, IG_Map_SubMenu, 0);
+	DynamicMenu_AddItem("Vote", IGM_VOTE, IG_Vote_SubMenu, 0);
+	DynamicMenu_AddItem("Call Vote", IGM_CALLVOTE, IG_CallVote_SubMenu, 0);
+	DynamicMenu_AddItem("Exit!", IGM_EXIT, IG_Exit_SubMenu, 0);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Закрыть!", IGM_CLOSE, NULL, IG_Close_Event);
+	DynamicMenu_AddItem("Закрыть!", IGM_CLOSE, 0, IG_Close_Event);
 	if(!ui_singlemode.integer){
-	DynamicMenu_AddItem("Действия", IGM_ACTIONS, IG_Actions_SubMenu, NULL);
+	DynamicMenu_AddItem("Действия", IGM_ACTIONS, IG_Actions_SubMenu, 0);
 	}
 	if(ui_singlemode.integer){
-	DynamicMenu_AddItem("Сохранить", IGM_SAVE, IG_Save_SubMenu, NULL);
+	DynamicMenu_AddItem("Сохранить", IGM_SAVE, IG_Save_SubMenu, 0);
 	}
-	DynamicMenu_AddItem("Старт", IGM_START, IG_Start_SubMenu, NULL);
-	DynamicMenu_AddItem("Боты", IGM_BOTS, IG_AddBot_SubMenu, NULL);
-	DynamicMenu_AddItem("Командные Приказы...", IGM_TEAMORDERS, NULL, IG_TeamOrders_Event);
-	DynamicMenu_AddItem("Настройки", IGM_SETUP, IG_Setup_SubMenu, NULL);
-	DynamicMenu_AddItem("Карта", IGM_MAP, IG_Map_SubMenu, NULL);
-	DynamicMenu_AddItem("Голосование", IGM_VOTE, IG_Vote_SubMenu, NULL);
-	DynamicMenu_AddItem("Создать Голосование", IGM_CALLVOTE, IG_CallVote_SubMenu, NULL);
-	DynamicMenu_AddItem("Выйти!", IGM_EXIT, IG_Exit_SubMenu, NULL);
+	DynamicMenu_AddItem("Старт", IGM_START, IG_Start_SubMenu, 0);
+	DynamicMenu_AddItem("Боты", IGM_BOTS, IG_AddBot_SubMenu, 0);
+	DynamicMenu_AddItem("Командные Приказы...", IGM_TEAMORDERS, 0, IG_TeamOrders_Event);
+	DynamicMenu_AddItem("Настройки", IGM_SETUP, IG_Setup_SubMenu, 0);
+	DynamicMenu_AddItem("Карта", IGM_MAP, IG_Map_SubMenu, 0);
+	DynamicMenu_AddItem("Голосование", IGM_VOTE, IG_Vote_SubMenu, 0);
+	DynamicMenu_AddItem("Создать Голосование", IGM_CALLVOTE, IG_CallVote_SubMenu, 0);
+	DynamicMenu_AddItem("Выйти!", IGM_EXIT, IG_Exit_SubMenu, 0);
 	}
 
 	depth = DynamicMenu_Depth();
@@ -2099,8 +2099,8 @@ static void DM_TeamList_SubMenu( void )
 {
 	DynamicMenu_SubMenuInit();
 
-	DynamicMenu_AddItem("me", 0, NULL, DM_BotPlayerTarget_Event);
-	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_EXCLUDEGRANDPARENT, NULL, DM_BotPlayerTarget_Event);
+	DynamicMenu_AddItem("me", 0, 0, DM_BotPlayerTarget_Event);
+	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_EXCLUDEGRANDPARENT, 0, DM_BotPlayerTarget_Event);
 
 	DynamicMenu_FinishSubMenuInit();
 }
@@ -2125,7 +2125,7 @@ static void DM_ItemPatrol2_SubMenu( void )
 	exclude = DynamicMenu_ActiveIdAtDepth(depth);
 //	index = s_dynamic.active[depth - 1];	// previous menu level
 //	exclude = s_dynamic.data[index].id;
-	DynamicMenu_AddListOfItems(exclude, NULL, DM_BotItemItemTarget_Event);
+	DynamicMenu_AddListOfItems(exclude, 0, DM_BotItemItemTarget_Event);
 
 	DynamicMenu_FinishSubMenuInit();
 }
@@ -2142,7 +2142,7 @@ DM_ItemPatrol_SubMenu
 static void DM_ItemPatrol_SubMenu( void )
 {
 	DynamicMenu_SubMenuInit();
-	DynamicMenu_AddListOfItems(-1, DM_ItemPatrol2_SubMenu, NULL);
+	DynamicMenu_AddListOfItems(-1, DM_ItemPatrol2_SubMenu, 0);
 	DynamicMenu_FinishSubMenuInit();
 }
 
@@ -2158,9 +2158,9 @@ DM_CampItemList_SubMenu
 static void DM_CampItemList_SubMenu( void )
 {
 	DynamicMenu_SubMenuInit();
-	DynamicMenu_AddItem("here", -1, NULL, DM_BotItemTarget_Event);
-	DynamicMenu_AddItem("there", -1, NULL, DM_BotItemTarget_Event);
-	DynamicMenu_AddListOfItems(-1, NULL, DM_BotItemTarget_Event);
+	DynamicMenu_AddItem("here", -1, 0, DM_BotItemTarget_Event);
+	DynamicMenu_AddItem("there", -1, 0, DM_BotItemTarget_Event);
+	DynamicMenu_AddListOfItems(-1, 0, DM_BotItemTarget_Event);
 	DynamicMenu_FinishSubMenuInit();
 }
 
@@ -2178,7 +2178,7 @@ DM_ItemList_SubMenu
 void DM_ItemList_SubMenu( void )
 {
 	DynamicMenu_SubMenuInit();
-	DynamicMenu_AddListOfItems(-1, NULL, DM_BotItemTarget_Event);
+	DynamicMenu_AddListOfItems(-1, 0, DM_BotItemTarget_Event);
 	DynamicMenu_FinishSubMenuInit();
 }
 
@@ -2194,7 +2194,7 @@ DM_EnemyList_SubMenu
 static void DM_EnemyList_SubMenu( void )
 {
 	DynamicMenu_SubMenuInit();
-	DynamicMenu_AddListOfPlayers(PT_ENEMY, NULL, DM_BotPlayerTarget_Event);
+	DynamicMenu_AddListOfPlayers(PT_ENEMY, 0, DM_BotPlayerTarget_Event);
 	DynamicMenu_FinishSubMenuInit();
 }
 
@@ -2210,99 +2210,99 @@ static void DM_CommandList_SubMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Report", BC_REPORT, (createHandler)NULL, DM_BotCommand_Event);
-	DynamicMenu_AddItem("Help", BC_HELP, DM_TeamList_SubMenu, (eventHandler)NULL);
+	DynamicMenu_AddItem("Report", BC_REPORT, (createHandler)0, DM_BotCommand_Event);
+	DynamicMenu_AddItem("Help", BC_HELP, DM_TeamList_SubMenu, 0);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Репорт", BC_REPORT, (createHandler)NULL, DM_BotCommand_Event);
-	DynamicMenu_AddItem("Помощь", BC_HELP, DM_TeamList_SubMenu, (eventHandler)NULL);
+	DynamicMenu_AddItem("Репорт", BC_REPORT, (createHandler)0, DM_BotCommand_Event);
+	DynamicMenu_AddItem("Помощь", BC_HELP, DM_TeamList_SubMenu, 0);
 	}
 
 	if (botcommandmenu_gametype == GT_CTF)
 	{
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("Capture Flag", BC_GETFLAG, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Defend Base", BC_DEFENDBASE, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Capture Flag", BC_GETFLAG, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Defend Base", BC_DEFENDBASE, (createHandler)0, DM_BotCommand_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Захват Флага", BC_GETFLAG, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Защита Базы", BC_DEFENDBASE, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Захват Флага", BC_GETFLAG, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Защита Базы", BC_DEFENDBASE, (createHandler)0, DM_BotCommand_Event);
 		}
 	}
 	if (botcommandmenu_gametype == GT_CTF_ELIMINATION)
 	{
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("Capture Flag", BC_GETFLAG, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Defend Base", BC_DEFENDBASE, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Capture Flag", BC_GETFLAG, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Defend Base", BC_DEFENDBASE, (createHandler)0, DM_BotCommand_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Захват Флага", BC_GETFLAG, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Защита Базы", BC_DEFENDBASE, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Захват Флага", BC_GETFLAG, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Защита Базы", BC_DEFENDBASE, (createHandler)0, DM_BotCommand_Event);
 		}
 	}
 	if (botcommandmenu_gametype == GT_1FCTF)
 	{
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("Capture Flag", BC_GETFLAG, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Defend Base", BC_DEFENDBASE, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Capture Flag", BC_GETFLAG, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Defend Base", BC_DEFENDBASE, (createHandler)0, DM_BotCommand_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Захват Флага", BC_GETFLAG, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Защита Базы", BC_DEFENDBASE, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Захват Флага", BC_GETFLAG, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Защита Базы", BC_DEFENDBASE, (createHandler)0, DM_BotCommand_Event);
 		}
 	}
 	
 	if (botcommandmenu_gametype == GT_OBELISK)
 	{
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("Attack Enemy", BC_ATTACKBASE, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Defend Base", BC_DEFENDBASE, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Attack Enemy", BC_ATTACKBASE, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Defend Base", BC_DEFENDBASE, (createHandler)0, DM_BotCommand_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Атакуй Врага", BC_GETFLAG, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Защита Базы", BC_DEFENDBASE, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Атакуй Врага", BC_GETFLAG, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Защита Базы", BC_DEFENDBASE, (createHandler)0, DM_BotCommand_Event);
 		}
 	}
 	
 	if (botcommandmenu_gametype == GT_HARVESTER)
 	{
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("Collect skulls", BC_COLLECTSKULLS, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Collect skulls", BC_COLLECTSKULLS, (createHandler)0, DM_BotCommand_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Собирай черепа", BC_COLLECTSKULLS, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Собирай черепа", BC_COLLECTSKULLS, (createHandler)0, DM_BotCommand_Event);
 		}
 	}
 	
 	if (botcommandmenu_gametype == GT_DOUBLE_D)
 	{
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("Take A point", BC_DOMINATEA, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Take B point", BC_DOMINATEB, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Take A point", BC_DOMINATEA, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Take B point", BC_DOMINATEB, (createHandler)0, DM_BotCommand_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Возьми A точку", BC_DOMINATEA, (createHandler)NULL, DM_BotCommand_Event);
-		DynamicMenu_AddItem("Возьми B точку", BC_DOMINATEB, (createHandler)NULL, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Возьми A точку", BC_DOMINATEA, (createHandler)0, DM_BotCommand_Event);
+		DynamicMenu_AddItem("Возьми B точку", BC_DOMINATEB, (createHandler)0, DM_BotCommand_Event);
 		}
 	}
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Follow", BC_FOLLOW, DM_TeamList_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Get", BC_GET, DM_ItemList_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Patrol", BC_PATROL, DM_ItemPatrol_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Camp", BC_CAMP, DM_CampItemList_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Hunt", BC_HUNT, DM_EnemyList_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Point+", BC_POINT, (createHandler)NULL, DM_BotCommand_Event);
-	DynamicMenu_AddItem("Dismiss", BC_DISMISS, (createHandler)NULL, DM_BotCommand_Event);
+	DynamicMenu_AddItem("Follow", BC_FOLLOW, DM_TeamList_SubMenu, 0);
+	DynamicMenu_AddItem("Get", BC_GET, DM_ItemList_SubMenu, 0);
+	DynamicMenu_AddItem("Patrol", BC_PATROL, DM_ItemPatrol_SubMenu, 0);
+	DynamicMenu_AddItem("Camp", BC_CAMP, DM_CampItemList_SubMenu, 0);
+	DynamicMenu_AddItem("Hunt", BC_HUNT, DM_EnemyList_SubMenu, 0);
+	DynamicMenu_AddItem("Point+", BC_POINT, (createHandler)0, DM_BotCommand_Event);
+	DynamicMenu_AddItem("Dismiss", BC_DISMISS, (createHandler)0, DM_BotCommand_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Следуй", BC_FOLLOW, DM_TeamList_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Возьми", BC_GET, DM_ItemList_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Патрулируй", BC_PATROL, DM_ItemPatrol_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Сиди", BC_CAMP, DM_CampItemList_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Охоться", BC_HUNT, DM_EnemyList_SubMenu, (eventHandler)NULL);
-	DynamicMenu_AddItem("Точка+", BC_POINT, (createHandler)NULL, DM_BotCommand_Event);
-	DynamicMenu_AddItem("Отбой", BC_DISMISS, (createHandler)NULL, DM_BotCommand_Event);
+	DynamicMenu_AddItem("Следуй", BC_FOLLOW, DM_TeamList_SubMenu, 0);
+	DynamicMenu_AddItem("Возьми", BC_GET, DM_ItemList_SubMenu, 0);
+	DynamicMenu_AddItem("Патрулируй", BC_PATROL, DM_ItemPatrol_SubMenu, 0);
+	DynamicMenu_AddItem("Сиди", BC_CAMP, DM_CampItemList_SubMenu, 0);
+	DynamicMenu_AddItem("Охоться", BC_HUNT, DM_EnemyList_SubMenu, 0);
+	DynamicMenu_AddItem("Точка+", BC_POINT, (createHandler)0, DM_BotCommand_Event);
+	DynamicMenu_AddItem("Отбой", BC_DISMISS, (createHandler)0, DM_BotCommand_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();
@@ -2320,36 +2320,36 @@ static void BotCommand_InitPrimaryMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Close!", 0, NULL, DM_Close_Event);
-	DynamicMenu_AddItem("Everyone", 0, DM_CommandList_SubMenu, NULL);
-	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_BOTONLY, DM_CommandList_SubMenu, NULL);
-	DynamicMenu_AddItem("Leader?", COM_WHOLEADER, NULL, DM_Command_Event);
+	DynamicMenu_AddItem("Close!", 0, 0, DM_Close_Event);
+	DynamicMenu_AddItem("Everyone", 0, DM_CommandList_SubMenu, 0);
+	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_BOTONLY, DM_CommandList_SubMenu, 0);
+	DynamicMenu_AddItem("Leader?", COM_WHOLEADER, 0, DM_Command_Event);
 	}
 	
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Закрыть!", 0, NULL, DM_Close_Event);
-	DynamicMenu_AddItem("Everyone", 0, DM_CommandList_SubMenu, NULL);
-	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_BOTONLY, DM_CommandList_SubMenu, NULL);
-	DynamicMenu_AddItem("Лидер?", COM_WHOLEADER, NULL, DM_Command_Event);
+	DynamicMenu_AddItem("Закрыть!", 0, 0, DM_Close_Event);
+	DynamicMenu_AddItem("Everyone", 0, DM_CommandList_SubMenu, 0);
+	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_BOTONLY, DM_CommandList_SubMenu, 0);
+	DynamicMenu_AddItem("Лидер?", COM_WHOLEADER, 0, DM_Command_Event);
 	}
 
 	if (botcommandmenu_gametype == GT_CTF)
 	{
 		if(cl_language.integer == 0){
-		DynamicMenu_AddItem("My task?", COM_MYTASK, NULL, DM_Command_Event);
+		DynamicMenu_AddItem("My task?", COM_MYTASK, 0, DM_Command_Event);
 		}
 		if(cl_language.integer == 1){
-		DynamicMenu_AddItem("Моя задача?", COM_MYTASK, NULL, DM_Command_Event);
+		DynamicMenu_AddItem("Моя задача?", COM_MYTASK, 0, DM_Command_Event);
 		}
 	}
 
 	if(cl_language.integer == 0){
-	DynamicMenu_AddItem("Lead", COM_IAMLEADER, (createHandler)NULL, DM_Command_Event);
-	DynamicMenu_AddItem("Resign", COM_QUITLEADER, (createHandler)NULL, DM_Command_Event);
+	DynamicMenu_AddItem("Lead", COM_IAMLEADER, (createHandler)0, DM_Command_Event);
+	DynamicMenu_AddItem("Resign", COM_QUITLEADER, (createHandler)0, DM_Command_Event);
 	}
 	if(cl_language.integer == 1){
-	DynamicMenu_AddItem("Я лидер", COM_IAMLEADER, (createHandler)NULL, DM_Command_Event);
-	DynamicMenu_AddItem("Я не лидер", COM_QUITLEADER, (createHandler)NULL, DM_Command_Event);
+	DynamicMenu_AddItem("Я лидер", COM_IAMLEADER, (createHandler)0, DM_Command_Event);
+	DynamicMenu_AddItem("Я не лидер", COM_QUITLEADER, (createHandler)0, DM_Command_Event);
 	}
 
 	DynamicMenu_FinishSubMenuInit();

@@ -1198,10 +1198,10 @@ void UI_SetActiveMenu( uiMenuCommand_t menu ) {
 		UI_CreditMenu(1);
 		return;
 	case UIMENU_NEED_CD:
-		UI_ConfirmMenu( "Insert the CD", (voidfunc_f)NULL, NeedCDAction );
+		UI_ConfirmMenu( "Insert the CD", 0, NeedCDAction );
 		return;
 	case UIMENU_BAD_CD_KEY:
-		UI_ConfirmMenu( "Bad CD Key", (voidfunc_f)NULL, NeedCDKeyAction );
+		UI_ConfirmMenu( "Bad CD Key", 0, NeedCDKeyAction );
 		return;
 	case UIMENU_INGAME:
 		/*
@@ -1901,6 +1901,22 @@ int vy(float cord) {
 	return result;
 }
 
+/*
+================
+UI_FillRect2
+
+Coordinates are 640*480 virtual values
+=================
+*/
+void UI_FillRect2( float x, float y, float width, float height, const float *color ) {
+	trap_R_SetColor( color );
+
+	//UI_AdjustFrom640( &x, &y, &width, &height );
+	trap_R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, uis.whiteShader );
+
+	trap_R_SetColor( NULL );
+}
+
 void UI_DrawRoundedRect(float x, float y, float width, float height, float radius, const float *color) {
     
 	UI_AdjustFrom640( &x, &y, &width, &height );
@@ -1932,22 +1948,6 @@ void UI_FillRect( float x, float y, float width, float height, const float *colo
 	trap_R_SetColor( color );
 
 	UI_AdjustFrom640( &x, &y, &width, &height );
-	trap_R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, uis.whiteShader );
-
-	trap_R_SetColor( NULL );
-}
-
-/*
-================
-UI_FillRect
-
-Coordinates are 640*480 virtual values
-=================
-*/
-void UI_FillRect2( float x, float y, float width, float height, const float *color ) {
-	trap_R_SetColor( color );
-
-	//UI_AdjustFrom640( &x, &y, &width, &height );
 	trap_R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, uis.whiteShader );
 
 	trap_R_SetColor( NULL );

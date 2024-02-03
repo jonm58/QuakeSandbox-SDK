@@ -1524,8 +1524,8 @@ static void CG_Missile( centity_t *cent ) {
 		return;
 	}
 
-	//look for this to add new ones - SWEP_HYPER
-	/*if ( cent->currentState.generic3 == 16 ) {
+	//look for this to add new ones - WEAPONS_HYPER
+	/*if ( cent->currentState.generic3 == WP_BRICK ) {
 		ent.reType = RT_SPRITE;
 		ent.radius = 50;
 		ent.rotation = 1;

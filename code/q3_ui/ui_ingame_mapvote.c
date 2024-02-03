@@ -123,7 +123,7 @@ MapVote_LoadMapList
 static void MapVote_LoadMapList( void )
 {
 	s_mapvote.nummaps = UI_BuildMapListByType( s_mapvote.index, MAX_MAPS_LIST,
-		filter_gametype[s_mapvote.filter.curvalue], NULL );
+		filter_gametype[s_mapvote.filter.curvalue], 0 );
 
 	s_mapvote.page = 0;
 	s_mapvote.maxpage = s_mapvote.nummaps / LISTMAPS_PERPAGE;

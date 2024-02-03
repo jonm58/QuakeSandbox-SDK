@@ -119,7 +119,6 @@ field_t fields[] = {
 	{"random", FOFS(random), F_FLOAT},
 	{"count", FOFS(count), F_INT},
 	{"playerangle", FOFS(playerangle), F_INT},
-	{"weaponlist", FOFS(weaponlist), F_INT},
 	{"price", FOFS(price), F_INT},
 	{"health", FOFS(health), F_INT},
 	{"light", 0, F_IGNORE},
@@ -732,10 +731,6 @@ void G_SpawnGEntityFromSpawnVars( void ) {
 			return;
 		}
 	}
-	// check for "notteam" flag (GT_FFA, GT_TOURNAMENT, GT_SINGLE_PLAYER)
-if( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_DOUBLE_D || g_gametype.integer == GT_FFA || g_gametype.integer == GT_TEAM || g_gametype.integer == GT_LMS || g_gametype.integer == GT_DOMINATION ) {
-
-} else {
 	if ( g_gametype.integer >= GT_TEAM && !g_ffa_gt ) {
 		G_SpawnInt( "notteam", "0", &i );
 		if ( i ) {
@@ -749,7 +744,6 @@ if( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_DOUBLE_D ||
 			return;
 		}
 	}
-}
 
 	G_SpawnInt( "notta", "0", &i );
 	if ( i ) {

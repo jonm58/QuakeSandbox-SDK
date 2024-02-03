@@ -1119,6 +1119,7 @@ static void CG_DrawStatusBar( void ) {
 	vec4_t         colorlow;
 	clientInfo_t	*ci;
 	int				weaphack;
+	gitem_t	*it;
 		
 		colornorm[0]=cg_crosshairColorRed.value;
 		colornorm[1]=cg_crosshairColorGreen.value;
@@ -1450,8 +1451,16 @@ static void CG_DrawStatusBar( void ) {
 		origin[1] = 0;
 		origin[2] = 0;
 		angles[YAW] = 90 + 20 * sin( cg.time / 1000.0 );
+		if(!BG_CheckClassname(sb_classnum_view.string)){
 		CG_Draw3DModelCopy( 640 + cl_screenoffset.integer - TEXT_ICON_SPACE  - 160, 1 + 12, 160, 160,
 					   trap_R_RegisterModel_MiTech( oasb_modelst.string ), 0, origin, angles );
+		} else {
+		for ( it = bg_itemlist + 1 ; it->classname ; it++ ) {
+		if ( !Q_stricmp( it->classname, sb_classnum_view.string ) )
+				CG_Draw3DModelCopy( 640 + cl_screenoffset.integer - TEXT_ICON_SPACE  - 160, 1 + 12, 160, 160,
+					   trap_R_RegisterModel_MiTech( it->world_model[0] ), 0, origin, angles );	
+		}
+		}
 		}
 		}
 	}
@@ -1493,7 +1502,16 @@ static void CG_DrawStatusBar( void ) {
 	// ammo
 	//
 	if ( weaphack ) {
+		if(ps->stats[STAT_SWEP] <= 15){
 		value = ps->ammo[cent->currentState.weapon];
+		} else {
+		value = ps->stats[STAT_SWEPAMMO];
+		if(value <= 0){
+		cg.swep_listcl[ps->stats[STAT_SWEP]] = 2;
+		} else {
+		cg.swep_listcl[ps->stats[STAT_SWEP]] = 1;	
+		}
+		}
 		if ( value > -1 ) {
 			if ( cg.predictedPlayerState.weaponstate == WEAPON_FIRING
 				&& cg.predictedPlayerState.weaponTime > 100 ) {

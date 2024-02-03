@@ -580,7 +580,7 @@ qboolean G_BotConnect( int clientNum, qboolean restart ) {
 G_AddBot
 ===============
 */
-static void G_AddBot( const char *name, float skill, const char *team, int delay, char *altname, int parentEntityNum, char* waypoint, int customspbot, int weaponlist ) {
+static void G_AddBot( const char *name, float skill, const char *team, int delay, char *altname, int parentEntityNum, char* waypoint, int customspbot ) {
 	int				clientNum;
 	char			*botinfo;
 	gentity_t		*bot;
@@ -590,42 +590,6 @@ static void G_AddBot( const char *name, float skill, const char *team, int delay
 	char			*model;
 	char			*headmodel;
 	char			userinfo[MAX_INFO_STRING];
-	int 			number;
-
-if(!weaponlist){
-if(g_weaponpackmode.integer == 0){	
-	number = 1;
-}
-if(g_weaponpackmode.integer == 1){	
-	number = 2;
-}
-if(g_weaponpackmode.integer == 2){	
-	number = 3;
-}
-if(g_weaponpackmode.integer == 3){	
-	number = 4;
-}
-if(g_weaponpackmode.integer == 4){	
-	number = (rand() % (4 + 1));
-}
-}
-if(weaponlist){
-if(weaponlist == 1){	
-	number = 1;
-}
-if(weaponlist == 2){	
-	number = 2;
-}
-if(weaponlist == 3){	
-	number = 3;
-}
-if(weaponlist == 4){	
-	number = 4;
-}
-if(weaponlist == 5){	
-	number = (rand() % (4 + 1));
-}
-}
 
         // Mix3r_Durachok: remap ai character, if name has format name/aifile example: ( addbot sarge/amok_c )
         // detect if this ai remapped or not
@@ -658,22 +622,6 @@ if(weaponlist == 5){
 	Info_SetValueForKey( userinfo, "rate", "25000" );
 	Info_SetValueForKey( userinfo, "snaps", "20" );
 	Info_SetValueForKey( userinfo, "skill", va("%1.2f", skill) );
-	Info_SetValueForKey( userinfo, "weaponpack", "1" );
-	if(number == 1){
-	Info_SetValueForKey( userinfo, "weaponpack", "1" );	
-	}
-	
-	if(number == 2){
-	Info_SetValueForKey( userinfo, "weaponpack", "2" );	
-	}
-
-	if(number == 3){
-	Info_SetValueForKey( userinfo, "weaponpack", "3" );
-	}
-	
-	if(number == 4){
-	Info_SetValueForKey( userinfo, "weaponpack", "4" );	
-	}
 
 if(!onandroid.integer){
 	if ( skill >= 1 && skill < 2 ) {
@@ -944,7 +892,7 @@ void Svcmd_AddBot_f( void ) {
 	// waypoint
 	trap_Argv( 6, waypoint, sizeof(waypoint) );
 
-	G_AddBot( name, skill, team, delay, altname, 0, waypoint, 0, 0 );
+	G_AddBot( name, skill, team, delay, altname, 0, waypoint, 0 );
 
 	// if this was issued during gameplay and we are playing locally,
 	// go ahead and load the bot's media immediately
@@ -1218,7 +1166,7 @@ G_AddSinglePlayerBot
 ====================
 */
 
-void G_AddCustomBot( char *name, int parentEntityNum, char* waypoint, float relSkill, int weaponlist, int npcid ) {
+void G_AddCustomBot( char *name, int parentEntityNum, char* waypoint, float relSkill, int npcid ) {
 	float skill = trap_Cvar_VariableValue( "g_spSkill" );
 	int noprint = trap_Cvar_VariableIntegerValue( "cl_noprint" );
 
@@ -1237,7 +1185,7 @@ void G_AddCustomBot( char *name, int parentEntityNum, char* waypoint, float relS
 	if ( !g_debugBotspawns.integer )
 		trap_Cvar_Set( "cl_noprint", "1" );
 
-	G_AddBot( name, skill, "free", 0, name, parentEntityNum, waypoint, npcid, weaponlist );
+	G_AddBot( name, skill, "free", 0, name, parentEntityNum, waypoint, npcid );
 
 	//restore cl_noprint to its former value
 	trap_Cvar_Set( "cl_noprint", va("%i", noprint ) );

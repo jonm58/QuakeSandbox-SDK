@@ -1248,7 +1248,7 @@ static void PhysgunInteract( gentity_t *self ) {
 	
 	if(!self->sandboxInteract || self->parent->health <= 0){
 	self->parent = NULL;
-	self->think = NULL;
+	self->think = 0;
 	self->nextthink = 0;
 	self->sandboxInteract = 0;
 	self->parent->sandboxInteract = 0;

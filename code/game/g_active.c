@@ -1200,20 +1200,11 @@ if ( !client->ps.gravity ){
 	// set speed
 if ( !ent->speed ){
 	client->ps.speed = g_speed.value;
-	if(client->pers.playerclass == PCLASS_FEMALE){
-	client->ps.speed *= 1.2;
-	}
 	if(client->sess.sessionTeam == TEAM_BLUE){
 	client->ps.speed = g_teamblue_speed.integer;
-	if(client->pers.playerclass == PCLASS_FEMALE){
-	client->ps.speed *= 1.2;
-	}
 	}
 	if(client->sess.sessionTeam == TEAM_RED){
 	client->ps.speed = g_teamred_speed.integer;
-	if(client->pers.playerclass == PCLASS_FEMALE){
-	client->ps.speed *= 1.2;
-	}
 	}
 }
 	else if ( ent->speed == -1 )
@@ -1382,8 +1373,9 @@ if ( !ent->speed ){
 
 	ent->waterlevel = pm.waterlevel;
 	ent->watertype = pm.watertype;
-	ent->client->ps.stats[STAT_WEAPONLIST] = ent->weaponpack;
 	ent->client->ps.stats[STAT_SWEP] = ent->swep_id;
+	ent->client->ps.stats[STAT_SWEPAMMO] = ent->swep_ammo[ent->swep_id];
+	ent->s.generic3 = ent->swep_ammo[ent->swep_id];
 	if(ent->singlebot){
 	ent->client->ps.stats[STAT_NO_PICKUP] = 1;
 	ent->wait_to_pickup = 70000000;
@@ -1494,6 +1486,27 @@ if(ent->swep_list[wp] == 1){
 	return qtrue;
 } else {
 	return qfalse;
+}
+}
+
+int G_CheckSwepAmmo( int clientNum, int wp ) {
+gentity_t *ent;
+
+ent = g_entities + clientNum;
+
+return ent->swep_ammo[wp];
+}
+
+void PM_Add_SwepAmmo( int clientNum, int wp, int count ) {
+	gentity_t *ent;
+
+	ent = g_entities + clientNum;
+	
+if(!(ent->swep_ammo[wp] == -1)){
+if(!(ent->swep_ammo[wp] >= 9999)){
+	ent->swep_ammo[wp] += count;
+	
+}
 }
 }
 

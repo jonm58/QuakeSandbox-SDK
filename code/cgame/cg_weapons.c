@@ -771,10 +771,6 @@ void CG_RegisterWeapon( int weaponNum ) {
 	vec3_t			mins, maxs;
 	int				i;
 
-	if(weaponNum >= 16){
-	CG_RegisterSwep(weaponNum);
-	return;
-	}
 	weaponInfo = &cg_weapons[weaponNum];
 
 	if ( weaponNum == 0 ) {
@@ -794,6 +790,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 			break;
 		}
 	}
+	
 	if ( !item->classname ) {
 		cg.weaponSelect = WEAPONS_NUM;
 		return;
@@ -803,9 +800,6 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 	// load cmodel before model so filecache works
 	weaponInfo->weaponModel = trap_R_RegisterModel_MiTech( item->world_model[0] );
-	weaponInfo->weaponModel2 = trap_R_RegisterModel_MiTech( item->world_model[1] );
-	weaponInfo->weaponModel3 = trap_R_RegisterModel_MiTech( item->world_model[2] );
-	weaponInfo->weaponModel4 = trap_R_RegisterModel_MiTech( item->world_model[3] );
 
 	// calc midpoint for rotation
 	trap_R_ModelBounds( weaponInfo->weaponModel, mins, maxs );
@@ -815,16 +809,6 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 	weaponInfo->weaponIcon = trap_R_RegisterShader( item->icon );
 	weaponInfo->ammoIcon = trap_R_RegisterShader( item->icon );
-	
-	weaponInfo->weaponIcon2 = trap_R_RegisterShader( item->icon2 );
-	weaponInfo->ammoIcon2 = trap_R_RegisterShader( item->icon2 );
-	
-	weaponInfo->weaponIcon3 = trap_R_RegisterShader( item->icon3 );
-	weaponInfo->ammoIcon3 = trap_R_RegisterShader( item->icon3 );
-
-	weaponInfo->weaponIcon4 = trap_R_RegisterShader( item->icon4 );
-	weaponInfo->ammoIcon4 = trap_R_RegisterShader( item->icon4 );
-	
 
 	for ( ammo = bg_itemlist + 1 ; ammo->classname ; ammo++ ) {
 		if ( ammo->giType == IT_AMMO && ammo->giTag == weaponNum ) {
@@ -844,21 +828,6 @@ void CG_RegisterWeapon( int weaponNum ) {
 	COM_StripExtension(path, path, sizeof(path));
 	strcat( path, "_barrel.md3" );
 	weaponInfo->barrelModel = trap_R_RegisterModel_MiTech( path );
-	
-	Q_strncpyz( path, item->world_model[1], MAX_QPATH );
-	COM_StripExtension(path, path, sizeof(path));
-	strcat( path, "_barrel.md3" );
-	weaponInfo->barrelModel2 = trap_R_RegisterModel_MiTech( path );
-	
-	Q_strncpyz( path, item->world_model[2], MAX_QPATH );
-	COM_StripExtension(path, path, sizeof(path));
-	strcat( path, "_barrel.md3" );
-	weaponInfo->barrelModel3 = trap_R_RegisterModel_MiTech( path );
-	
-	Q_strncpyz( path, item->world_model[3], MAX_QPATH );
-	COM_StripExtension(path, path, sizeof(path));
-	strcat( path, "_barrel.md3" );
-	weaponInfo->barrelModel4 = trap_R_RegisterModel_MiTech( path );
 
 	Q_strncpyz( path, item->world_model[0], MAX_QPATH );
 	COM_StripExtension(path, path, sizeof(path));
@@ -871,7 +840,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 	weaponInfo->loopFireSound = qfalse;
 
-	switch ( weaponNum ) {
+	switch ( weaponNum ) {					//look for this to add new ones - WEAPONS_HYPER
 	case WP_GAUNTLET:
 		//MAKERGB( weaponInfo->flashDlightColor, 0.6f, 0.6f, 1.0f );
 		//weaponInfo->readySound = trap_S_RegisterSound_MiTech( "sound/weapons/bfg/bfg_humd.wav", qfalse );
@@ -1035,102 +1004,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );
 		break;
 		
-
-
-	 default:
-		MAKERGB( weaponInfo->flashDlightColor, 1, 1, 1 );
-		weaponInfo->flashSound[0] = trap_S_RegisterSound_MiTech( "sound/weapons/rocket/rocklf1a.wav", qfalse );
-		break;
-	}
-}
-
-/*
-=================
-CG_RegisterSwep
-
-The server says this item is used on this level
-=================
-*/
-void CG_RegisterSwep( int weaponNum ) {
-	weaponInfo_t	*weaponInfo;
-	gitem_t			*item, *ammo;
-	char			path[MAX_QPATH];
-	vec3_t			mins, maxs;
-	int				i;
-
-	weaponInfo = &cg_weapons[weaponNum];
-
-	if ( weaponNum <= 15 ) {
-		return;
-	}
-
-	if ( weaponInfo->registered ) {
-		return;
-	}
-
-	memset( weaponInfo, 0, sizeof( *weaponInfo ) );
-	weaponInfo->registered = qtrue;
-
-	for ( item = bg_itemlist + 1 ; item->classname ; item++ ) {
-		if ( item->giType == IT_WEAPON && item->swep_id == weaponNum ) {
-			weaponInfo->item = item;
-			break;
-		}
-	}
-	if ( !item->classname ) {
-		cg.weaponSelect = WEAPONS_NUM;
-		return;
-		//CG_Error( "Couldn't find weapon %i", weaponNum );
-	}
-	CG_RegisterItemVisuals( item - bg_itemlist );
-
-	// load cmodel before model so filecache works
-	weaponInfo->weaponModel = trap_R_RegisterModel_MiTech( item->world_model[0] );
-
-	// calc midpoint for rotation
-	trap_R_ModelBounds( weaponInfo->weaponModel, mins, maxs );
-	for ( i = 0 ; i < 3 ; i++ ) {
-		weaponInfo->weaponMidpoint[i] = mins[i] + 0.5 * ( maxs[i] - mins[i] );
-	}
-
-	weaponInfo->weaponIcon = trap_R_RegisterShader( item->icon );
-	weaponInfo->ammoIcon = trap_R_RegisterShader( item->icon );
-	
-
-	for ( ammo = bg_itemlist + 1 ; ammo->classname ; ammo++ ) {
-		if ( ammo->giType == IT_AMMO && ammo->giTag == item->giTag ) {
-			break;
-		}
-	}
-	if ( ammo->classname && ammo->world_model[0] ) {
-		weaponInfo->ammoModel = trap_R_RegisterModel_MiTech( ammo->world_model[0] );
-	}
-
-	Q_strncpyz( path, item->world_model[0], MAX_QPATH );
-	COM_StripExtension(path, path, sizeof(path));
-	strcat( path, "_flash.md3" );
-	weaponInfo->flashModel = trap_R_RegisterModel_MiTech( path );
-
-	Q_strncpyz( path, item->world_model[0], MAX_QPATH );
-	COM_StripExtension(path, path, sizeof(path));
-	strcat( path, "_barrel.md3" );
-	weaponInfo->barrelModel = trap_R_RegisterModel_MiTech( path );
-
-	Q_strncpyz( path, item->world_model[0], MAX_QPATH );
-	COM_StripExtension(path, path, sizeof(path));
-	strcat( path, "_hand.md3" );
-	weaponInfo->handsModel = trap_R_RegisterModel_MiTech( path );
-
-	if ( !weaponInfo->handsModel ) {
-		weaponInfo->handsModel = trap_R_RegisterModel_MiTech( "models/weapons2/shotgun/shotgun_hand.md3" );
-	}
-
-	weaponInfo->loopFireSound = qfalse;
-
-	CG_Printf("before: switch ( weaponNum ) {");
-
-	switch ( weaponNum ) {
-	case 16:					//look for this to add new ones - SWEP_HYPER		
+	case WP_BRICK:
 		//weaponInfo->readySound = trap_S_RegisterSound_MiTech( "sound/weapons/bfg/bfg_hum.wav", qfalse );
 		//MAKERGB( weaponInfo->flashDlightColor, 1, 0.7f, 1 );
 		//MAKERGB( weaponInfo->missileDlightColor, 0.40f, 1, 0.20f );
@@ -1140,7 +1014,8 @@ void CG_RegisterSwep( int weaponNum ) {
 		weaponInfo->missileModel = trap_R_RegisterModel_MiTech( "props/25brick.md3" );
 		//weaponInfo->missileSound = trap_S_RegisterSound_MiTech( "sound/weapons/rocket/rockfly.wav", qfalse );
 		break;
-	case 17:					//look for this to add new ones - SWEP_HYPER		
+		
+	case WP_DIAMOND:
 		//weaponInfo->readySound = trap_S_RegisterSound_MiTech( "sound/weapons/bfg/bfg_hum.wav", qfalse );
 		//MAKERGB( weaponInfo->flashDlightColor, 1, 0.7f, 1 );
 		//MAKERGB( weaponInfo->missileDlightColor, 0.40f, 1, 0.20f );
@@ -1150,7 +1025,8 @@ void CG_RegisterSwep( int weaponNum ) {
 		weaponInfo->missileModel = trap_R_RegisterModel_MiTech( "props/25diamond_block.md3" );
 		//weaponInfo->missileSound = trap_S_RegisterSound_MiTech( "sound/weapons/rocket/rockfly.wav", qfalse );
 		break;
-	case 18:					//look for this to add new ones - SWEP_HYPER		
+		
+	case WP_DIRT:	
 		//weaponInfo->readySound = trap_S_RegisterSound_MiTech( "sound/weapons/bfg/bfg_hum.wav", qfalse );
 		//MAKERGB( weaponInfo->flashDlightColor, 1, 0.7f, 1 );
 		//MAKERGB( weaponInfo->missileDlightColor, 0.40f, 1, 0.20f );
@@ -1160,7 +1036,8 @@ void CG_RegisterSwep( int weaponNum ) {
 		weaponInfo->missileModel = trap_R_RegisterModel_MiTech( "props/25dirt.md3" );
 		//weaponInfo->missileSound = trap_S_RegisterSound_MiTech( "sound/weapons/rocket/rockfly.wav", qfalse );
 		break;
-	case 19:					//look for this to add new ones - SWEP_HYPER		
+		
+	case WP_STONE:
 		//weaponInfo->readySound = trap_S_RegisterSound_MiTech( "sound/weapons/bfg/bfg_hum.wav", qfalse );
 		//MAKERGB( weaponInfo->flashDlightColor, 1, 0.7f, 1 );
 		//MAKERGB( weaponInfo->missileDlightColor, 0.40f, 1, 0.20f );
@@ -1170,7 +1047,8 @@ void CG_RegisterSwep( int weaponNum ) {
 		weaponInfo->missileModel = trap_R_RegisterModel_MiTech( "props/25stone.md3" );
 		//weaponInfo->missileSound = trap_S_RegisterSound_MiTech( "sound/weapons/rocket/rockfly.wav", qfalse );
 		break;
-	case 20:					//look for this to add new ones - SWEP_HYPER		
+		
+	case WP_BEDROCK:
 		//weaponInfo->readySound = trap_S_RegisterSound_MiTech( "sound/weapons/bfg/bfg_hum.wav", qfalse );
 		//MAKERGB( weaponInfo->flashDlightColor, 1, 0.7f, 1 );
 		//MAKERGB( weaponInfo->missileDlightColor, 0.40f, 1, 0.20f );
@@ -1180,8 +1058,7 @@ void CG_RegisterSwep( int weaponNum ) {
 		weaponInfo->missileModel = trap_R_RegisterModel_MiTech( "props/25bedrock.md3" );
 		//weaponInfo->missileSound = trap_S_RegisterSound_MiTech( "sound/weapons/rocket/rockfly.wav", qfalse );
 		break;
-		
-
+				
 
 	 default:
 		MAKERGB( weaponInfo->flashDlightColor, 1, 1, 1 );
@@ -1683,18 +1560,7 @@ if ( cg.snap->ps.pm_type == PM_CUTSCENE ) {
 		}
 	}
 
-if ( ci->plradius == 1 ) {
 	gun.hModel = weapon->weaponModel;
-}
-if ( ci->plradius == 2 ) {
-	gun.hModel = weapon->weaponModel2;
-}
-if ( ci->plradius == 3 ) {
-	gun.hModel = weapon->weaponModel3;
-}
-if ( ci->plradius == 4 ) {
-	gun.hModel = weapon->weaponModel4;
-}
 	if (!gun.hModel) {
 		return;
 	}
@@ -1741,7 +1607,6 @@ if ( ci->plradius == 4 ) {
 	if ( cent->currentState.eFlags & EF_TALK ) {
 		return;
 	}
-	if ( ci->plradius == 1 ) {
 	if ( weapon->barrelModel ) {
 		memset( &barrel, 0, sizeof( barrel ) );
 		VectorCopy( parent->lightingOrigin, barrel.lightingOrigin );
@@ -1757,64 +1622,6 @@ if ( ci->plradius == 4 ) {
 		CG_PositionRotatedEntityOnTag( &barrel, &gun, weapon->weaponModel, "tag_barrel" );
 
 		CG_AddWeaponWithPowerups( &barrel, cent->currentState.powerups );
-	}
-	}
-	
-	if ( ci->plradius == 2 ) {
-	if ( weapon->barrelModel2 ) {
-		memset( &barrel, 0, sizeof( barrel ) );
-		VectorCopy( parent->lightingOrigin, barrel.lightingOrigin );
-		barrel.shadowPlane = parent->shadowPlane;
-		barrel.renderfx = parent->renderfx;
-
-		barrel.hModel = weapon->barrelModel2;
-		angles[YAW] = 0;
-		angles[PITCH] = 0;
-		angles[ROLL] = CG_MachinegunSpinAngle( cent );
-		AnglesToAxis( angles, barrel.axis );
-
-		CG_PositionRotatedEntityOnTag( &barrel, &gun, weapon->weaponModel2, "tag_barrel" );
-
-		CG_AddWeaponWithPowerups( &barrel, cent->currentState.powerups );
-	}
-	}
-	
-	if ( ci->plradius == 3 ) {
-	if ( weapon->barrelModel3 ) {
-		memset( &barrel, 0, sizeof( barrel ) );
-		VectorCopy( parent->lightingOrigin, barrel.lightingOrigin );
-		barrel.shadowPlane = parent->shadowPlane;
-		barrel.renderfx = parent->renderfx;
-
-		barrel.hModel = weapon->barrelModel3;
-		angles[YAW] = 0;
-		angles[PITCH] = 0;
-		angles[ROLL] = CG_MachinegunSpinAngle( cent );
-		AnglesToAxis( angles, barrel.axis );
-
-		CG_PositionRotatedEntityOnTag( &barrel, &gun, weapon->weaponModel3, "tag_barrel" );
-
-		CG_AddWeaponWithPowerups( &barrel, cent->currentState.powerups );
-	}
-	}
-	
-	if ( ci->plradius == 4 ) {
-	if ( weapon->barrelModel4 ) {
-		memset( &barrel, 0, sizeof( barrel ) );
-		VectorCopy( parent->lightingOrigin, barrel.lightingOrigin );
-		barrel.shadowPlane = parent->shadowPlane;
-		barrel.renderfx = parent->renderfx;
-
-		barrel.hModel = weapon->barrelModel4;
-		angles[YAW] = 0;
-		angles[PITCH] = 0;
-		angles[ROLL] = CG_MachinegunSpinAngle( cent );
-		AnglesToAxis( angles, barrel.axis );
-
-		CG_PositionRotatedEntityOnTag( &barrel, &gun, weapon->weaponModel4, "tag_barrel" );
-
-		CG_AddWeaponWithPowerups( &barrel, cent->currentState.powerups );
-	}
 	}
 
 	// make sure we aren't looking at cg.predictedPlayerEntity for LG
@@ -2037,21 +1844,6 @@ void CG_DrawWeaponSelect( void ) {
 	swepnum = cg.snap->ps.generic2;
 	// don't display if dead
 	if ( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) {
-		if(mod_weaponpackmode == 0){
-		trap_Cvar_Set( "weapon_pack", "1" );
-		}
-		if(mod_weaponpackmode == 1){
-		trap_Cvar_Set( "weapon_pack", "2" );
-		}
-		if(mod_weaponpackmode == 2){
-		trap_Cvar_Set( "weapon_pack", "3" );
-		}
-		if(mod_weaponpackmode == 3){
-		trap_Cvar_Set( "weapon_pack", "4" );
-		}
-		if(mod_weaponpackmode == 4){
-		trap_Cvar_Set( "weapon_pack", "1" );
-		}
 		return;
 	}
 
@@ -2085,8 +1877,14 @@ void CG_DrawWeaponSelect( void ) {
 		}
 	}
 	
-	//CG_DrawWeaponBar0(count,bits);
-	CG_DrawWeaponBarNew2(WEAPONS_NUM,bits,swepnum);
+	for ( i = MAX_WEAPONS ; i <= WEAPONS_NUM ; i++ ) {
+		if(cg.swep_listcl[i] >= 1){
+			count++;
+		}
+	}
+	
+	//CG_DrawWeaponBarNew(WEAPONS_NUM,bits,swepnum);		//FOR MANY WEAPONS WEAPONS_HYPER
+	CG_DrawWeaponBarNew2(count,bits,swepnum); //FOR VANILLA WEAPONS WEAPONS_HYPER
 	trap_R_SetColor(NULL);
 	return;
 }
@@ -2117,32 +1915,7 @@ void CG_DrawWeaponBar0(int count, int bits){
 
 		CG_RegisterWeapon( i );
 		// draw weapon icon
-		if(mod_weaponpackmode == 0){
 		CG_DrawPic( x, y, 32, 32, cg_weapons[i].weaponIcon );
-		}
-		if(mod_weaponpackmode == 1){
-		CG_DrawPic( x, y, 32, 32, cg_weapons[i].weaponIcon2 );
-		}
-		if(mod_weaponpackmode == 2){
-		CG_DrawPic( x, y, 32, 32, cg_weapons[i].weaponIcon3 );
-		}
-		if(mod_weaponpackmode == 3){
-		CG_DrawPic( x, y, 32, 32, cg_weapons[i].weaponIcon4 );
-		}
-		if(mod_weaponpackmode == 4){
-		if(weapon_pack.integer == 1){
-		CG_DrawPic( x, y, 32, 32, cg_weapons[i].weaponIcon );
-		}
-		if(weapon_pack.integer == 2){
-		CG_DrawPic( x, y, 32, 32, cg_weapons[i].weaponIcon2 );
-		}
-		if(weapon_pack.integer == 3){
-		CG_DrawPic( x, y, 32, 32, cg_weapons[i].weaponIcon3 );
-		}
-		if(weapon_pack.integer == 4){
-		CG_DrawPic( x, y, 32, 32, cg_weapons[i].weaponIcon4 );
-		}
-		}
 
 		// draw selection marker
 		if ( i == cg.weaponSelect ) {
@@ -2169,7 +1942,7 @@ CG_DrawWeaponBarNew
 
 void CG_DrawWeaponBarNew(int count, int bits, int swepnum){
 
-	int y = 480 - 32;
+	int y = (480 - 32) - 35;
 	int x = 640+cl_screenoffset.integer-32;
 
 		CG_RegisterWeapon( swepnum );
@@ -2177,7 +1950,7 @@ void CG_DrawWeaponBarNew(int count, int bits, int swepnum){
 		CG_DrawPic( x, y, 32, 32, cg_weapons[swepnum].weaponIcon );
 
 		// no ammo cross on top
-		if ( !(cg.snap->ps.stats[STAT_WEAPONS] & ( 1 << swepnum )) && swepnum <= 15 ) {
+		if ( !cg.snap->ps.ammo[ swepnum ] && swepnum <= 15 ) {
 			  CG_DrawPic( x, y, 32, 32, cgs.media.noammoShader );
 		}
 }
@@ -2195,6 +1968,12 @@ void CG_DrawWeaponBarNew2(int count, int bits, int swepnum){
 	int i;
 	
 	for ( i = 1 ; i <= WEAPONS_NUM ; i++ ) {
+        if ( !(cg.snap->ps.stats[STAT_WEAPONS] & ( 1 << i )) && i <= 15 ) {
+            continue;
+        }
+		if(!cg.swep_listcl[i] && i >= 16 ){
+		    continue;	
+		}
 		CG_RegisterWeapon( i );
 		// draw weapon icon
 		CG_DrawPic( x, y, 32*scale, 32*scale, cg_weapons[i].weaponIcon );
@@ -2206,11 +1985,11 @@ void CG_DrawWeaponBarNew2(int count, int bits, int swepnum){
 		}
 
 		// no ammo cross on top
-		if ( !(cg.snap->ps.stats[STAT_WEAPONS] & ( 1 << i )) && i <= 15 ) {
-			  CG_DrawPic( x, y, 32*scale, 32*scale, cgs.media.noammoShader );
-		}
 		if ( !cg.snap->ps.ammo[ i ] && i <= 15 ) {
 			  CG_DrawPic( x, y, 32*scale, 32*scale, cgs.media.noammoShader );
+		}
+		if( cg.swep_listcl[i] == 2 && i >= 16 ){
+			CG_DrawPic( x, y, 32*scale, 32*scale, cgs.media.noammoShader );
 		}
 
 		x += 40*scale;
@@ -2253,14 +2032,30 @@ void CG_NextWeapon_f( void ) {
 	cg.weaponSelectTime = cg.time;
 	original = cg.weaponSelect;
 
-		cg.weaponSelect++;
-		if ( cg.weaponSelect > WEAPONS_NUM ) {
-			cg.weaponSelect = 1;
+	for ( i = 0 ; i < WEAPONS_NUM ; i++ ) {
+	cg.weaponSelect++;
+	if ( cg.weaponSelect > WEAPONS_NUM ) {
+		cg.weaponSelect = 1;
+	}
+    if(cg.weaponSelect <= 15){
+		if ( CG_WeaponSelectable( cg.weaponSelect ) ) {
+			break;
 		}
+    } else {
+	if(cg.swep_listcl[cg.weaponSelect] == 1){
+		break;
+	}
+	}
+	}
 	
+	if(oasb_tool.integer != 0){
 	if(cg.weaponSelect == WP_GAUNTLET){
 	trap_Cvar_Set("cg_hide255", "0");
 	trap_SendConsoleCommand( "execscript toolset\n" );
+	} else {
+	trap_Cvar_Set("cg_hide255", "1");
+	trap_SendConsoleCommand( "execscript weaponset\n" );
+	} 
 	} else {
 	trap_Cvar_Set("cg_hide255", "1");
 	trap_SendConsoleCommand( "execscript weaponset\n" );
@@ -2286,17 +2081,33 @@ void CG_PrevWeapon_f( void ) {
 	cg.weaponSelectTime = cg.time;
 	original = cg.weaponSelect;
 
-		cg.weaponSelect--;
-		if ( cg.weaponSelect < 1 ) {
-			cg.weaponSelect = WEAPONS_NUM;
+	for ( i = 0 ; i < WEAPONS_NUM; i++ ) {
+	cg.weaponSelect--;
+	if ( cg.weaponSelect < 1 ) {
+		cg.weaponSelect = WEAPONS_NUM;
+	}
+    if(cg.weaponSelect <= 15){
+		if ( CG_WeaponSelectable( cg.weaponSelect ) ) {
+			break;
 		}
+    } else {
+	if(cg.swep_listcl[cg.weaponSelect] == 1){
+		break;
+	}
+	}
+	}
 	
+	if(oasb_tool.integer != 0){
 	if(cg.weaponSelect == WP_GAUNTLET){
 	trap_Cvar_Set("cg_hide255", "0");
 	trap_SendConsoleCommand( "execscript toolset\n" );
 	} else {
 	trap_Cvar_Set("cg_hide255", "1");
 	trap_SendConsoleCommand( "execscript weaponset\n" );
+	}
+	} else {
+	trap_Cvar_Set("cg_hide255", "1");
+	trap_SendConsoleCommand( "execscript weaponset\n" );	
 	}
 }
 
@@ -2322,10 +2133,15 @@ void CG_Weapon_f( void ) {
 	}*/
 
 	cg.weaponSelectTime = cg.time;
-
-	/*if ( ! ( cg.snap->ps.stats[STAT_WEAPONS] & ( 1 << num ) ) ) {
+    if(num <= 15){
+	if ( ! ( cg.snap->ps.stats[STAT_WEAPONS] & ( 1 << num ) ) ) {
 		return;		// don't have the weapon
-	}*/
+	}
+    } else {
+	if(!cg.swep_listcl[cg.weaponSelect]){
+	return;		// don't have the weapon
+	}
+	}
 
 	cg.weaponSelect = num;
 	//trap_SendConsoleCommand( va("ws %i\n", num));
@@ -2765,7 +2581,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		mark = cgs.media.burnMarkShader;
 		radius = 1;
 		break;
-	case 16:					//look for this to add new ones - SWEP_HYPER
+	case WP_BRICK:					//look for this to add new ones - WEAPONS_HYPER
 		mod = cgs.media.dishFlashModel;
 		shader = cgs.media.grenadeExplosionShader;
 		if ( !cg_paintballMode.integer )
@@ -2802,7 +2618,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		}
 		// LEILEI END enhancement
 		break;
-	case 17:					//look for this to add new ones - SWEP_HYPER
+	case WP_DIAMOND:
 		mod = cgs.media.dishFlashModel;
 		shader = cgs.media.grenadeExplosionShader;
 		if ( !cg_paintballMode.integer )
@@ -2839,7 +2655,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		}
 		// LEILEI END enhancement
 		break;
-	case 18:					//look for this to add new ones - SWEP_HYPER
+	case WP_DIRT:
 		mod = cgs.media.dishFlashModel;
 		shader = cgs.media.grenadeExplosionShader;
 		if ( !cg_paintballMode.integer )
@@ -2876,7 +2692,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		}
 		// LEILEI END enhancement
 		break;
-	case 19:					//look for this to add new ones - SWEP_HYPER
+	case WP_STONE:
 		mod = cgs.media.dishFlashModel;
 		shader = cgs.media.grenadeExplosionShader;
 		if ( !cg_paintballMode.integer )
@@ -2913,7 +2729,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		}
 		// LEILEI END enhancement
 		break;
-	case 20:					//look for this to add new ones - SWEP_HYPER
+	case WP_BEDROCK:
 		mod = cgs.media.dishFlashModel;
 		shader = cgs.media.grenadeExplosionShader;
 		if ( !cg_paintballMode.integer )

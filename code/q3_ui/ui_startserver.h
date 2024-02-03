@@ -702,7 +702,7 @@ int portallight;
 int minigame;
 int overlay;
 int randomItems;
-int weaponpack;
+int slickmove;
 int music;
 int spawnprotect;
 int elimination_lockspectator;

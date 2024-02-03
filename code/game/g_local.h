@@ -229,7 +229,6 @@ struct gentity_s {
 
 	int			count;
 	int			playerangle;
-	int			weaponlist;
 	int			flashon;
 	int			crosson;
 
@@ -258,7 +257,6 @@ struct gentity_s {
 	int		wait_to_pickup;
 	int			gmodmod_one;
 	int			gmodmod_two;
-	int			weaponpack;
 	int			singlebot;
 	int			gmodtool;
 	int			gmodtoolmode;
@@ -308,6 +306,7 @@ vec3_t		home3;
 	int			allowuse;
 	
 	int			swep_list[8192];
+	int			swep_ammo[8192];
 	int			swep_id;
 };
 
@@ -421,8 +420,6 @@ typedef struct {
 	qboolean	teamInfo;			// send team overlay updates?
 
    pspecial_t	playerspecial;	   // The players current special
-   pclass_t	playerclass;	   // The players current class
-   pclass_t	newplayerclass;	   // The class the player will become when it respawns
 	//elimination:
 	int		roundReached;			//Only spawn if we are new to this round
 	int		livesLeft;			//lives in LMS
@@ -803,6 +800,7 @@ void FinishSpawningItem( gentity_t *ent );
 void Think_Weapon (gentity_t *ent);
 int ArmorIndex (gentity_t *ent);
 void	Add_Ammo (gentity_t *ent, int weapon, int count);
+void	Add_Weapon (gentity_t *ent, int weapon, int count);
 void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace );
 void Touch_Item2(gentity_t *ent, gentity_t *other, trace_t *trace, qboolean allowBot);
 
@@ -860,6 +858,9 @@ void AddRemap(const char *oldShader, const char *newShader, float timeOffset);
 const char *BuildShaderStateConfig( void );
 
 
+void target_finish_think(gentity_t* self);
+void target_finish_use (gentity_t *self, gentity_t *other, gentity_t *activator);
+
 //
 // g_combat.c
 //
@@ -888,38 +889,14 @@ void ProximityMine_RemoveAll( void );
 gentity_t *fire_blaster (gentity_t *self, vec3_t start, vec3_t aimdir);
 gentity_t *fire_custom (gentity_t *self, vec3_t start, vec3_t dir);
 gentity_t *fire_plasma (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_plasma2 (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_plasma3 (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_plasma4 (gentity_t *self, vec3_t start, vec3_t aimdir);
 gentity_t *fire_grenade (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_grenade2 (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_grenade3 (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_grenade4 (gentity_t *self, vec3_t start, vec3_t aimdir);
 gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir);
-gentity_t *fire_rocket2 (gentity_t *self, vec3_t start, vec3_t dir);
-gentity_t *fire_rocket3 ( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_rocket4 (gentity_t *self, vec3_t start, vec3_t dir);
 gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir);
-gentity_t *fire_bfg4 (gentity_t *self, vec3_t start, vec3_t dir);
 gentity_t *fire_grapple (gentity_t *self, vec3_t start, vec3_t dir);
-gentity_t *fire_grapple4 (gentity_t *self, vec3_t start, vec3_t dir);
 gentity_t *fire_nails( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
 gentity_t *fire_nail( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_nail2( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_nail3( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_nail4( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_grapple2( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_grapple3( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_machine2( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_machine3( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_shotgun2( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_shotgun3( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
-gentity_t *fire_shotgun4( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
 gentity_t *fire_prox( gentity_t *self, vec3_t start, vec3_t aimdir );
 gentity_t *fire_flame (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_flame2 (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_flame3 (gentity_t *self, vec3_t start, vec3_t aimdir);
-gentity_t *fire_flame4 (gentity_t *self, vec3_t start, vec3_t aimdir);
 gentity_t *fire_antimatter (gentity_t *self, vec3_t start, vec3_t aimdir);
 gentity_t *fire_special1 ( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
 gentity_t *fire_special2 ( gentity_t *self, vec3_t start, vec3_t forward, vec3_t right, vec3_t up );
@@ -1101,6 +1078,7 @@ void ClientThink( int clientNum );
 void ClientEndFrame( gentity_t *ent );
 void G_RunClient( gentity_t *ent );
 qboolean G_CheckSwep( int clientNum, int wp, int finish );
+int G_CheckSwepAmmo( int clientNum, int wp );
 void G_DefaultSwep( int clientNum, int wp );
 
 //
@@ -1235,7 +1213,6 @@ typedef struct bot_settings_s
 	char characterfile[MAX_FILEPATH];
 	float skill;
 	char team[MAX_FILEPATH];
-	char weaponpack[MAX_FILEPATH];
 	char waypoint[MAX_TOKEN_CHARS];
 } bot_settings_t;
 
@@ -1319,7 +1296,7 @@ extern	int sl_pz;
 extern	int 		mod_teamblue_damage;
 extern	int 		mod_teamred_damage;
 extern	int			mod_accelerate;
-extern	int			mod_weaponpackmode;
+extern	int			mod_slickmove;
 extern	int			mod_overlay;
 extern	int			mod_roundmode;
 extern	int			mod_zround;
@@ -1658,7 +1635,7 @@ extern	vmCvar_t	eliminationrespawn;
 extern	vmCvar_t	onandroid;
 extern	vmCvar_t	g_lavatowater;
 extern	vmCvar_t	g_overlay;
-extern	vmCvar_t	g_weaponpackmode;
+extern	vmCvar_t	g_slickmove;
 extern	vmCvar_t	g_accelerate;
 extern	vmCvar_t	g_randomItems;
 extern	vmCvar_t	info_zombie;

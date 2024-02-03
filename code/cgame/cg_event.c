@@ -831,7 +831,13 @@ static void CG_ItemPickup( int itemNum ) {
 	cg.itemPickupTime = cg.time;
 	cg.itemPickupBlendTime = cg.time;
 	// see if it should be the grabbed weapon
+	if ( bg_itemlist[itemNum].giType == IT_AMMO ) {
+		if(cg.swep_listcl[bg_itemlist[itemNum].giTag] == 2){
+			cg.swep_listcl[bg_itemlist[itemNum].giTag] = 1;
+		}
+	}
 	if ( bg_itemlist[itemNum].giType == IT_WEAPON ) {
+		cg.swep_listcl[bg_itemlist[itemNum].giTag] = 1;
 		// select it immediately
                 /* always*/
 		if ( cg_autoswitch.integer == 1 && bg_itemlist[itemNum].giTag != WP_MACHINEGUN ) {
@@ -857,6 +863,28 @@ static void CG_ItemPickup( int itemNum ) {
                 //
 	}
 
+}
+
+/*
+================
+CG_AddWeapon
+
+Adds custom weapon
+================
+*/
+static void CG_AddWeapon( int weaponNum, int delete ) {
+	weaponInfo_t	*weaponInfo;
+	gitem_t			*item, *ammo;
+	char			path[MAX_QPATH];
+	vec3_t			mins, maxs;
+	int				i;
+	
+	for ( item = bg_itemlist + 1 ; item->classname ; item++ ) {
+		if ( item->giType == IT_WEAPON && item->giTag == weaponNum ) {
+			cg.swep_listcl[bg_itemlist[weaponNum].giTag] = 1;
+			break;
+		}
+	}	
 }
 
 /*

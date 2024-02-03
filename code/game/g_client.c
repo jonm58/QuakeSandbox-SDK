@@ -1285,21 +1285,18 @@ void ClientUserinfoChanged( int clientNum ) {
 	int		teamTask, teamLeader, team, health;
 	int		oasbidi;
 	int		oasbheight;
-	int		weaponpack;
 	int		singlebot;
 	int		gmodtool;
-	float		gmodtoolmode;
-	char		gmodmodifiers;
+	float	gmodtoolmode;
+	char	gmodmodifiers;
 	int		botskill;
 	char	*s;
 	char	model[MAX_QPATH];
 	char	gender[MAX_QPATH];
 	char	headModel[MAX_QPATH];
 	char	oldname[MAX_STRING_CHARS];
-	//KK-OAX
 	char        err[MAX_STRING_CHARS];
 	qboolean    revertName = qfalse;
-
 	gclient_t	*client;
 	char	c1[MAX_INFO_STRING];
 	char	c2[MAX_INFO_STRING];
@@ -1313,8 +1310,6 @@ void ClientUserinfoChanged( int clientNum ) {
 	char	pliggreen[MAX_INFO_STRING];
 	char	pligblue[MAX_INFO_STRING];
 	char	swep_id[MAX_INFO_STRING];
-	//char	totex[MAX_INFO_STRING];
-	//char	hetex[MAX_INFO_STRING];
 	char	pligradius[MAX_INFO_STRING];
 	char	redTeam[MAX_INFO_STRING];
 	char	blueTeam[MAX_INFO_STRING];
@@ -1356,28 +1351,6 @@ void ClientUserinfoChanged( int clientNum ) {
 	// see if the player is nudging his shots
 	s = Info_ValueForKey( userinfo, "cg_cmdTimeNudge" );
 	client->pers.cmdTimeNudge = atoi( s );
-
-	// see if the player wants to debug the backward reconciliation
-	/*s = Info_ValueForKey( userinfo, "cg_debugDelag" );
-	if ( !atoi( s ) ) {
-		client->pers.debugDelag = qfalse;
-	}
-	else {
-		client->pers.debugDelag = qtrue;
-	}*/
-
-	// see if the player is simulating incoming latency
-	//s = Info_ValueForKey( userinfo, "cg_latentSnaps" );
-	//client->pers.latentSnaps = atoi( s );
-
-	// see if the player is simulating outgoing latency
-	//s = Info_ValueForKey( userinfo, "cg_latentCmds" );
-	//client->pers.latentCmds = atoi( s );
-
-	// see if the player is simulating outgoing packet loss
-	//s = Info_ValueForKey( userinfo, "cg_plOut" );
-	//client->pers.plOut = atoi( s );
-//unlagged - client options
 
 	// set name
 	Q_strncpyz ( oldname, client->pers.netname, sizeof( oldname ) );
@@ -1437,8 +1410,6 @@ void ClientUserinfoChanged( int clientNum ) {
         }
     }
 
-
-
 //ArenaScript
 ent->playername = ent->client->pers.netname;
 ent->maxHealth = ent->client->pers.maxHealth;
@@ -1451,32 +1422,6 @@ oasbidi = atoi( Info_ValueForKey( userinfo, "oasb_idi" ) );
 ent->gmodmod_one = oasbidi;
 oasbheight = atoi( Info_ValueForKey( userinfo, "oasb_height" ) );
 ent->gmodmod_two = oasbheight;
-if(g_weaponpackmode.integer == 0){
-weaponpack = 1;
-ent->weaponpack = 1;
-ent->client->ps.stats[STAT_WEAPONLIST] = 1;
-}
-if(g_weaponpackmode.integer == 1){
-weaponpack = 2;
-ent->weaponpack = 2;
-ent->client->ps.stats[STAT_WEAPONLIST] = 2;
-}
-if(g_weaponpackmode.integer == 2){
-weaponpack = 3;
-ent->weaponpack = 3;
-ent->client->ps.stats[STAT_WEAPONLIST] = 3;
-}
-if(g_weaponpackmode.integer == 3){
-weaponpack = 4;
-ent->weaponpack = 4;
-ent->client->ps.stats[STAT_WEAPONLIST] = 4;
-}
-if(g_weaponpackmode.integer == 4){
-weaponpack = atoi( Info_ValueForKey( userinfo, "weapon_pack" ) );
-ent->weaponpack = weaponpack;
-ent->client->ps.stats[STAT_WEAPONLIST] = weaponpack;
-}
-
 
 ent->playerspecial = atoi(Info_ValueForKey( userinfo, "cg_hetex" ));
 client->pers.playerspecial = atoi(Info_ValueForKey( userinfo, "cg_hetex" ));
@@ -1488,9 +1433,6 @@ ent->gmodtoolmode = gmodtoolmode;
 if ( ent->r.svFlags & SVF_BOT ) {
 botskill = atoi( Info_ValueForKey( userinfo, "skill" ) );
 ent->botskill = botskill;
-weaponpack = atoi( Info_ValueForKey( userinfo, "weaponpack" ) );
-ent->weaponpack = weaponpack;
-ent->client->ps.stats[STAT_WEAPONLIST] = weaponpack;
 singlebot = atoi( Info_ValueForKey( userinfo, "singlebot" ) );
 ent->singlebot = singlebot;
 if(ent->singlebot){
@@ -1498,19 +1440,6 @@ ent->client->ps.stats[STAT_NO_PICKUP] = 1;
 ent->wait_to_pickup = 100000000;
 }
 }
-
-if (!Q_stricmp (gender, "NEUTER"))
-   client->pers.newplayerclass = PCLASS_NEUTER;
-else if (!Q_stricmp (gender, "MALE"))
-   client->pers.newplayerclass = PCLASS_MALE;
-else if (!Q_stricmp (gender, "FEMALE"))
-   client->pers.newplayerclass = PCLASS_FEMALE;
-else {
-   client->pers.newplayerclass = PCLASS_MALE;
-   Q_strncpyz( gender, "MALE", sizeof( gender ) );
-}
-
-client->pers.playerclass = client->pers.newplayerclass;
 
 	// N_G: this condition makes no sense to me and I'm not going to
 	// try finding out what it means, I've added parentheses according to
@@ -1536,15 +1465,7 @@ client->pers.playerclass = client->pers.newplayerclass;
 
 	// set max health
 	if (client->ps.powerups[PW_GUARD]) {
-	if(client->pers.playerclass == PCLASS_MALE){
-	client->pers.maxHealth = 240;
-	}
-	if(client->pers.playerclass == PCLASS_NEUTER){
-	client->pers.maxHealth = 240;
-	}
-	if(client->pers.playerclass == PCLASS_FEMALE){
-	client->pers.maxHealth = 200;
-	}
+    client->pers.maxHealth = 200;
 	} else
 		health = atoi( Info_ValueForKey( userinfo, "handicap" ) );
 		client->pers.maxHealth = health;
@@ -1553,19 +1474,7 @@ if (!(ent->r.svFlags & SVF_BOT)){
 			client->pers.maxHealth = 100;
 }
 		}
-	if(health == 100){
-	if(client->pers.playerclass == PCLASS_MALE){
-	client->pers.maxHealth = 120;
-	}
-	if(client->pers.playerclass == PCLASS_NEUTER){
-	client->pers.maxHealth = 120;
-	}
-	}
-	if(health > 100){
-	if(client->pers.playerclass == PCLASS_FEMALE){
-	client->pers.maxHealth = 100;
-	}
-	}
+		
 	client->ps.stats[STAT_MAX_HEALTH] = client->pers.maxHealth;
 
 	// set model
@@ -1604,28 +1513,6 @@ if ( ent->r.svFlags & SVF_BOT ) {
 		team = client->sess.sessionTeam;
 	}
 
-/*	NOTE: all client side now
-Sago: I am not happy with this exception
-
-	// team
-	switch( team ) {
-	case TEAM_RED:
-		ForceClientSkin(client, model, "red");
-//		ForceClientSkin(client, headModel, "red");
-		break;
-	case TEAM_BLUE:
-		ForceClientSkin(client, model, "blue");
-//		ForceClientSkin(client, headModel, "blue");
-		break;
-	}
-	// don't ever use a default skin in teamplay, it would just waste memory
-	// however bots will always join a team but they spawn in as spectator
-	if ( g_gametype.integer >= GT_TEAM && team == TEAM_SPECTATOR) {
-		ForceClientSkin(client, model, "red");
-//		ForceClientSkin(client, headModel, "red");
-	}
-*/
-
 	if (g_gametype.integer >= GT_TEAM && g_ffa_gt!=1) {
 		client->pers.teamInfo = qtrue;
 	} else {
@@ -1636,15 +1523,6 @@ Sago: I am not happy with this exception
 			client->pers.teamInfo = qfalse;
 		}
 	}
-	/*
-	s = Info_ValueForKey( userinfo, "cg_pmove_fixed" );
-	if ( !*s || atoi( s ) == 0 ) {
-		client->pers.pmoveFixed = qfalse;
-	}
-	else {
-		client->pers.pmoveFixed = qtrue;
-	}
-	*/
 
 	// team task (0 = none, 1 = offence, 2 = defence)
 	teamTask = atoi(Info_ValueForKey(userinfo, "teamtask"));
@@ -1674,7 +1552,6 @@ Sago: I am not happy with this exception
             strcpy(c2, Info_ValueForKey( userinfo, "color2" ));
         }
 
-//	strcpy(redTeam, Info_ValueForKey( userinfo, "legsskin" ));
 	strcpy(pligred, Info_ValueForKey( userinfo, "cg_plightred" ));
 	strcpy(pliggreen, Info_ValueForKey( userinfo, "cg_plightgreen" ));
 	strcpy(pligblue, Info_ValueForKey( userinfo, "cg_plightblue" ));
@@ -1685,27 +1562,21 @@ Sago: I am not happy with this exception
 	strcpy(heliggreen, Info_ValueForKey( userinfo, "cg_helightgreen" ));
 	strcpy(heligblue, Info_ValueForKey( userinfo, "cg_helightblue" ));
 	strcpy(swep_id, va("%i", ent->swep_id));
-	//strcpy(totex, Info_ValueForKey( userinfo, "cg_totex" ));
-	//strcpy(hetex, Info_ValueForKey( userinfo, "cg_hetex" ));
-	strcpy(pligradius, Info_ValueForKey( userinfo, "weapon_pack" ));
 	strcpy(blueTeam, Info_ValueForKey( userinfo, "g_blueteam" ));
 
-	// send over a subset of the userinfo keys so other clients can
-	// print scoreboards, display models, and play custom sounds
 	if ( ent->r.svFlags & SVF_BOT ) {
-		s = va("n\\%s\\t\\%i\\model\\%s\\hmodel\\%s\\g_redteam\\%s\\g_blueteam\\%s\\c1\\%s\\c2\\%s\\hc\\%i\\w\\%i\\l\\%i\\skill\\%s\\wp\\%s\\tt\\%d\\tl\\%d",
+		s = va("n\\%s\\t\\%i\\model\\%s\\hmodel\\%s\\g_redteam\\%s\\g_blueteam\\%s\\c1\\%s\\c2\\%s\\hc\\%i\\w\\%i\\l\\%i\\skill\\%s\\tt\\%d\\tl\\%d",
 			client->pers.netname, team, model, headModel, redTeam, blueTeam, c1, c2,
 			client->pers.maxHealth, client->sess.wins, client->sess.losses,
-			Info_ValueForKey( userinfo, "skill" ), Info_ValueForKey( userinfo, "weaponpack" ), teamTask, teamLeader );
+			Info_ValueForKey( userinfo, "skill" ), teamTask, teamLeader );
 	} else {
-		s = va("n\\%s\\t\\%i\\model\\%s\\hmodel\\%s\\g_redteam\\%s\\g_blueteam\\%s\\hr\\%s\\hg\\%s\\hb\\%s\\tr\\%s\\tg\\%s\\tb\\%s\\pr\\%s\\pg\\%s\\pb\\%s\\pd\\%s\\si\\%s\\c1\\%s\\c2\\%s\\hc\\%i\\w\\%i\\l\\%i\\tt\\%d\\tl\\%d",
-			client->pers.netname, client->sess.sessionTeam, model, headModel, redTeam, blueTeam, heligred, heliggreen, heligblue, toligred, toliggreen, toligblue, pligred, pliggreen, pligblue, pligradius, swep_id, c1, c2,
+		s = va("n\\%s\\t\\%i\\model\\%s\\hmodel\\%s\\g_redteam\\%s\\g_blueteam\\%s\\hr\\%s\\hg\\%s\\hb\\%s\\tr\\%s\\tg\\%s\\tb\\%s\\pr\\%s\\pg\\%s\\pb\\%s\\si\\%s\\c1\\%s\\c2\\%s\\hc\\%i\\w\\%i\\l\\%i\\tt\\%d\\tl\\%d",
+			client->pers.netname, client->sess.sessionTeam, model, headModel, redTeam, blueTeam, heligred, heliggreen, heligblue, toligred, toliggreen, toligblue, pligred, pliggreen, pligblue, swep_id, c1, c2,
 			client->pers.maxHealth, client->sess.wins, client->sess.losses, teamTask, teamLeader);
 	}
 
 	trap_SetConfigstring( CS_PLAYERS+clientNum, s );
 
-	// this is not the userinfo, more like the configstring actually
 	G_LogPrintf( "ClientUserinfoChanged: %i %s\\id\\%s\n", clientNum, s, Info_ValueForKey(userinfo, "cl_guid") );
 }
 
@@ -2235,19 +2106,6 @@ void ClientSpawn(gentity_t *ent) {
 				client->pers.maxHealth = 100;
 	}
 			}
-	if(health == 100){
-	if(client->pers.playerclass == PCLASS_MALE){
-	client->pers.maxHealth = 120;
-	}
-	if(client->pers.playerclass == PCLASS_NEUTER){
-	client->pers.maxHealth = 120;
-	}
-	}
-	if(health > 100){
-	if(client->pers.playerclass == PCLASS_FEMALE){
-	client->pers.maxHealth = 100;
-	}
-	}
 
 	// clear entity values
 	client->ps.stats[STAT_MAX_HEALTH] = client->pers.maxHealth;
@@ -2265,7 +2123,7 @@ void ClientSpawn(gentity_t *ent) {
 	ent->watertype = 0;
 	ent->flags = 0;
 
-client->pers.playerclass = client->pers.newplayerclass;
+
 
         //Sago: No one has hit the client yet!
         client->lastSentFlying = -1;
@@ -2288,23 +2146,6 @@ if(g_gametype.integer != GT_ELIMINATION && g_gametype.integer != GT_CTF_ELIMINAT
 	} else {
 		client->ps.ammo[WP_MACHINEGUN] = 100;
 	}
-
-//assign weapons according to class
-/*switch (client->pers.playerclass){
-   case PCLASS_BFG:
-      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_BFG );
-      client->ps.ammo[WP_BFG] = 20;
-      break;
-   case PCLASS_LIGHTNING:
-      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_LIGHTNING );
-      client->ps.ammo[WP_LIGHTNING] = 60;
-      break;
-   case PCLASS_RAILGUN:
-   default:
-      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_RAILGUN );
-      client->ps.ammo[WP_RAILGUN] = 20;
-      break;
-}*/
 
 	client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GAUNTLET );
 	client->ps.ammo[WP_GAUNTLET] = -1;
@@ -2942,19 +2783,7 @@ if	(client->sess.sessionTeam == TEAM_RED ) {
 				client->pers.maxHealth = 100;
 	}
 			}
-	if(health == 100){
-	if(client->pers.playerclass == PCLASS_MALE){
-	client->pers.maxHealth = 120;
-	}
-	if(client->pers.playerclass == PCLASS_NEUTER){
-	client->pers.maxHealth = 120;
-	}
-	}
-	if(health > 100){
-	if(client->pers.playerclass == PCLASS_FEMALE){
-	client->pers.maxHealth = 100;
-	}
-	}
+
 	// clear entity values
 	client->ps.stats[STAT_MAX_HEALTH] = client->pers.maxHealth;
 	client->ps.eFlags = flags;
@@ -2971,7 +2800,7 @@ if	(client->sess.sessionTeam == TEAM_RED ) {
 	ent->watertype = 0;
 	ent->flags = 0;
 
-client->pers.playerclass = client->pers.newplayerclass;
+
 
     //Sago: No one has hit the client yet!
     client->lastSentFlying = -1;
@@ -2992,23 +2821,6 @@ if(g_gametype.integer != GT_ELIMINATION && g_gametype.integer != GT_CTF_ELIMINAT
 	} else {
 		client->ps.ammo[WP_MACHINEGUN] = 100;
 	}
-
-//assign weapons according to class
-/*switch (client->pers.playerclass){
-   case PCLASS_BFG:
-      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_BFG );
-      client->ps.ammo[WP_BFG] = 20;
-      break;
-   case PCLASS_LIGHTNING:
-      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_LIGHTNING );
-      client->ps.ammo[WP_LIGHTNING] = 60;
-      break;
-   case PCLASS_RAILGUN:
-   default:
-      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_RAILGUN );
-      client->ps.ammo[WP_RAILGUN] = 20;
-      break;
-}*/
 
 	client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GAUNTLET );
 	client->ps.ammo[WP_GAUNTLET] = -1;
@@ -3686,19 +3498,7 @@ if	(client->sess.sessionTeam == TEAM_RED ) {
 				client->pers.maxHealth = 100;
 	}
 			}
-	if(health == 100){
-	if(client->pers.playerclass == PCLASS_MALE){
-	client->pers.maxHealth = 120;
-	}
-	if(client->pers.playerclass == PCLASS_NEUTER){
-	client->pers.maxHealth = 120;
-	}
-	}
-	if(health > 100){
-	if(client->pers.playerclass == PCLASS_FEMALE){
-	client->pers.maxHealth = 100;
-	}
-	}
+
 	// clear entity values
 	client->ps.stats[STAT_MAX_HEALTH] = client->pers.maxHealth;
 	client->ps.eFlags = flags;
@@ -3715,7 +3515,7 @@ if	(client->sess.sessionTeam == TEAM_RED ) {
 	ent->watertype = 0;
 	ent->flags = 0;
 
-client->pers.playerclass = client->pers.newplayerclass;
+
 
         //Sago: No one has hit the client yet!
         client->lastSentFlying = -1;
@@ -3732,23 +3532,6 @@ if(g_gametype.integer != GT_ELIMINATION && g_gametype.integer != GT_CTF_ELIMINAT
 	} else {
 	client->ps.stats[STAT_WEAPONS] = ( 1 << WP_MACHINEGUN );
 	client->ps.ammo[WP_MACHINEGUN] = 100;
-
-//assign weapons according to class
-//switch (client->pers.playerclass){
-//   case PCLASS_BFG:
-//      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_BFG );
-//      client->ps.ammo[WP_BFG] = 20;
-//      break;
-//   case PCLASS_LIGHTNING:
-//      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_LIGHTNING );
-//      client->ps.ammo[WP_LIGHTNING] = 60;
-//      break;
-//   case PCLASS_RAILGUN:
-//   default:
-//      client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_RAILGUN );
-//      client->ps.ammo[WP_RAILGUN] = 20;
- //     break;
-//}
 
 	client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GAUNTLET );
 	client->ps.ammo[WP_GAUNTLET] = -1;

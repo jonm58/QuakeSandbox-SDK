@@ -170,7 +170,7 @@ static void Credits_Effect_FlipZ(effectParams_t* ep);
 // that the xyz co-ordinates are unchanged after one period.
 // This prevents pixel jumps from one spatial position to another
 static effectInfo_t effectData[] = {
-	{ 400, 3000, 4000, "None", NULL },	// EFFECT_NONE
+	{ 400, 3000, 4000, "None", 0 },	// EFFECT_NONE
 	{ 15, 3000, 3000, "PulseXYZ", Credits_Effect_PulseXYZ },	// EFFECT_PULSEXYZ
 	{ 15, 3000, 3000, "PulseXY", Credits_Effect_PulseXY },	// EFFECT_PULSEXY
 	{ 15, 3000, 3000, "Ripple-1", Credits_Effect_Ripple1 },	// EFFECT_RIPPLE1

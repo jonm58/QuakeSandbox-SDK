@@ -173,7 +173,8 @@ char* 			advanced_items[] = {
 "r_customHeight",
 "cl_mapAutoDownload",
 "s_doppler",
-"com_yieldCPU"
+"com_yieldCPU",
+"handicap"
 };
 
 
@@ -185,7 +186,7 @@ UI_Advanced_ParseInfos
 	int advanced_i = 0;
 	int advanced_j = 0;
 void UI_Advanced_ParseInfos( void ) {
-	for (advanced_i = 0; advanced_i < 80; advanced_i++) {
+	for (advanced_i = 0; advanced_i < 81; advanced_i++) {
 	if(Q_stricmp (s_advanced.filter.field.buffer, "")){
 	if ( !Q_stristr( advanced_items[advanced_i], s_advanced.filter.field.buffer ) ) {
 		continue;

@@ -369,7 +369,7 @@ vmCvar_t	eliminationredrespawn;
 vmCvar_t	onandroid;
 vmCvar_t	g_overlay;
 vmCvar_t	g_lavatexture;
-vmCvar_t	g_weaponpackmode;
+vmCvar_t	g_slickmove;
 vmCvar_t	g_accelerate;
 vmCvar_t	g_randomItems;
 vmCvar_t	info_zombie;
@@ -678,7 +678,7 @@ int sl_pz;
 int mod_teamblue_damage;
 int mod_teamred_damage;
 int	mod_accelerate;
-int	mod_weaponpackmode;
+int	mod_slickmove;
 int	mod_overlay;
 int	mod_roundmode;
 int	mod_gravity;
@@ -1034,7 +1034,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &onandroid, "onandroid", "0", CVAR_ARCHIVE, 0, qtrue  },
 	{ &g_lavatexture, "g_lavatexture", "0", 0, 0, qtrue  },
 	{ &g_overlay, "g_overlay", "0", 0, 0, qtrue  },
-	{ &g_weaponpackmode, "g_weaponpackmode", "0", 0, 0, qtrue  },
+	{ &g_slickmove, "g_slickmove", "0", 0, 0, qtrue  },
 	{ &g_accelerate, "g_accelerate", "1", 0, 0, qtrue  },
 	{ &g_randomItems, "g_randomItems", "0", 0, 0, qtrue  },
 	{ &info_zombie, "info_zombie", "0", 0, 0, qtrue  },
@@ -4006,7 +4006,7 @@ mod_invulinf = g_invulinf.integer;
 mod_teamblue_damage = g_teamblue_damage.value;
 mod_teamred_damage = g_teamred_damage.value;
 mod_accelerate = g_accelerate.value;
-mod_weaponpackmode = g_weaponpackmode.value;
+mod_slickmove = g_slickmove.value;
 mod_overlay = g_overlay.value;
 mod_roundmode = g_roundmode.value;
 mod_gravity = g_gravity.value;

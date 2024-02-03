@@ -468,13 +468,7 @@ typedef struct weaponInfo_s {
 
 	qhandle_t		handsModel;			// the hands don't actually draw, they just position the weapon
 	qhandle_t		weaponModel;
-	qhandle_t		weaponModel2;
-	qhandle_t		weaponModel3;
-	qhandle_t		weaponModel4;
 	qhandle_t		barrelModel;
-	qhandle_t		barrelModel2;
-	qhandle_t		barrelModel3;
-	qhandle_t		barrelModel4;
 	qhandle_t		flashModel;
 
 	vec3_t			weaponMidpoint;		// so it will rotate centered instead of by tag
@@ -485,12 +479,6 @@ typedef struct weaponInfo_s {
 
 	qhandle_t		weaponIcon;
 	qhandle_t		ammoIcon;
-	qhandle_t		weaponIcon2;
-	qhandle_t		ammoIcon2;
-	qhandle_t		weaponIcon3;
-	qhandle_t		ammoIcon3;
-	qhandle_t		weaponIcon4;
-	qhandle_t		ammoIcon4;
 
 
 	qhandle_t		ammoModel;
@@ -611,6 +599,8 @@ typedef struct {
 
 	// input state sent to server
 	int			weaponSelect;
+	
+	int			swep_listcl[8192];
 
 	// auto rotating items
 	vec3_t		autoAngles;
@@ -1631,7 +1621,7 @@ extern	int 	mod_portalinf;
 extern	int 	mod_kamikazeinf;
 extern	int 	mod_invulinf;
 extern	int 	mod_accelerate;
-extern	int 	mod_weaponpackmode;
+extern	int 	mod_slickmove;
 extern	int 	mod_overlay;
 extern	int 	mod_roundmode;
 extern	int 	mod_gravity;
@@ -1662,12 +1652,11 @@ extern	vmCvar_t	cg_weaponselecttime;
 //ArenaSandBox Set
 extern	vmCvar_t	oasb_idi;
 extern	vmCvar_t	oasb_height;
-extern	vmCvar_t	weapon_pack;
 extern	vmCvar_t	oasb_tool;
 extern	vmCvar_t	oasb_modifier;
 extern	vmCvar_t	oasb_modifiers;
 extern	vmCvar_t	oasb_modelst;
-extern	vmCvar_t	sb_classnum;
+extern	vmCvar_t	sb_classnum_view;
 extern	vmCvar_t	cg_hide255;
 
 extern	vmCvar_t	cg_postprocess;

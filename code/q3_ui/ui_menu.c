@@ -145,7 +145,7 @@ static qboolean MainMenu_LoadScript( const char* filename )
 
 void MainMenu_ReloadGame( void )
 {
-	UI_ConfirmMenu( "RELOAD GAME?", NULL, MainMenu_ReloadAction );
+	UI_ConfirmMenu( "RELOAD GAME?", 0, MainMenu_ReloadAction );
 }
 
 /*
@@ -413,7 +413,7 @@ static void Main_MenuDraw( void ) {
 
 	} else {
 		//if (uis.debug) {
-		UI_DrawString( 320, 5, "QSandbox v2024.02.02", UI_CENTER|UI_SMALLFONT, color );
+		UI_DrawString( 320, 5, "QSandbox v2024.02.04", UI_CENTER|UI_SMALLFONT, color );
 		//}
 		//UI_DrawString( 320, 460, "MiLab Interactive 2023", UI_CENTER|UI_SMALLFONT, color );
 	}

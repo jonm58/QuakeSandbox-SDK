@@ -129,23 +129,11 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 		} else if ( ci->handicap < 999 ) {
 			Com_sprintf( string, sizeof( string ), "%i", ci->handicap );
 			if ( cgs.gametype == GT_TOURNAMENT )
-				if ( ci->handicap == 100 ) {
-				CG_DrawSmallStringColor( iconx - 20, y - SMALLCHAR_HEIGHT/2, "G", color );
-				}
-				if ( ci->handicap == 120 ) {
-				CG_DrawSmallStringColor( iconx - 20, y - SMALLCHAR_HEIGHT/2, "B", color );
-				}
-				if ( ci->handicap != 120 && ci->handicap != 100 ) {
+				if ( ci->handicap != 100 ) {
 				CG_DrawSmallStringColor( iconx - 20, y - SMALLCHAR_HEIGHT/2, string, color );
 				}
 			else
-				if ( ci->handicap == 100 ) {
-				CG_DrawSmallStringColor( iconx - 20, y - SMALLCHAR_HEIGHT/2, "G", color );
-				}
-				if ( ci->handicap == 120 ) {
-				CG_DrawSmallStringColor( iconx - 20, y - SMALLCHAR_HEIGHT/2, "B", color );
-				}
-				if ( ci->handicap != 120 && ci->handicap != 100 ) {
+				if ( ci->handicap != 100 ) {
 				CG_DrawSmallStringColor( iconx - 20, y - SMALLCHAR_HEIGHT/2, string, color );
 				}
 		}

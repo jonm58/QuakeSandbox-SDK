@@ -283,10 +283,10 @@ static void LoadConfig_SaveCheck( const char* configname )
 	else {
 		trap_FS_FCloseFile(handle);
 		if(cl_language.integer == 0){
-		UI_ConfirmMenu("Overwrite?", NULL, LoadConfig_DoSave);
+		UI_ConfirmMenu("Overwrite?", 0, LoadConfig_DoSave);
 		}
 		if(cl_language.integer == 1){
-		UI_ConfirmMenu("Перезаписать?", NULL, LoadConfig_DoSave);
+		UI_ConfirmMenu("Перезаписать?", 0, LoadConfig_DoSave);
 		}
 	}
 }
@@ -685,7 +685,7 @@ UI_LoadConfigMenu
 */
 void UI_LoadConfigMenu( void )
 {
-	LoadConfig_MenuInit(qtrue, NULL, NULL);
+	LoadConfig_MenuInit(qtrue, 0, 0);
 	UI_PushMenu( &s_configs.menu );
 }
 
@@ -697,7 +697,7 @@ UI_SaveConfigMenu
 */
 void UI_SaveConfigMenu( void )
 {
-	LoadConfig_MenuInit(qfalse, NULL, NULL);
+	LoadConfig_MenuInit(qfalse, 0, 0);
 	UI_PushMenu( &s_configs.menu );
 }
 

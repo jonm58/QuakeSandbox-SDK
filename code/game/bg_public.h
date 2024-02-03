@@ -31,8 +31,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define	GAME_VERSION		BASEGAME "-1"
 
-#define WEAPONS_NUM		15		//look for this to add new ones - SWEP_HYPER
-
 #define	DEFAULT_GRAVITY		800
 #define	GIB_HEALTH			-66
 #define	ARMOR_PROTECTION	0.66
@@ -201,6 +199,7 @@ typedef enum {
 typedef struct {
 	// state (in / out)
 	playerState_t	*ps;
+	entityState_t	*s;
 
 	// command (in)
 	usercmd_t	cmd;
@@ -257,10 +256,10 @@ typedef enum {
 	STAT_CLIENTS_READY,				// bit mask of clients wishing to exit the intermission (FIXME: configstring?)
 	STAT_MAX_HEALTH,				// health / armor limit, changable by handicap
 	STAT_NO_PICKUP,					// for dropped ammo
-	STAT_WEAPONLIST,				// for MANY WEAPONS ammo
 	STAT_MONEY,						// for buy activator funcs
 	STAT_FLASH,						// for flashlight
-	STAT_SWEP						// for SWEP WEAPONS
+	STAT_SWEP,						// for SWEP WEAPONS
+	STAT_SWEPAMMO					// for SWEP WEAPONS ammo
 } statIndex_t;
 
 
@@ -386,24 +385,31 @@ typedef enum {
 typedef enum {
 	WP_NONE,
 
-	WP_GRAPPLING_HOOK,		//1
-	WP_GAUNTLET,			//2
-	WP_MACHINEGUN,			//3
-	WP_SHOTGUN,				//4
-	WP_GRENADE_LAUNCHER,	//5
-	WP_ROCKET_LAUNCHER,		//6
-	WP_LIGHTNING,			//7
-	WP_RAILGUN,				//8
-	WP_PLASMAGUN,			//9
-	WP_BFG,					//10
-	WP_NAILGUN,				//11
-	WP_PROX_LAUNCHER,		//12
-	WP_CHAINGUN,			//13
-	WP_FLAMETHROWER,		//14
-	WP_ANTIMATTER,			//15
+	WP_GAUNTLET,
+	WP_MACHINEGUN,
+	WP_SHOTGUN,
+	WP_GRENADE_LAUNCHER,
+	WP_ROCKET_LAUNCHER,
+	WP_LIGHTNING,
+	WP_RAILGUN,
+	WP_PLASMAGUN,
+	WP_BFG,
+	WP_GRAPPLING_HOOK,
+	WP_NAILGUN,
+	WP_PROX_LAUNCHER,
+	WP_CHAINGUN,
+	WP_FLAMETHROWER,
+	WP_ANTIMATTER,
+	WP_BRICK,
+	WP_DIAMOND,
+	WP_DIRT,
+	WP_STONE,
+	WP_BEDROCK,
+	
+	WEAPONS_NUM		//look for this to add new ones - WEAPONS_HYPER
+} weapon_t;	
 
-	WP_NUM_WEAPONS
-} weapon_t;
+#define WP_NUM_WEAPONS 16
 
 
 // reward sounds (stored in ps->persistant[PERS_PLAYEREVENTS])
@@ -792,9 +798,6 @@ typedef struct gitem_s {
 	char		*world_model[MAX_ITEM_MODELS];
 
 	char		*icon;
-	char		*icon2;
-	char		*icon3;
-	char		*icon4;
 	char		*pickup_name;	// for printing on pickup
 	char		*pickup_nameru;	// for printing on pickup
 
@@ -802,8 +805,6 @@ typedef struct gitem_s {
 	itemType_t  giType;			// IT_* flags
 
 	int			giTag;
-	
-	int			swep_id;
 
 	char		*precaches;		// string of all models and images this item will use
 	char		*sounds;		// string of all sounds this item will use
@@ -815,6 +816,7 @@ extern	int		bg_numItems;
 
 gitem_t	*BG_FindItem( const char *pickupName );
 gitem_t	*BG_FindSwep( int id );
+gitem_t	*BG_FindSwepAmmo( int id );
 gitem_t	*BG_FindItemForWeapon( weapon_t weapon );
 gitem_t	*BG_FindItemForPowerup( powerup_t pw );
 gitem_t	*BG_FindItemForHoldable( holdable_t pw );

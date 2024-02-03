@@ -186,15 +186,7 @@ if (!(other->r.svFlags & SVF_BOT)){
 			handicap = 100.0f;
 		}
 }
-	if(other->client->pers.playerclass == PCLASS_MALE){
-		max = (int)(2 *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_NEUTER){
-		max = (int)(2 *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_FEMALE){
 		max = (int)(2 *  handicap * 1);
-	}
 
 		other->health = max;
 		other->client->ps.stats[STAT_HEALTH] = max;
@@ -213,15 +205,7 @@ if (!(other->r.svFlags & SVF_BOT)){
 				}
 		}
 
-	if(other->client->pers.playerclass == PCLASS_MALE){
-		max = (int)(g_guardhealthmodifier.value *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_NEUTER){
-		max = (int)(g_guardhealthmodifier.value *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_FEMALE){
 		max = (int)(g_guardhealthmodifier.value *  handicap * 1);
-	}
 
 		other->health = max;
 		other->client->ps.stats[STAT_HEALTH] = max;
@@ -256,15 +240,7 @@ if (!(other->r.svFlags & SVF_BOT)){
 				}
 		}
 
-	if(other->client->pers.playerclass == PCLASS_MALE){
-		max = (int)(g_scouthealthmodifier.value *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_NEUTER){
-		max = (int)(g_scouthealthmodifier.value *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_FEMALE){
 		max = (int)(g_scouthealthmodifier.value *  handicap * 1);
-	}
 
 		other->health = max;
 		other->client->ps.stats[STAT_HEALTH] = max;
@@ -298,15 +274,7 @@ if (!(other->r.svFlags & SVF_BOT)){
 				}
 		}
 
-	if(other->client->pers.playerclass == PCLASS_MALE){
-		max = (int)(g_doublerhealthmodifier.value *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_NEUTER){
-		max = (int)(g_doublerhealthmodifier.value *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_FEMALE){
 		max = (int)(g_doublerhealthmodifier.value *  handicap * 1);
-	}
 
 		other->health = max;
 		other->client->ps.stats[STAT_HEALTH] = max;
@@ -342,15 +310,7 @@ if (!(other->r.svFlags & SVF_BOT)){
 				}
 		}
 
-	if(other->client->pers.playerclass == PCLASS_MALE){
-		max = (int)(g_ammoregenhealthmodifier.value *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_NEUTER){
-		max = (int)(g_ammoregenhealthmodifier.value *  handicap * 1.20);
-	}
-	if(other->client->pers.playerclass == PCLASS_FEMALE){
 		max = (int)(g_ammoregenhealthmodifier.value *  handicap * 1);
-	}
 
 		other->health = max;
 		other->client->ps.stats[STAT_HEALTH] = max;
@@ -518,12 +478,38 @@ int Pickup_Backpack( gentity_t *ent, gentity_t *other) {
 
 //======================================================================
 
+void Add_Weapon (gentity_t *ent, int weapon, int count)
+{
+if(weapon <= 15){
+	if(count == 1){
+	ent->client->ps.stats[STAT_WEAPONS] |= ( 1 << weapon );
+	} else {
+	ent->client->ps.stats[STAT_WEAPONS] &= ~( 1 << weapon );
+	}
+} else {
+	if(count == 1){
+	ent->swep_list[weapon] = 1;
+	trap_SendServerCommand( ent->client->ps.clientNum, va("swep_1 %i", weapon) );
+	} else {
+	ent->swep_list[weapon] = 0;
+	trap_SendServerCommand( ent->client->ps.clientNum, va("swep_0 %i", weapon) );
+	}
+}
+}
+
 void Add_Ammo (gentity_t *ent, int weapon, int count)
 {
+if(weapon <= 15){
 	ent->client->ps.ammo[weapon] += count;
 	if ( ent->client->ps.ammo[weapon] > mod_ammolimit ) {
 		ent->client->ps.ammo[weapon] = mod_ammolimit;
 	}
+} else {
+	ent->swep_ammo[weapon] += count;
+	if ( ent->swep_ammo[weapon] > mod_ammolimit ) {
+		ent->swep_ammo[weapon] = mod_ammolimit;
+	}
+}
 }
 
 int Pickup_Ammo (gentity_t *ent, gentity_t *other)
@@ -611,7 +597,6 @@ int Pickup_Ammo (gentity_t *ent, gentity_t *other)
 	}
     //end
 	}
-
 	Add_Ammo (other, ent->item->giTag, quantity);
 
 	return RESPAWN_AMMO;
@@ -713,7 +698,7 @@ int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 	}
     //end
 		}
-
+	if(ent->item->giTag <= 15){
 		// dropped items and teamplay weapons always have full ammo
 		if ( ! (ent->flags & FL_DROPPED_ITEM) && g_gametype.integer != GT_TEAM ) {
 			// respawning rules
@@ -729,19 +714,37 @@ int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 				}
 			}
 		}
+	} else {
+		// dropped items and teamplay weapons always have full ammo
+		if ( ! (ent->flags & FL_DROPPED_ITEM) && g_gametype.integer != GT_TEAM ) {
+			// respawning rules
+			// drop the quantity if the already have over the minimum
+			if ( other->swep_ammo[ent->item->giTag] < quantity ) {
+				quantity = quantity - other->swep_ammo[ent->item->giTag];
+			} else {
+				if(g_maxweaponpickup.integer == 1){
+				quantity /= 2;
+				}
+				if(g_maxweaponpickup.integer != 1){
+					quantity = g_maxweaponpickup.integer;		// only add a single shot
+				}
+			}
+		}
+	}
+		
 	}
 
 	// add the weapon
-	if(ent->item->swep_id <= 15){
+	if(ent->item->giTag <= 15){
 	other->client->ps.stats[STAT_WEAPONS] |= ( 1 << ent->item->giTag );
+	} else {
+	other->swep_list[ent->item->giTag] = 1;	
 	}
 
 	Add_Ammo( other, ent->item->giTag, quantity );
 
 	if (ent->item->giTag == WP_GRAPPLING_HOOK)
 		other->client->ps.ammo[ent->item->giTag] = -1; // unlimited ammo
-	
-	other->swep_list[ent->item->swep_id] = 1;
 
 	// team deathmatch has slow weapon respawns
 	if ( g_gametype.integer == GT_TEAM ) {

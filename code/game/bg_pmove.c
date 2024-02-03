@@ -197,11 +197,13 @@ static void PM_Friction( void ) {
 
 	// apply ground friction
 	if ( pm->waterlevel <= 1 ) {
-		if ( pml.walking && !(pml.groundTrace.surfaceFlags & SURF_SLICK) ) {
-			// if getting knocked back, no friction
-			if ( ! (pm->ps->pm_flags & PMF_TIME_KNOCKBACK) ) {
-				control = speed < pm_stopspeed ? pm_stopspeed : speed;
-				drop += control*pm_friction*pml.frametime;
+		if(mod_slickmove != 1){
+			if ( pml.walking && !(pml.groundTrace.surfaceFlags & SURF_SLICK) ) {
+				// if getting knocked back, no friction
+				if ( ! (pm->ps->pm_flags & PMF_TIME_KNOCKBACK) ) {
+					control = speed < pm_stopspeed ? pm_stopspeed : speed;
+					drop += control*pm_friction*pml.frametime;
+				}
 			}
 		}
 	}
@@ -865,7 +867,7 @@ static void PM_WalkMove( void ) {
 
 	// when a player gets hit, they temporarily lose
 	// full control, which allows them to be moved a bit
-	if ( ( pml.groundTrace.surfaceFlags & SURF_SLICK ) || pm->ps->pm_flags & PMF_TIME_KNOCKBACK ) {
+	if ( ( pml.groundTrace.surfaceFlags & SURF_SLICK ) || pm->ps->pm_flags & PMF_TIME_KNOCKBACK || mod_slickmove == 1 ) {
 		accelerate = pm_airaccelerate;
 	} else {
 		accelerate = pm_accelerate;
@@ -876,7 +878,7 @@ static void PM_WalkMove( void ) {
 	//Com_Printf("velocity = %1.1f %1.1f %1.1f\n", pm->ps->velocity[0], pm->ps->velocity[1], pm->ps->velocity[2]);
 	//Com_Printf("velocity1 = %1.1f\n", VectorLength(pm->ps->velocity));
 
-	if ( ( pml.groundTrace.surfaceFlags & SURF_SLICK ) || pm->ps->pm_flags & PMF_TIME_KNOCKBACK ) {
+	if ( ( pml.groundTrace.surfaceFlags & SURF_SLICK ) || pm->ps->pm_flags & PMF_TIME_KNOCKBACK || mod_slickmove == 1 ) {
 		pm->ps->velocity[2] -= pm->ps->gravity * pml.frametime;
 	} else {
 		// don't reset the z velocity for slopes
@@ -1514,7 +1516,7 @@ static void PM_BeginWeaponChange( int weapon ) {
 	if(G_CheckSwep(pm->ps->clientNum, weapon, 0)){
 		if ( pm->ps->weaponstate == WEAPON_DROPPING ) {
 		return;
-	}
+		}
 
         if(pm->pmove_flags & DF_INSTANT_WEAPON_CHANGE)
         {
@@ -1792,786 +1794,51 @@ static void PM_Weapon( void ) {
 
 	pm->ps->weaponstate = WEAPON_FIRING;
 
+if( pm->ps->stats[STAT_SWEP] <= 15 ){
 	// check for out of ammo
-	if ( ! pm->ps->ammo[ pm->ps->weapon ] ) {
-		PM_AddEvent( EV_NOAMMO );
-		pm->ps->weaponTime += 500;
+		if ( ! pm->ps->ammo[ pm->ps->weapon ] ) {
+			PM_AddEvent( EV_NOAMMO );
+			pm->ps->weaponTime += 500;
+			return;
+		}
+	} else {
+#ifdef 	QAGAME
+		if(!G_CheckSwepAmmo(pm->ps->clientNum, pm->ps->stats[STAT_SWEP])){
+			PM_AddEvent( EV_NOAMMO );
+			pm->ps->weaponTime += 500;
 		return;
-	}
-/*	if(pm->ps->stats[STAT_WEAPONLIST]==0){
-	if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-	return;
-	}
-	}
-	}
-	
-	if(!pm->ps->stats[STAT_WEAPONLIST]){
-	if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-	return;
-	}
-	}
-	}*/
-
-
-if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1 || pm->ps->ammo[ pm->ps->weapon ] >=9999 )) {
-	
-	
-if(!pm->ps->stats[STAT_WEAPONLIST]){	
-
-if(pm->ps->weapon == WP_GRAPPLING_HOOK ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}	
-}
-if(pm->ps->weapon == WP_GAUNTLET ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_MACHINEGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_SHOTGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_GRENADE_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ROCKET_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_LIGHTNING ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_RAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PLASMAGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_BFG ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_NAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PROX_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_CHAINGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_FLAMETHROWER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ANTIMATTER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
+		}
+#else
+		if(!pm->ps->stats[STAT_SWEPAMMO]){
+			PM_AddEvent( EV_NOAMMO );
+			pm->ps->weaponTime += 500;
+		return;
+		}
+#endif
 }
 
-}	
-	
-if(pm->ps->stats[STAT_WEAPONLIST]==1){	
+if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1 || pm->ps->ammo[ pm->ps->weapon ] >=9999 ) || !(pm->ps->stats[STAT_SWEPAMMO] == -1 || pm->ps->stats[STAT_SWEPAMMO] >=9999 )) {
 
-if(pm->ps->weapon == WP_GRAPPLING_HOOK ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}	
+
+
+if( pm->ps->stats[STAT_SWEP] >= 16 ){
+if(pm->s->generic3 >= 1 ){ pm->s->generic3 -= 1; }
+if(pm->ps->stats[STAT_SWEPAMMO] >= 1 ){ pm->ps->stats[STAT_SWEPAMMO] -= 1; }
+#ifdef 	QAGAME
+if(G_CheckSwepAmmo(pm->ps->clientNum, pm->ps->stats[STAT_SWEP]) >= 1 ){ 
+PM_Add_SwepAmmo(pm->ps->clientNum, pm->ps->stats[STAT_SWEP], -1); 
 }
-if(pm->ps->weapon == WP_GAUNTLET ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_MACHINEGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_SHOTGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_GRENADE_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ROCKET_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_LIGHTNING ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_RAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PLASMAGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_BFG ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_NAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PROX_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_CHAINGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_FLAMETHROWER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ANTIMATTER ){
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
+#endif
+} else {
+if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){ pm->ps->ammo[ pm->ps->weapon ]-= 1; }
 }
 
 }
 
 
+// fire weapon
+PM_AddEvent( EV_FIRE_WEAPON );
 
-
-
-if(pm->ps->stats[STAT_WEAPONLIST]==2){	
-
-if(pm->ps->weapon == WP_GRAPPLING_HOOK ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}	
-}
-if(pm->ps->weapon == WP_GAUNTLET ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_MACHINEGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 5 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 5 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 5;
-	}
-}		
-}
-if(pm->ps->weapon == WP_SHOTGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_GRENADE_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 3 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 3 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 3;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ROCKET_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_LIGHTNING ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 5 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 5 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 5;
-	}
-}		
-}
-if(pm->ps->weapon == WP_RAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PLASMAGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 2 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 2 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 2;
-	}
-}		
-}
-if(pm->ps->weapon == WP_BFG ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 5 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 5 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 5;
-	}
-}		
-}
-if(pm->ps->weapon == WP_NAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 2 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 2 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 2;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PROX_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_CHAINGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 15 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 15 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 15;
-	}
-}		
-}
-if(pm->ps->weapon == WP_FLAMETHROWER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ANTIMATTER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 5 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 5 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 5;
-	}
-}		
-}
-
-}
-
-
-
-
-if(pm->ps->stats[STAT_WEAPONLIST]==3){	
-
-if(pm->ps->weapon == WP_GRAPPLING_HOOK ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}	
-}
-if(pm->ps->weapon == WP_GAUNTLET ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_MACHINEGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 5 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 5 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 5;
-	}
-}		
-}
-if(pm->ps->weapon == WP_SHOTGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 2 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 2 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 2;
-	}
-}		
-}
-if(pm->ps->weapon == WP_GRENADE_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 5 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 5 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 5;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ROCKET_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 5 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 5 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 5;
-	}
-}		
-}
-if(pm->ps->weapon == WP_LIGHTNING ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 3 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 3 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 3;
-	}
-}		
-}
-if(pm->ps->weapon == WP_RAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PLASMAGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 5 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 5 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 5;
-	}
-}		
-}
-if(pm->ps->weapon == WP_BFG ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 4 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 4 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 4;
-	}
-}		
-}
-if(pm->ps->weapon == WP_NAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 2 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 2 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 2;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PROX_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_CHAINGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 10 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 10 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 10;
-	}
-}		
-}
-if(pm->ps->weapon == WP_FLAMETHROWER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}	
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ANTIMATTER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 3 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 3 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 3;
-	}
-}		
-}
-
-}
-
-
-
-
-if(pm->ps->stats[STAT_WEAPONLIST]==4){	
-
-if(pm->ps->weapon == WP_GRAPPLING_HOOK ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}	
-}
-if(pm->ps->weapon == WP_GAUNTLET ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_MACHINEGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 2 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 2 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 2;
-	}
-}		
-}
-if(pm->ps->weapon == WP_SHOTGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 2 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 2 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 2;
-	}
-}		
-}
-if(pm->ps->weapon == WP_GRENADE_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ROCKET_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 3 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 3 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 3;
-	}
-}		
-}
-if(pm->ps->weapon == WP_LIGHTNING ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 10 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 10 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 10;
-	}
-}		
-}
-if(pm->ps->weapon == WP_RAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 3 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 3 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 3;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PLASMAGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 2 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 2 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 2;
-	}
-}		
-}
-if(pm->ps->weapon == WP_BFG ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 10 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 10 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 10;
-	}
-}		
-}
-if(pm->ps->weapon == WP_NAILGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_PROX_LAUNCHER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 3 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 3 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 3;
-	}
-}		
-}
-if(pm->ps->weapon == WP_CHAINGUN ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_FLAMETHROWER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 1 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 1;
-	}
-}		
-}
-if(pm->ps->weapon == WP_ANTIMATTER ){
-if(pm->ps->ammo[ pm->ps->weapon ] < 2 ){
-return;
-}
-if(pm->ps->ammo[ pm->ps->weapon ] >= 2 ){
-	if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1)){
-		pm->ps->ammo[ pm->ps->weapon ]-= 2;
-	}
-}		
-}
-
-}
-}
-
-
-	// fire weapon
-	PM_AddEvent( EV_FIRE_WEAPON );
-
-if(!pm->ps->stats[STAT_WEAPONLIST]){	
-	switch( pm->ps->stats[STAT_SWEP] ) {
-	default:
-	case WP_GAUNTLET:
-		addTime = mod_gdelay*2;
-		break;
-	case WP_LIGHTNING:
-		addTime = mod_lgdelay*3;
-		break;
-	case WP_SHOTGUN:
-		addTime = mod_sgdelay;
-		break;
-	case WP_MACHINEGUN:
-		addTime = mod_mgdelay*10;
-		break;
-	case WP_GRENADE_LAUNCHER:
-		addTime = mod_gldelay;
-		break;
-	case WP_ROCKET_LAUNCHER:
-		addTime = mod_rldelay;
-		break;
-	case WP_PLASMAGUN:
-		addTime = mod_pgdelay*1.5;
-		break;
-	case WP_RAILGUN:
-		addTime = mod_rgdelay;
-		break;
-	case WP_BFG:
-		addTime = mod_bfgdelay*8;
-		break;
-	case WP_GRAPPLING_HOOK:
-		addTime = 100;
-		break;
-	case WP_NAILGUN:
-		addTime = mod_ngdelay;
-		break;
-	case WP_PROX_LAUNCHER:
-		addTime = mod_pldelay*1.25;
-		break;
-	case WP_CHAINGUN:
-		addTime = mod_cgdelay*33;
-		break;
-	case WP_FLAMETHROWER:
-		addTime = mod_ftdelay*2.5;
-		break;
-	case WP_ANTIMATTER:
-		addTime = mod_amdelay*25;
-	}
-}
-
-if(pm->ps->stats[STAT_WEAPONLIST]==1){	
 	switch( pm->ps->stats[STAT_SWEP] ) {
 	default:
 	case WP_GAUNTLET:
@@ -2619,176 +1886,25 @@ if(pm->ps->stats[STAT_WEAPONLIST]==1){
 	case WP_ANTIMATTER:
 		addTime = mod_amdelay;
 		break;
-	case 16:					//look for this to add new ones - SWEP_HYPER
+	case WP_BRICK:					//look for this to add new ones - WEAPONS_HYPER
 		addTime = 500;
 		break;
-	case 17:
+	case WP_DIAMOND:
 		addTime = 500;
 		break;
-	case 18:
+	case WP_DIRT:
 		addTime = 500;
 		break;
-	case 19:
+	case WP_STONE:
 		addTime = 500;
 		break;
-	case 20:
+	case WP_BEDROCK:
 		addTime = 500;
 		break;
 	case 65535:
 		addTime = 10;
 		break;
 	}
-}
-
-if(pm->ps->stats[STAT_WEAPONLIST]==2){	
-	switch( pm->ps->stats[STAT_SWEP] ) {
-	default:
-	case WP_GAUNTLET:
-		addTime = 1200;
-		break;
-	case WP_LIGHTNING:
-		addTime = 150;
-		break;
-	case WP_SHOTGUN:
-		addTime = 1000;
-		break;
-	case WP_MACHINEGUN:
-		addTime = 1000;
-		break;
-	case WP_GRENADE_LAUNCHER:
-		addTime = 900;
-		break;
-	case WP_ROCKET_LAUNCHER:
-		addTime = 900;
-		break;
-	case WP_PLASMAGUN:
-		addTime = 150;
-		break;
-	case WP_RAILGUN:
-		addTime = 700;
-		break;
-	case WP_BFG:
-		addTime = 2000;
-		break;
-	case WP_GRAPPLING_HOOK:
-		addTime = 1000;
-		break;
-	case WP_NAILGUN:
-		addTime = 1000;
-		break;
-	case WP_PROX_LAUNCHER:
-		addTime = 1000;
-		break;
-	case WP_CHAINGUN:
-		addTime = 1000;
-		break;
-	case WP_FLAMETHROWER:
-		addTime = 100;
-		break;
-	case WP_ANTIMATTER:
-		addTime = 1500;
-	}
-}
-
-if(pm->ps->stats[STAT_WEAPONLIST]==3){	
-	switch( pm->ps->stats[STAT_SWEP] ) {
-	default:
-	case WP_GAUNTLET:
-		addTime = 1200;
-		break;
-	case WP_LIGHTNING:
-		addTime = 100;
-		break;
-	case WP_SHOTGUN:
-		addTime = 1200;
-		break;
-	case WP_MACHINEGUN:
-		addTime = 700;
-		break;
-	case WP_GRENADE_LAUNCHER:
-		addTime = 1200;
-		break;
-	case WP_ROCKET_LAUNCHER:
-		addTime = 1300;
-		break;
-	case WP_PLASMAGUN:
-		addTime = 600;
-		break;
-	case WP_RAILGUN:
-		addTime = 700;
-		break;
-	case WP_BFG:
-		addTime = 1300;
-		break;
-	case WP_GRAPPLING_HOOK:
-		addTime = 1000;
-		break;
-	case WP_NAILGUN:
-		addTime = 1000;
-		break;
-	case WP_PROX_LAUNCHER:
-		addTime = 1000;
-		break;
-	case WP_CHAINGUN:
-		addTime = 1000;
-		break;
-	case WP_FLAMETHROWER:
-		addTime = 60;
-		break;
-	case WP_ANTIMATTER:
-		addTime = 1500;
-	}
-}
-
-if(pm->ps->stats[STAT_WEAPONLIST]==4){	
-	switch( pm->ps->stats[STAT_SWEP] ) {
-	default:
-	case WP_GAUNTLET:
-		addTime = 300;
-		break;
-	case WP_LIGHTNING:
-		addTime = 1200;
-		break;
-	case WP_SHOTGUN:
-		addTime = 800;
-		break;
-	case WP_MACHINEGUN:
-		addTime = 150;
-		break;
-	case WP_GRENADE_LAUNCHER:
-		addTime = 900;
-		break;
-	case WP_ROCKET_LAUNCHER:
-		addTime = 1300;
-		break;
-	case WP_PLASMAGUN:
-		addTime = 100;
-		break;
-	case WP_RAILGUN:
-		addTime = 2000;
-		break;
-	case WP_BFG:
-		addTime = 1800;
-		break;
-	case WP_GRAPPLING_HOOK:
-		addTime = 1000;
-		break;
-	case WP_NAILGUN:
-		addTime = 1000;
-		break;
-	case WP_PROX_LAUNCHER:
-		addTime = 1000;
-		break;
-	case WP_CHAINGUN:
-		addTime = 60;
-		break;
-	case WP_FLAMETHROWER:
-		addTime = 60;
-		break;
-	case WP_ANTIMATTER:
-		addTime = 1200;
-	}
-}
 
 	if( bg_itemlist[pm->ps->stats[STAT_PERSISTANT_POWERUP]].giTag == PW_SCOUT ) {
 		addTime /= mod_scoutfirespeed;

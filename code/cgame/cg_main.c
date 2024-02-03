@@ -115,12 +115,11 @@ vmCvar_t	cg_weaponselecttime;
 //ArenaSandBox Set
 vmCvar_t	oasb_idi;
 vmCvar_t	oasb_height;
-vmCvar_t	weapon_pack;
 vmCvar_t	oasb_tool;
 vmCvar_t	oasb_modifier;
 vmCvar_t	oasb_modifiers;
 vmCvar_t	oasb_modelst;
-vmCvar_t	sb_classnum;
+vmCvar_t	sb_classnum_view;
 vmCvar_t	cg_hide255;
 
 vmCvar_t	cg_postprocess;
@@ -417,7 +416,7 @@ int mod_portalinf;
 int mod_kamikazeinf;
 int mod_invulinf;
 int mod_accelerate;
-int mod_weaponpackmode;
+int mod_slickmove;
 int mod_overlay;
 int 	mod_gravity;
 int 	mod_dayangle;
@@ -454,12 +453,11 @@ static cvarTable_t cvarTable[] = { // bk001129
 	//ArenaSandBox Set
 	{ &oasb_idi, "oasb_idi", "0", CVAR_USERINFO},
 	{ &oasb_height, "oasb_height", "0", CVAR_USERINFO},
-	{ &weapon_pack, "weapon_pack", "1", CVAR_USERINFO},
 	{ &oasb_tool, "oasb_tool", "0", CVAR_USERINFO},
 	{ &oasb_modifier, "oasb_modifier", "0", CVAR_USERINFO},
 	{ &oasb_modifiers, "oasb_modifiers", "0", CVAR_USERINFO},
 	{ &oasb_modelst, "oasb_modelst", "0", CVAR_USERINFO},
-	{ &sb_classnum, "sb_classnum", "0", CVAR_ARCHIVE},
+	{ &sb_classnum_view, "sb_classnum_view", "0", CVAR_ARCHIVE},
 	{ &cg_hide255, "cg_hide255", "0", 0},
 
 	{ &cg_postprocess, "cg_postprocess", "", 0 },
@@ -1335,7 +1333,7 @@ void CG_SetDefaultWeaponProperties(void) {
 	mod_kamikazeinf = 0;
 	mod_invulinf = 0;
 	mod_accelerate = 1;
-	mod_weaponpackmode = 0;
+	mod_slickmove = 0;
 	mod_overlay = 0;
 	mod_gravity = 512000;
 	mod_dayangle = 0;
@@ -2519,13 +2517,7 @@ static const char *CG_FeederItemText(float feederID, int index, int column, qhan
 					if ( info->botSkill > 0 && info->botSkill <= 14 ) {
 						*handle = cgs.media.botSkillShaders[ info->botSkill - 1 ];
 					} else if ( info->handicap < 999 ) {
-				if ( info->handicap == 100 ) {
-					return "G";
-				}
-				if ( info->handicap == 120 ) {
-					return "B";
-				}
-				if ( info->handicap != 120 && info->handicap != 100 ) {
+				if ( info->handicap != 100 ) {
 					return va("%i", info->handicap );
 				}
 					}

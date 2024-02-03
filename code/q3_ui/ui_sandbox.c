@@ -297,7 +297,7 @@ typedef struct
 	"eliminationrespawn",
 	"eliminationredrespawn",
 	"g_overlay",
-	"g_weaponpackmode",
+	"g_slickmove",
 	"g_accelerate",
 	"g_randomItems",
 	"g_locationdamage",
@@ -499,10 +499,12 @@ SandboxMain_SaveChanges
 */
 static void SandboxMain_SaveChanges( void ) {
 	//save cvars
+	trap_Cvar_Set( "sb_classnum_view", "none" );
 	if(uis.sb_tab == 1){
 	trap_Cmd_ExecuteText( EXEC_APPEND, va("set uibuildprop buildprop %s %s %i %s %s %s\n", s_sandboxmain.list.itemnames[s_sandboxmain.list.curvalue], s_sandboxmain.classlist.itemnames[s_sandboxmain.classlist.curvalue], s_sandboxmain.priv.curvalue, s_sandboxmain.minmax.field.buffer, s_sandboxmain.grid.field.buffer, s_sandboxmain.modif0.field.buffer) );
 	trap_Cvar_Set( "oasb_modelst", va("props/%s", s_sandboxmain.list.itemnames[s_sandboxmain.list.curvalue]) );
 	trap_Cvar_Set( "sb_sf", s_sandboxmain.modif0.field.buffer );
+	trap_Cvar_Set( "sb_classnum_view", s_sandboxmain.classlist.itemnames[s_sandboxmain.classlist.curvalue] );
 	}
 	if(uis.sb_tab == 3){
 	trap_Cmd_ExecuteText( EXEC_APPEND, va("set uibuildprop spawnbot %s %s %s %s %s %s %s\n", s_sandboxmain.list.itemnames[s_sandboxmain.list.curvalue], s_sandboxmain.classlist.itemnames[s_sandboxmain.classlist.curvalue], s_sandboxmain.modif0.field.buffer, s_sandboxmain.modif1.field.buffer, s_sandboxmain.modif2.field.buffer, s_sandboxmain.modif3.field.buffer, s_sandboxmain.modif4.field.buffer) );
@@ -1560,7 +1562,7 @@ void SandboxMain_MenuInit( void ) {
 	s_sandboxmain.classlist.generic.y		= 215 + 70;
 	s_sandboxmain.classlist.width			= 28;
 	s_sandboxmain.classlist.height			= 15;
-	s_sandboxmain.classlist.numitems		= 10;
+	s_sandboxmain.classlist.numitems		= 2;
 	s_sandboxmain.classlist.itemnames		= (const char **)s_sandboxmain.classeslist;
 	s_sandboxmain.classlist.columns			= 1;
 	s_sandboxmain.classlist.color			= s_sandboxmain_color1;
@@ -2293,16 +2295,8 @@ if(uis.sb_tab == 10){
 	s_sandboxmain.classlist.itemnames[122] = "weapon_bedrock";
 	}
 	if(uis.sb_tab == 3){
-	s_sandboxmain.classlist.itemnames[0] = "NPC_Blue_Weap0";
-	s_sandboxmain.classlist.itemnames[1] = "NPC_Blue_Weap1";
-	s_sandboxmain.classlist.itemnames[2] = "NPC_Blue_Weap2";
-	s_sandboxmain.classlist.itemnames[3] = "NPC_Blue_Weap3";
-	s_sandboxmain.classlist.itemnames[4] = "NPC_Blue_Weap4";
-	s_sandboxmain.classlist.itemnames[5] = "NPC_Red_Weap0";
-	s_sandboxmain.classlist.itemnames[6] = "NPC_Red_Weap1";
-	s_sandboxmain.classlist.itemnames[7] = "NPC_Red_Weap2";
-	s_sandboxmain.classlist.itemnames[8] = "NPC_Red_Weap3";
-	s_sandboxmain.classlist.itemnames[9] = "NPC_Red_Weap4";
+	s_sandboxmain.classlist.itemnames[0] = "NPC_Blue";
+	s_sandboxmain.classlist.itemnames[1] = "NPC_Red";
 	}
 	
 	

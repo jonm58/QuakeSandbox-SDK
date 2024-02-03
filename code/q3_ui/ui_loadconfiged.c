@@ -421,6 +421,22 @@ static void selecttoolEd_MenuEvent( void *ptr, int event ) {
 	}
 }
 
+/*
+=================
+UI_selecttoolEd_Cache
+=================
+*/
+void UI_selecttoolEd_Cache( void ) {
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
+	trap_R_RegisterShaderNoMip( ART_FIGHT0 );
+	trap_R_RegisterShaderNoMip( ART_FIGHT1 );
+	trap_R_RegisterShaderNoMip( ART_FRAMEL );
+	trap_R_RegisterShaderNoMip( ART_FRAMER );
+	trap_R_RegisterShaderNoMip( ART_ARROWS );
+	trap_R_RegisterShaderNoMip( ART_ARROWLEFT );
+	trap_R_RegisterShaderNoMip( ART_ARROWRIGHT );
+}
 
 /*
 ===============
@@ -687,23 +703,6 @@ s_selecttoolEd.list.itemnames[141] = "Targetname Tool Me (1 to 20)";
 	Menu_AddItem( &s_selecttoolEd.menu, &s_selecttoolEd.right );
 	Menu_AddItem( &s_selecttoolEd.menu, &s_selecttoolEd.back );
 	Menu_AddItem( &s_selecttoolEd.menu, &s_selecttoolEd.go );
-}
-
-/*
-=================
-UI_selecttoolEd_Cache
-=================
-*/
-void UI_selecttoolEd_Cache( void ) {
-	trap_R_RegisterShaderNoMip( ART_BACK0 );
-	trap_R_RegisterShaderNoMip( ART_BACK1 );
-	trap_R_RegisterShaderNoMip( ART_FIGHT0 );
-	trap_R_RegisterShaderNoMip( ART_FIGHT1 );
-	trap_R_RegisterShaderNoMip( ART_FRAMEL );
-	trap_R_RegisterShaderNoMip( ART_FRAMER );
-	trap_R_RegisterShaderNoMip( ART_ARROWS );
-	trap_R_RegisterShaderNoMip( ART_ARROWLEFT );
-	trap_R_RegisterShaderNoMip( ART_ARROWRIGHT );
 }
 
 

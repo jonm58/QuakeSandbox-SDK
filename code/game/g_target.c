@@ -231,8 +231,7 @@ if(ent->type == 7){
 activator->client->ps.stats[STAT_NO_PICKUP] += ent->count;
 }
 if(ent->type == 8){
-activator->client->ps.stats[STAT_WEAPONLIST] += ent->count;
-activator->weaponpack += ent->count;
+
 }
 if(ent->type == 9){
 activator->client->ps.stats[STAT_MONEY] += ent->count;
@@ -266,8 +265,7 @@ if(ent->type == 7){
 activator->client->ps.stats[STAT_NO_PICKUP] = ent->count;
 }
 if(ent->type == 8){
-activator->client->ps.stats[STAT_WEAPONLIST] = ent->count;
-activator->weaponpack = ent->count;
+
 }
 if(ent->type == 9){
 activator->client->ps.stats[STAT_MONEY] = ent->count;
@@ -960,7 +958,7 @@ Use the skill key to specify the skill level for the bot relative to the g_spski
 void target_botspawn_use (gentity_t *self, gentity_t *other, gentity_t *activator) {
 	if ( g_debugBotspawns.integer ) 
 		G_Printf("\ntime %i\n spawn bot \"%s\"\n botspawn \"%s\" / \"%s\" (%i)\n waypoint \"%s\"\n health %i\n", level.time, self->clientname, self->targetname, self->targetname2, self->s.number, self->target, self->health);
-	G_AddCustomBot( self->clientname, self->s.number, self->target, self->skill, self->weaponpack, self->type );
+	G_AddCustomBot( self->clientname, self->s.number, self->target, self->skill, self->type );
 }
 
 void SP_target_botspawn (gentity_t *self) {
@@ -1355,6 +1353,7 @@ When triggered, forces the game to go into the intermission which will show the 
 high score (if it is higher than the current highscore) for the current map and, when the player clicks during the intermission, ends the
 game.
 */
+
 void target_finish_think(gentity_t* self) {
 	target_finish_use(self, self, level.player);
 }
@@ -1435,11 +1434,6 @@ void modify_entity ( gentity_t *self, gentity_t *ent ) {
 	
 	if ( !strcmp( self->key, "playerangle" ) ) {
 		ent->playerangle = atoi(self->value);
-		return;
-	}
-	
-	if ( !strcmp( self->key, "weaponlist" ) ) {
-		ent->weaponlist = atoi(self->value);
 		return;
 	}
 

@@ -416,7 +416,7 @@ uie_cvarTable_t uie_cvarTable[] = {
 { "uie_minigame", "0" },
 { "uie_overlay", "0" },
 { "uie_randomItems", "0" },
-{ "uie_weaponpack", "0" },
+{ "uie_slickmove", "0" },
 /*{ "uie_music", "" },*/
 { "uie_spawnprotect", "500" },
 { "uie_elimination_lockspectator", "0" },
@@ -3421,7 +3421,7 @@ s_scriptdata.server.portallight = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999,
 s_scriptdata.server.minigame = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999, NULL, "uie_minigame" );
 s_scriptdata.server.overlay = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999, NULL, "uie_overlay" );
 s_scriptdata.server.randomItems = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999, NULL, "uie_randomItems" );
-s_scriptdata.server.weaponpack = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999, NULL, "uie_weaponpack" );
+s_scriptdata.server.slickmove = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999, NULL, "uie_slickmove" );
 /*s_scriptdata.server.music = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999, NULL, "uie_music" );*/
 s_scriptdata.server.spawnprotect = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999, NULL, "uie_spawnprotect" );
 s_scriptdata.server.elimination_lockspectator = UIE_GetSkirmishCvarIntClamp(-9999999, 9999999, NULL, "uie_elimination_lockspectator" );
@@ -3886,7 +3886,7 @@ UIE_SetSkirmishCvarInt( NULL, "uie_portallight", s_scriptdata.server.portallight
 UIE_SetSkirmishCvarInt( NULL, "uie_minigame", s_scriptdata.server.minigame);
 UIE_SetSkirmishCvarInt( NULL, "uie_overlay", s_scriptdata.server.overlay);
 UIE_SetSkirmishCvarInt( NULL, "uie_randomItems", s_scriptdata.server.randomItems);
-UIE_SetSkirmishCvarInt( NULL, "uie_weaponpack", s_scriptdata.server.weaponpack);
+UIE_SetSkirmishCvarInt( NULL, "uie_slickmove", s_scriptdata.server.slickmove);
 /*UIE_SetSkirmishCvarInt( NULL, "uie_music", s_scriptdata.server.music);*/
 UIE_SetSkirmishCvarInt( NULL, "uie_spawnprotect", s_scriptdata.server.spawnprotect);
 UIE_SetSkirmishCvarInt( NULL, "uie_elimination_lockspectator", s_scriptdata.server.elimination_lockspectator);

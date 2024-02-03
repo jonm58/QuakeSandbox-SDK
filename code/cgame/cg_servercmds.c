@@ -373,7 +373,7 @@ static void CG_ParseWeaponProperties(void) {
 	mod_kamikazeinf     = atoi(CG_Argv(35));
 	mod_invulinf     = atoi(CG_Argv(36));
 	mod_accelerate     = atoi(CG_Argv(37));
-	mod_weaponpackmode     = atoi(CG_Argv(38));
+	mod_slickmove     = atoi(CG_Argv(38));
 	mod_overlay     = atoi(CG_Argv(39));
 	mod_roundmode     = atoi(CG_Argv(40));
 	mod_zround     = atoi(CG_Argv(41));
@@ -1259,6 +1259,7 @@ static void CG_ServerCommand( void ) {
 	const char	*cmd;
 	char		text[MAX_SAY_TEXT];
 	int			offset;
+	int			i;
 
 	cmd = CG_Argv(0);
 
@@ -1341,6 +1342,35 @@ static void CG_ServerCommand( void ) {
 
 	if ( !strcmp( cmd, "cs" ) ) {
 		CG_ConfigStringModified();
+		return;
+	}
+	
+	if ( !strcmp( cmd, "swep_0" ) ) {
+		cg.swep_listcl[atoi(CG_Argv(1))] = 0;
+		return;
+	}
+	
+	if ( !strcmp( cmd, "swep_1" ) ) {
+		cg.swep_listcl[atoi(CG_Argv(1))] = 1;
+		return;
+	}
+	
+	if ( !strcmp( cmd, "swep_2" ) ) {
+		cg.swep_listcl[atoi(CG_Argv(1))] = 2;
+		return;
+	}
+	
+	if ( !strcmp( cmd, "allswep_0" ) ) {
+		for(i = 1 ; i <= (WEAPONS_NUM-1)-15 ; i++){
+		cg.swep_listcl[i+15] = 0; 
+		}
+		return;
+	}
+	
+	if ( !strcmp( cmd, "allswep_1" ) ) {
+		for(i = 1 ; i <= (WEAPONS_NUM-1)-15 ; i++){
+		cg.swep_listcl[i+15] = 1; 
+		}
 		return;
 	}
 
