@@ -14,7 +14,7 @@ useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU General Public Licenseа
 along with Quake III Arena source code; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
@@ -1855,7 +1855,7 @@ cgs.media.ptex255ShaderE	= trap_R_RegisterShader( "powerups/quad" );
 	Q_strncpyz(items, CG_ConfigString(CS_ITEMS), sizeof(items));
 
 	for ( i = 1 ; i < bg_numItems ; i++ ) {
-		if ( items[ i ] == '1' || cg_buildScript.integer ) {
+		if ( items[ i ] == '1' || 1 ) {
 			CG_LoadingItem( i );
 			CG_RegisterItemVisuals( i );
 		}
@@ -1935,9 +1935,6 @@ cgs.media.ptex255ShaderE	= trap_R_RegisterShader( "powerups/quad" );
 
 #endif
 
-	for (i=1 ; i<73 ; i++) {
-	CG_RegisterItemVisuals( i );
-	}
 	CG_ClearParticles ();
 /*
 	for (i=1; i<MAX_PARTICLES_AREAS; i++)
