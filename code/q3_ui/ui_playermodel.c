@@ -80,7 +80,7 @@ static char* playermodel_modelorder[] = {
 #define MAX_MODELSPERPAGE	(PLAYERGRID_ROWS*PLAYERGRID_COLS)
 #define MAX_SKINSPERPAGE	5
 
-#define MAX_PLAYERMODELS	65536
+#define MAX_PLAYERMODELS	8192
 #define MAX_PLAYERSKINS		4096
 
 #define MODELARRAY_X 		40

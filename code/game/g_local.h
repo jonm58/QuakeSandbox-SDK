@@ -305,8 +305,8 @@ vec3_t		home3;
 	int			mnoclip;
 	int			allowuse;
 	
-	int			swep_list[8192];
-	int			swep_ammo[8192];
+	int			swep_list[WEAPONS_NUM];
+	int			swep_ammo[WEAPONS_NUM];
 	int			swep_id;
 };
 

@@ -600,7 +600,7 @@ typedef struct {
 	// input state sent to server
 	int			weaponSelect;
 	
-	int			swep_listcl[8192];
+	int			swep_listcl[WEAPONS_NUM];
 
 	// auto rotating items
 	vec3_t		autoAngles;
@@ -654,8 +654,8 @@ typedef struct {
 	int			centerPrintTime;
 	int			centerPrintCharWidth;
 	int			centerPrintY;
-	char		centerPrint[1024];
-	char		centerPrintRus[1024];
+	char		centerPrint[256];
+	char		centerPrintRus[256];
 	int			centerPrintLines;
 	int			centerPrintRuLine;
 	int			centerPrintTimeC;
@@ -782,7 +782,7 @@ typedef struct {
 	int				subtitlePrintTime;
 	int				subtitlePrintCharWidth;
 	int				subtitlePrintY;
-	char			subtitlePrint[1024];
+	char			subtitlePrint[256];
 	int				subtitlePrintLines;
 	float			subtitlePrintDuration;
 

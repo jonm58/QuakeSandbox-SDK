@@ -328,8 +328,8 @@ if(cl_language.integer == 1){
 	{
 		skill = addBotsMenuInfo.skill.curvalue + 1;
 		//hpic = trap_R_RegisterShaderNoMip( va("menu/art/skill%i", skill));
-		//if (!hpic)
-		//	return;
+		if (1 == 1)
+			return;
 
 		// put icon in bottom right corner of pic
 		b = &addBotsMenuInfo.icon;

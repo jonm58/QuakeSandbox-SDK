@@ -9,7 +9,7 @@
 #define ART_FRAMEL			"menu/art/frame2_l"
 #define ART_FRAMER			"menu/art/frame1_r"
 
-#define MAX_WSITEMS			65536
+#define MAX_WSITEMS			256
 #define NAMEBUFSIZE			( MAX_WSITEMS * 48 )
 #define GAMEBUFSIZE			( MAX_WSITEMS * 16 )
 
