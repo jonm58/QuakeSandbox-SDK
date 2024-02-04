@@ -1856,7 +1856,7 @@ cgs.media.ptex255ShaderE	= trap_R_RegisterShader( "powerups/quad" );
 
 	for ( i = 1 ; i < bg_numItems ; i++ ) {
 		if ( items[ i ] == '1' || 1 ) {
-			CG_LoadingItem( i );
+			//CG_LoadingItem( i );
 			CG_RegisterItemVisuals( i );
 		}
 	}

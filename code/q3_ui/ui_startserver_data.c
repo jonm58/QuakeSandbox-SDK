@@ -2999,13 +2999,13 @@ void StartServer_LoadBotScriptData(void)
 	StartServer_SetBotSkillRangeType(UIE_GetSkirmishCvarIntClamp(0, BOTSKILL_COUNT, s, "BotSkillType"));
 
 	// number of bots if randomly generated
-	s_scriptdata.bot.numberBots = UIE_GetSkirmishCvarIntClamp(0, 400, s, "BotCount");
+	s_scriptdata.bot.numberBots = UIE_GetSkirmishCvarIntClamp(0, 256, s, "BotCount");
 
 	// frequency of bot changing on maps
 	s_scriptdata.bot.changeBots = UIE_GetSkirmishCvarIntClamp(0, BOTCHANGE_COUNT, s, "BotChange");
 
 	// number of open slots if bots are randomly selected
-	s_scriptdata.bot.numberOpen = UIE_GetSkirmishCvarIntClamp(0, 400, s, "OpenSlotCount");
+	s_scriptdata.bot.numberOpen = UIE_GetSkirmishCvarIntClamp(0, 256, s, "OpenSlotCount");
 
 	// skill range values
 	StartServer_SetBotSkillValue(&s_scriptdata.bot.globalSkill, UIE_GetSkirmishCvarInt(s, "BotSkillValue"));

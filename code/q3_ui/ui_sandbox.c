@@ -1194,11 +1194,19 @@ static void SandboxMain_MenuEvent( void* ptr, int event ) {
 		break;
 		
 	case ID_SAVEMAP:
+		if(uis.sb_tab != 5){
 		UI_saveMapEdMenu();
+		} else {
+		trap_Cmd_ExecuteText( EXEC_APPEND, "hideobjects\n" );
+		}
 		break;
 
 	case ID_LOADMAP:
+		if(uis.sb_tab != 5){
 		UI_loadMapEdMenu();
+		} else {
+		trap_Cmd_ExecuteText( EXEC_APPEND, "showobjects\n" );
+		}
 		break;
 		
 	case ID_PRIV:
@@ -1229,6 +1237,7 @@ void SandboxMain_MenuInit( void ) {
 	s_sandboxmain_color1[3] = sbt_color3_3.value;
 
 	SandboxMain_Cache();
+	
 
 	s_sandboxmain.menu.draw = SandboxMain_MenuDraw;
 	s_sandboxmain.menu.wrapAround = qtrue;
@@ -1238,13 +1247,22 @@ void SandboxMain_MenuInit( void ) {
 	//uis.cursorx = 319;
 	//uis.cursory = 80;
 
-	/*s_sandboxmain.frame.generic.type   	= MTYPE_BITMAP;
-	s_sandboxmain.frame.generic.flags	= QMF_INACTIVE;
-	s_sandboxmain.frame.generic.name   	= trap_R_RegisterShaderNoMip( sbt_wallpaper.string );
-	s_sandboxmain.frame.generic.x		= 0 - cl_screenoffset.integer;
-	s_sandboxmain.frame.generic.y		= 0;
-	s_sandboxmain.frame.width			= 640 + cl_screenoffset.integer*2;
-	s_sandboxmain.frame.height			= 480;*/
+s_sandboxmain.tab1.string           = "Props";
+s_sandboxmain.tab2.string           = "Settings";
+s_sandboxmain.tab3.string           = "NPC";
+s_sandboxmain.tab4.string           = "Items";
+s_sandboxmain.tab5.string           = "Admin";
+s_sandboxmain.tab6.string           = "Spawnlist";
+s_sandboxmain.tab7.string           = "Shaders";
+s_sandboxmain.tab8.string           = "Themes";
+s_sandboxmain.tab9.string           = "Scripts";
+s_sandboxmain.tab10.string           = "Custom";
+s_sandboxmain.savemap.string		= "Save map";
+s_sandboxmain.loadmap.string		= "Load map";
+s_sandboxmain.priv.generic.name			= "Private:";
+s_sandboxmain.minmax.generic.name		= "Coll size:";
+s_sandboxmain.grid.generic.name		= "Grid size:";
+s_sandboxmain.toolstext.string  				= "Tools:";
 	
 	s_sandboxmain.tab1.generic.type     	= MTYPE_PTEXT;
 	s_sandboxmain.tab1.generic.flags    	= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
@@ -1680,6 +1698,8 @@ void SandboxMain_MenuInit( void ) {
 	s_sandboxmain.classtext.string  				= "Class:";
 	s_sandboxmain.modif0.generic.name       		= "Value:";
 	s_sandboxmain.spawnobject.string           		= "Apply";
+	s_sandboxmain.savemap.string			= "Hide objects";
+	s_sandboxmain.loadmap.string			= "Show objects";
 	}
 	if(uis.sb_tab == 6){
 	s_sandboxmain.classlist.generic.type		= MTYPE_SCROLLLIST;
@@ -1939,23 +1959,6 @@ void SandboxMain_MenuInit( void ) {
 	s_sandboxmain.toolstext.style  					= UI_BIGFONT;
 	
 	y = 480+240;
-	
-s_sandboxmain.tab1.string           = "Props";
-s_sandboxmain.tab2.string           = "Settings";
-s_sandboxmain.tab3.string           = "NPC";
-s_sandboxmain.tab4.string           = "Items";
-s_sandboxmain.tab5.string           = "Admin";
-s_sandboxmain.tab6.string           = "Spawnlist";
-s_sandboxmain.tab7.string           = "Shaders";
-s_sandboxmain.tab8.string           = "Themes";
-s_sandboxmain.tab9.string           = "Scripts";
-s_sandboxmain.tab10.string           = "Custom";
-s_sandboxmain.savemap.string		= "Save map";
-s_sandboxmain.loadmap.string		= "Load map";
-s_sandboxmain.priv.generic.name			= "Private:";
-s_sandboxmain.minmax.generic.name		= "Coll size:";
-s_sandboxmain.grid.generic.name		= "Grid size:";
-s_sandboxmain.toolstext.string  				= "Tools:";
 
 if(uis.sb_tab == 1){
 	if (!s_sandboxmain.list.numitems) {
