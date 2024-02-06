@@ -53,6 +53,12 @@ void multi_trigger( gentity_t *ent, gentity_t *activator ) {
 	if ( (ent->flags & FL_NO_HUMANS) && !IsBot( activator ) )
 		return;
 	
+	if(strlen(ent->message) >= 1){
+	if(!(!Q_stricmp (activator->parent->message, ent->message))){
+	return;
+	}
+	}
+	
 	
 	ent->activator = activator;
 	if ( ent->nextthink ) {

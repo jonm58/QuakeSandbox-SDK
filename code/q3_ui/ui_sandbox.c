@@ -2298,8 +2298,8 @@ if(uis.sb_tab == 10){
 	s_sandboxmain.classlist.itemnames[122] = "weapon_bedrock";
 	}
 	if(uis.sb_tab == 3){
-	s_sandboxmain.classlist.itemnames[0] = "NPC_Enemy";
-	s_sandboxmain.classlist.itemnames[1] = "NPC_Citizen";
+	s_sandboxmain.classlist.itemnames[0] = "NPC_Citizen";
+	s_sandboxmain.classlist.itemnames[1] = "NPC_Enemy";
 	s_sandboxmain.classlist.itemnames[2] = "NPC_Guard";
 	s_sandboxmain.classlist.itemnames[3] = "NPC_Partner";
 	}

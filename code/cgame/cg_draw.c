@@ -4894,19 +4894,22 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 					consoleSizeY
 					);
 			}
+			if(!cg_singlemode.integer){
 			CG_DrawGenericConsole(&cgs.chat, chatLines, cg_chatTime.integer, 
 					0 - cl_screenoffset.integer, 
 					CG_ConsoleChatPositionY(consoleSizeY, chatSizeY) - cg_chatY.integer,
 					chatSizeX,
 					chatSizeY
 					);
-
+			}
+			if(!cg_singlemode.integer){
 			CG_DrawGenericConsole(&cgs.teamChat, teamChatLines, cg_teamChatTime.integer, 
 					0 - cl_screenoffset.integer, 
 					cg_teamChatY.integer - teamChatLines*teamChatSizeY,
 					teamChatSizeX,
 					teamChatSizeY
 				       	);
+			}
 
 
 

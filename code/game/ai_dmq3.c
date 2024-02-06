@@ -2321,7 +2321,7 @@ TeamPlayIsOn
 */
 int TeamPlayIsOn(void) {
 	if(gametype == GT_FFA){
-	if(g_building.integer){ return 1; }
+	if(g_building.integer || g_singlemode.integer){ return 1; }
 	}
 	
 	return ( gametype >= GT_TEAM && g_ffa_gt!=1);
@@ -2947,7 +2947,7 @@ BotSameTeam
 */
 int BotSameTeam(bot_state_t *bs, int entnum) {
 	if(gametype == GT_FFA){
-	if(g_building.integer){
+	if(g_building.integer || g_singlemode.integer){
 		return 1; 
 	}
 	}
@@ -4868,6 +4868,23 @@ void BotCheckConsoleMessages(bot_state_t *bs) {
 				}
 				//if at a valid chat position and not chatting already and not in teamplay
 				else if (bs->ainode != AINode_Stand && BotValidChatPosition(bs) && !TeamPlayIsOn()) {
+					chat_reply = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_CHAT_REPLY, 0, 1);
+					if (random() < 1.5 / (NumBots()+1) && random() < chat_reply) {
+						//if bot replies with a chat message
+						if (trap_BotReplyChat(bs->cs, message, context, CONTEXT_REPLY,
+																NULL, NULL,
+																NULL, NULL,
+																NULL, NULL,
+																botname, netname)) {
+							//remove the console message
+							trap_BotRemoveConsoleMessage(bs->cs, handle);
+							bs->stand_time = FloatTime() + BotChatTime(bs);
+							AIEnter_Stand(bs, "BotCheckConsoleMessages: reply chat");
+							//EA_Say(bs->client, bs->cs.chatmessage);
+							break;
+						}
+					}
+				} else if (gametype == GT_FFA && g_building.integer || gametype == GT_FFA && g_singlemode.integer) {
 					chat_reply = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_CHAT_REPLY, 0, 1);
 					if (random() < 1.5 / (NumBots()+1) && random() < chat_reply) {
 						//if bot replies with a chat message

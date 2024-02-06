@@ -1166,7 +1166,7 @@ G_AddSinglePlayerBot
 ====================
 */
 
-void G_AddCustomBot( char *name, int parentEntityNum, char* waypoint, float relSkill, int npcid ) {
+void G_AddCustomBot( char *name, int parentEntityNum, char* waypoint, float relSkill, int npcid, char* altname ) {
 	float skill = trap_Cvar_VariableValue( "g_spSkill" );
 	int noprint = trap_Cvar_VariableIntegerValue( "cl_noprint" );
 
@@ -1185,7 +1185,11 @@ void G_AddCustomBot( char *name, int parentEntityNum, char* waypoint, float relS
 	if ( !g_debugBotspawns.integer )
 		trap_Cvar_Set( "cl_noprint", "1" );
 
+	if(!altname){
 	G_AddBot( name, skill, "free", 0, name, parentEntityNum, waypoint, npcid );
+	} else {
+	G_AddBot( name, skill, "free", 0, altname, parentEntityNum, waypoint, npcid );
+	}
 
 	//restore cl_noprint to its former value
 	trap_Cvar_Set( "cl_noprint", va("%i", noprint ) );

@@ -481,6 +481,31 @@ void Svcmd_Editline_f( void )
 }
 
 /*
+==================
+FindClByName
+==================
+*/
+int FindClByName(char *name) {
+	int i;
+	char buf[MAX_INFO_STRING];
+	gclient_t		*client;
+
+	for (i = -1; i < level.maxclients; i++) {
+	if(!Q_stricmp (name, va("%i", i))){
+		return atoi(name);
+	}
+	}
+
+	for (i = 0; i < level.maxclients; i++) {
+		client = &level.clients[i];
+		if(!Q_stricmp (name, client->pers.netname)){
+		return client->ps.clientNum;
+		}
+	}
+	return 0;
+}
+
+/*
 ============
 Svcmd_ClientCommand_f
 Editing line with variables
@@ -489,18 +514,33 @@ Editing line with variables
 void Svcmd_ClientCommand_f( void )
 {
 	char   num[1024];
+	char   cmdtype[1024];
 	char   cmd[1024];
 	if( trap_Argc( ) == 1 ){
-    G_Printf( "usage: editline <num> <cmd>\n" );
+    G_Printf( "usage: clientcmd <num or name> <type> <cmd>\n" );
 	G_Printf( "<num> | clientnum (-1 for all)\n" );
 	G_Printf( "<cmd> | any cmd\n" );
     return;}
   
   trap_Argv( 1, num, sizeof( num ) );
-  trap_Argv( 2, cmd, sizeof( cmd ) );
-	
-  trap_SendServerCommand( atoi(num), va("clcmd \"%s\"", cmd));
-	
+  trap_Argv( 2, cmdtype, sizeof( cmdtype ) );
+  trap_Argv( 3, cmd, sizeof( cmd ) );
+
+if(atoi(cmdtype) == 0 || atoi(cmdtype) == 1){
+  trap_SendServerCommand( FindClByName(num), va("clcmd \"%s\"", cmd));
+}
+if(atoi(cmdtype) == 2){
+  trap_SendServerCommand( FindClByName(num), va("\"%s\"", cmd));
+}
+if(atoi(cmdtype) == 3){
+  trap_EA_Say( FindClByName(num), va("\"%s\"", cmd));
+}
+if(atoi(cmdtype) == 4){
+  trap_EA_SayTeam( FindClByName(num), va("\"%s\"", cmd));
+}
+if(atoi(cmdtype) == 5){
+  trap_EA_Command( FindClByName(num), va("\"%s\"", cmd));
+}
 }
 
 /*
