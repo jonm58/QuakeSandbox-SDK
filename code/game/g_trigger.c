@@ -54,7 +54,9 @@ void multi_trigger( gentity_t *ent, gentity_t *activator ) {
 		return;
 	
 	if(strlen(ent->message) >= 1){
-	if(!(!Q_stricmp (activator->parent->message, ent->message))){
+	if(!Q_stricmp (activator->botspawn->message, ent->message)){
+	
+	} else {
 	return;
 	}
 	}

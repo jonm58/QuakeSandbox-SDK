@@ -978,9 +978,9 @@ if(ent->singlebot){
 	G_UseTriggerFragAndDeathEntities ( self, attacker );
 	
 	// Trigger deathtarget and drop loot
-	if ( self->parent ) {
-		G_UseDeathTargets(self->parent, self);
-		G_DropLoot(self->parent, self);
+	if ( self->botspawn ) {
+		G_UseDeathTargets(self->botspawn, self);
+		G_DropLoot(self->botspawn, self);
 	}
 
 	//if ( !IsBot( self ) )
