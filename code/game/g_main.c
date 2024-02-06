@@ -1819,7 +1819,7 @@ void G_ShutdownGame( int restart ) {
 
 	//drop all bots from game in single player
 	for (i = 0; i < MAX_CLIENTS; i++ ) {
-		if ( g_entities[i].singlebot == 1 ) {
+		if ( g_entities[i].singlebot >= 1 ) {
 			DropClientSilently( g_entities[i].client->ps.clientNum );
 		}
 	}
@@ -1836,7 +1836,30 @@ void G_ShutdownGame( int restart ) {
 	}
 }
 
-
+qboolean G_NpcFactionProp(int prop, gentity_t* ent){
+switch(prop) {
+	case NP_PICKUP:{
+		switch(ent->singlebot) {
+			case NPC_PLAYER: 	return qtrue;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qfalse;
+			case NPC_GUARD: 	return qfalse;
+			case NPC_PARTNER: 	return qtrue;
+		}	
+	break;}
+	
+	case NP_HARM:{
+		switch(ent->singlebot) {
+			case NPC_PLAYER: 	return qtrue;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qfalse;
+			case NPC_GUARD: 	return qfalse;
+			case NPC_PARTNER: 	return qtrue;
+		}	
+	break;}
+}
+return qfalse;
+}
 
 //===================================================================
 

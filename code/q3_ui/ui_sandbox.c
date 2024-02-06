@@ -1580,7 +1580,7 @@ s_sandboxmain.toolstext.string  				= "Tools:";
 	s_sandboxmain.classlist.generic.y		= 215 + 70;
 	s_sandboxmain.classlist.width			= 28;
 	s_sandboxmain.classlist.height			= 15;
-	s_sandboxmain.classlist.numitems		= 2;
+	s_sandboxmain.classlist.numitems		= 4;
 	s_sandboxmain.classlist.itemnames		= (const char **)s_sandboxmain.classeslist;
 	s_sandboxmain.classlist.columns			= 1;
 	s_sandboxmain.classlist.color			= s_sandboxmain_color1;
@@ -2298,8 +2298,10 @@ if(uis.sb_tab == 10){
 	s_sandboxmain.classlist.itemnames[122] = "weapon_bedrock";
 	}
 	if(uis.sb_tab == 3){
-	s_sandboxmain.classlist.itemnames[0] = "NPC_Blue";
-	s_sandboxmain.classlist.itemnames[1] = "NPC_Red";
+	s_sandboxmain.classlist.itemnames[0] = "NPC_Enemy";
+	s_sandboxmain.classlist.itemnames[1] = "NPC_Citizen";
+	s_sandboxmain.classlist.itemnames[2] = "NPC_Guard";
+	s_sandboxmain.classlist.itemnames[3] = "NPC_Partner";
 	}
 	
 	

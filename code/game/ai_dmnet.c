@@ -195,9 +195,10 @@ int BotNearbyGoal(bot_state_t *bs, int tfl, bot_goal_t *ltg, float range) {
 	//check if the bot should go for air
 	if (BotGoForAir(bs, tfl, ltg, range)) return qtrue;
 
-if(bs->spbot == 1){
+if(bs->spbot){
+if(!NpcFactionProp(bs, NP_GOAL, 0)){
         return qfalse; // spbot no items
-}
+}}
 	// if the bot is carrying a flag or cubes
 	if (BotCTFCarryingFlag(bs)
 #ifdef MISSIONPACK

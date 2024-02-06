@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	GIB_HEALTH			-66
 #define	ARMOR_PROTECTION	0.66
 
-#define	MAX_ITEMS			256
+#define	MAX_ITEMS			1024
 
 #define	RANK_TIED_FLAG		0x4000
 
@@ -58,6 +58,24 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Domination points
 #define MAX_DOMINATION_POINTS 8
 #define MAX_DOMINATION_POINTS_NAMES 20
+
+//npc properties
+#define NP_CHAT						1
+#define NP_CHATLISTEN				2
+#define NP_ATTACK					3
+#define NP_CONTROL					4
+#define NP_SCORE					5
+#define NP_GOAL						6
+#define NP_JUMP						7
+#define NP_PICKUP					8
+#define NP_HARM						9
+
+//factions
+#define NPC_PLAYER					0
+#define NPC_ENEMY					1
+#define NPC_CITIZEN					2
+#define NPC_GUARD					3
+#define NPC_PARTNER					4
 
 //
 // config strings are a general means of communicating variable length strings

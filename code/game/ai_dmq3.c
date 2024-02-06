@@ -1763,9 +1763,10 @@ BotCheckItemPickup
 void BotCheckItemPickup(bot_state_t *bs, int *oldinventory) {
 	int offence, leader;
 
-if(bs->spbot == 1){
+if(bs->spbot){
+if(!NpcFactionProp(bs, NP_GOAL, 0)){
         return; // spbot no items
-}
+}}
 
 	if (gametype <= GT_TEAM && g_ffa_gt==0)
 		return;
@@ -2319,6 +2320,10 @@ TeamPlayIsOn
 ==================
 */
 int TeamPlayIsOn(void) {
+	if(gametype == GT_FFA){
+	if(g_building.integer){ return 1; }
+	}
+	
 	return ( gametype >= GT_TEAM && g_ffa_gt!=1);
 }
 
@@ -2824,10 +2829,11 @@ bot_moveresult_t BotAttackMove(bot_state_t *bs, int tfl) {
 	attack_skill = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_ATTACK_SKILL, 0, 1);
 	jumper = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_JUMPER, 0, 1);
 	croucher = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_CROUCHER, 0, 1);
-if(bs->spbot == 1){
+if(bs->spbot){
+if(!NpcFactionProp(bs, NP_JUMP, 0)){
     jumper = 0;
 	croucher = 0;
-}
+}}
 	//if the bot is really stupid
 	if (attack_skill < 0.2) return moveresult;
 	//initialize the movement state
@@ -2940,6 +2946,11 @@ BotSameTeam
 ==================
 */
 int BotSameTeam(bot_state_t *bs, int entnum) {
+	if(gametype == GT_FFA){
+	if(g_building.integer){
+		return 1; 
+	}
+	}
 	if (bs->client < 0 || bs->client >= MAX_CLIENTS) {
 		//BotAI_Print(PRT_ERROR, "BotSameTeam: client out of range\n");
 		return qfalse;
@@ -3104,10 +3115,7 @@ int BotFindEnemy(bot_state_t *bs, int curenemy) {
 	float squaredist, cursquaredist;
 	aas_entityinfo_t entinfo, curenemyinfo;
 	vec3_t dir, angles;
-        
-        //if(bs->spbot == 1){
-        //return qfalse;
-        //}
+    
 	alertness = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_ALERTNESS, 0, 1);
 	easyfragger = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_EASY_FRAGGER, 0, 1);
 	//check if the health decreased
@@ -3189,9 +3197,12 @@ int BotFindEnemy(bot_state_t *bs, int curenemy) {
 		//if the bot has no
 		if (squaredist > Square(900.0 + alertness * 4000.0)) continue;
 		//if on the same team
-		if (BotSameTeam(bs, i)) continue;
+		if(!bs->spbot){
+		if (BotSameTeam(bs, i)) 
+		continue;
+		}
 		if(bs->spbot){
-		if (IsSingleBot(&g_entities[i])) continue;
+		if(!NpcFactionProp(bs, NP_ATTACK, &g_entities[i]))  continue;
 		}
 		//if the bot's health decreased or the enemy is shooting
 		if (curenemy < 0 && (healthdecrease || EntityIsShooting(&entinfo)))
@@ -5427,7 +5438,14 @@ void BotDeathmatchAI(bot_state_t *bs, float thinktime) {
 		BotCheckAir(bs);
 	}
 	//check the console messages
-	BotCheckConsoleMessages(bs);
+	if(bs->spbot){
+	if(NpcFactionProp(bs, NP_CONTROL, 0)){
+	BotCheckConsoleMessages(bs);		
+	}
+	} else {
+	BotCheckConsoleMessages(bs);	
+	}
+	
 	// patrolling AI should never go for items
 	if( bs->patrolpoints && !bs->ltgtype )
 		bs->ltgtype = LTG_PATROL;

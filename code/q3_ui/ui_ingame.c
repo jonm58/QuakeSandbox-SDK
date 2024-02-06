@@ -2100,7 +2100,11 @@ static void DM_TeamList_SubMenu( void )
 	DynamicMenu_SubMenuInit();
 
 	DynamicMenu_AddItem("me", 0, 0, DM_BotPlayerTarget_Event);
-	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_EXCLUDEGRANDPARENT, 0, DM_BotPlayerTarget_Event);
+	if ( DynamicMenu_ServerGametype() == GT_FFA ){
+	DynamicMenu_AddListOfPlayers(PT_ALL, 0, DM_BotPlayerTarget_Event);
+	} else {
+	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_EXCLUDEGRANDPARENT, 0, DM_BotPlayerTarget_Event);	
+	}
 
 	DynamicMenu_FinishSubMenuInit();
 }
@@ -2194,7 +2198,11 @@ DM_EnemyList_SubMenu
 static void DM_EnemyList_SubMenu( void )
 {
 	DynamicMenu_SubMenuInit();
-	DynamicMenu_AddListOfPlayers(PT_ENEMY, 0, DM_BotPlayerTarget_Event);
+	if ( DynamicMenu_ServerGametype() == GT_FFA ){
+	DynamicMenu_AddListOfPlayers(PT_ALL, 0, DM_BotPlayerTarget_Event);
+	} else {
+	DynamicMenu_AddListOfPlayers(PT_ENEMY, 0, DM_BotPlayerTarget_Event);	
+	}
 	DynamicMenu_FinishSubMenuInit();
 }
 
@@ -2322,14 +2330,22 @@ static void BotCommand_InitPrimaryMenu( void )
 	if(cl_language.integer == 0){
 	DynamicMenu_AddItem("Close!", 0, 0, DM_Close_Event);
 	DynamicMenu_AddItem("Everyone", 0, DM_CommandList_SubMenu, 0);
-	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_BOTONLY, DM_CommandList_SubMenu, 0);
+	if ( DynamicMenu_ServerGametype() == GT_FFA ){
+	DynamicMenu_AddListOfPlayers(PT_ALL, DM_CommandList_SubMenu, 0);
+	} else {
+	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_BOTONLY, DM_CommandList_SubMenu, 0);		
+	}
 	DynamicMenu_AddItem("Leader?", COM_WHOLEADER, 0, DM_Command_Event);
 	}
 	
 	if(cl_language.integer == 1){
 	DynamicMenu_AddItem("Закрыть!", 0, 0, DM_Close_Event);
 	DynamicMenu_AddItem("Everyone", 0, DM_CommandList_SubMenu, 0);
-	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_BOTONLY, DM_CommandList_SubMenu, 0);
+	if ( DynamicMenu_ServerGametype() == GT_FFA ){
+	DynamicMenu_AddListOfPlayers(PT_ALL, DM_CommandList_SubMenu, 0);
+	} else {
+	DynamicMenu_AddListOfPlayers(PT_FRIENDLY|PT_BOTONLY, DM_CommandList_SubMenu, 0);		
+	}
 	DynamicMenu_AddItem("Лидер?", COM_WHOLEADER, 0, DM_Command_Event);
 	}
 
@@ -2384,8 +2400,8 @@ void UI_BotCommandMenu( void )
 		return;
 
 	botcommandmenu_gametype = DynamicMenu_ServerGametype();
-	if ( botcommandmenu_gametype< GT_TEAM || botcommandmenu_gametype == GT_LMS)
-		return;
+	//if ( botcommandmenu_gametype< GT_TEAM || botcommandmenu_gametype == GT_LMS)
+		//return;
 
 	DynamicMenu_MenuInit(qfalse, qtrue);
 	BotCommand_InitPrimaryMenu();

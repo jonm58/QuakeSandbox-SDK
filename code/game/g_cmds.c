@@ -1393,18 +1393,18 @@ static void G_SayTo( gentity_t *ent, gentity_t *other, int mode, int color, cons
 	if ( other->client->pers.connected != CON_CONNECTED ) {
 		return;
 	}
-	if ( mode == SAY_TEAM  && !OnSameTeam(ent, other) ) {
+	/*if ( mode == SAY_TEAM  && !OnSameTeam(ent, other) ) {
 		return;
-	}
+	}*/
 
         if ((ent->r.svFlags & SVF_BOT) && trap_Cvar_VariableValue( "bot_nochat" )>1) return;
 
 	// no chatting to players in tournements
-	if ( (g_gametype.integer == GT_TOURNAMENT )
+	/*if ( (g_gametype.integer == GT_TOURNAMENT )
 		&& other->client->sess.sessionTeam == TEAM_FREE
 		&& ent->client->sess.sessionTeam != TEAM_FREE ) {
 		return;
-	}
+	}*/
 
 	trap_SendServerCommand( other-g_entities, va("%s \"%s%c%c%s\"",
 		mode == SAY_TEAM ? "tchat" : "chat",
@@ -1424,9 +1424,9 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText ) 
 
     if ((ent->r.svFlags & SVF_BOT) && trap_Cvar_VariableValue( "bot_nochat" )>1) return;
 
-	if ( (g_gametype.integer < GT_TEAM || g_ffa_gt == 1) && mode == SAY_TEAM ) {
+	/*if ( (g_gametype.integer < GT_TEAM || g_ffa_gt == 1) && mode == SAY_TEAM ) {
 		mode = SAY_ALL;
-	}
+	}*/
 
 	switch ( mode ) {
 	default:
@@ -1744,11 +1744,17 @@ static void Cmd_SpawnList_Item_f( gentity_t *ent ){
 	} else {
 	CopyAlloc(tent->target, arg07);	
 	}
-	if(!Q_stricmp (arg03, "NPC_Blue")){
-	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, 1 );
+	if(!Q_stricmp (arg03, "NPC_Enemy")){
+	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, NPC_ENEMY );
 	}
-	if(!Q_stricmp (arg03, "NPC_Red")){
-	G_AddBot(tent->clientname, atof(arg04), "Red", 0, arg06, tent->s.number, tent->target, 1 );
+	if(!Q_stricmp (arg03, "NPC_Citizen")){
+	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, NPC_CITIZEN );
+	}
+	if(!Q_stricmp (arg03, "NPC_Guard")){
+	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, NPC_GUARD );
+	}
+	if(!Q_stricmp (arg03, "NPC_Partner")){
+	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, NPC_PARTNER );
 	}
 	
 	trap_Cvar_Set("g_spSkill", arg04);
@@ -1899,11 +1905,17 @@ static void Cmd_PropNpc_AS_f( gentity_t *ent ){
 	} else {
 	CopyAlloc(tent->target, arg07);	
 	}
-	if(!Q_stricmp (arg03, "NPC_Blue")){
-	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, 1 );
+	if(!Q_stricmp (arg03, "NPC_Enemy")){
+	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, NPC_ENEMY );
 	}
-	if(!Q_stricmp (arg03, "NPC_Red")){
-	G_AddBot(tent->clientname, atof(arg04), "Red", 0, arg06, tent->s.number, tent->target, 1 );
+	if(!Q_stricmp (arg03, "NPC_Citizen")){
+	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, NPC_CITIZEN );
+	}
+	if(!Q_stricmp (arg03, "NPC_Guard")){
+	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, NPC_GUARD );
+	}
+	if(!Q_stricmp (arg03, "NPC_Partner")){
+	G_AddBot(tent->clientname, atof(arg04), "Blue", 0, arg06, tent->s.number, tent->target, NPC_PARTNER );
 	}
 	
 	trap_Cvar_Set("g_spSkill", arg04);
@@ -1970,11 +1982,17 @@ static void Cmd_SpawnBot_f( gentity_t *ent ){
 	} else {
 	CopyAlloc(tent->target, target);	
 	}
-	if(!Q_stricmp (class, "NPC_Blue")){
-	G_AddBot(tent->clientname, atof(skill), "Blue", 0, name, tent->s.number, tent->target, 1 );
+	if(!Q_stricmp (class, "NPC_Enemy")){
+	G_AddBot(tent->clientname, atof(skill), "Blue", 0, name, tent->s.number, tent->target, NPC_ENEMY );
 	}
-	if(!Q_stricmp (class, "NPC_Red")){
-	G_AddBot(tent->clientname, atof(skill), "Red", 0, name, tent->s.number, tent->target, 1 );
+	if(!Q_stricmp (class, "NPC_Citizen")){
+	G_AddBot(tent->clientname, atof(skill), "Blue", 0, name, tent->s.number, tent->target, NPC_CITIZEN );
+	}
+	if(!Q_stricmp (class, "NPC_Guard")){
+	G_AddBot(tent->clientname, atof(skill), "Blue", 0, name, tent->s.number, tent->target, NPC_GUARD );
+	}
+	if(!Q_stricmp (class, "NPC_Partner")){
+	G_AddBot(tent->clientname, atof(skill), "Blue", 0, name, tent->s.number, tent->target, NPC_PARTNER );
 	}
 	
 	trap_Cvar_Set("g_spSkill", skill);

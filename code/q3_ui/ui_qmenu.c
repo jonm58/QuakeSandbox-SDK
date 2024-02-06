@@ -1740,18 +1740,6 @@ sfxHandle_t Menu_DefaultKey( menuframework_s *m, int key )
 	switch ( key )
 	{
 #ifndef NDEBUG
-		case K_F1:
-			UI_StartServerMenu( qtrue );
-			break;
-		case K_F2:
-			UI_ArenaServersMenu();
-			break;
-		case K_F3:
-			UI_SetupMenu();
-			break;
-		case K_F4:
-			UI_PlayerSettingsMenu();
-			break;
 		case K_PGDN:
 		case K_KP_PGDN:
 		case K_MWHEELDOWN:

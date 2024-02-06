@@ -274,8 +274,10 @@ void DynamicMenu_AddListOfPlayers( int type, createHandler crh, eventHandler evh
 	for( n = 0; n < numPlayers; n++ ) {
 		trap_GetConfigString( CS_PLAYERS + n, info, MAX_INFO_STRING );
 
+	if (!(type & PT_ALL)){
 		if (n == cs.clientNum)
 			continue;
+	}
 
 		isBot = atoi( Info_ValueForKey( info, "skill" ) );
 		if( (type & PT_BOTONLY) && !isBot ) {
@@ -310,6 +312,11 @@ void DynamicMenu_AddListOfPlayers( int type, createHandler crh, eventHandler evh
 		{
 			// depth has been increased by init of (sub)menu
 			if (!Q_stricmp(name, s_dynamic.data[s_dynamic.active[depth - 2]].text))
+				continue;
+		}
+	
+		if (type & PT_ALL && 0)
+		{
 				continue;
 		}
 

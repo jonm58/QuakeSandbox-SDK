@@ -51,16 +51,7 @@ int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 	int			i;
 	gclient_t	*client;
 
-	if(other->client->sess.sessionTeam == TEAM_BLUE){
-	if(g_teamblue_pickupitems.integer == 0){
-	return 1;
-	}
-	}
-	if(other->client->sess.sessionTeam == TEAM_RED){
-	if(g_teamred_pickupitems.integer == 0){
-	return 1;
-	}
-	}
+
 
 	if ( !other->client->ps.powerups[ent->item->giTag] ) {
 		// round timing to seconds to make multiple powerup timers
@@ -161,16 +152,7 @@ int Pickup_PersistantPowerup( gentity_t *ent, gentity_t *other ) {
 	int		max;
 
 
-	if(other->client->sess.sessionTeam == TEAM_BLUE){
-	if(g_teamblue_pickupitems.integer == 0){
-	return 1;
-	}
-	}
-	if(other->client->sess.sessionTeam == TEAM_RED){
-	if(g_teamred_pickupitems.integer == 0){
-	return 1;
-	}
-	}
+
 
 	other->client->ps.stats[STAT_PERSISTANT_POWERUP] = ent->item - bg_itemlist;
 	other->client->persistantPowerup = ent;
@@ -348,16 +330,7 @@ int Pickup_Holdable( gentity_t *ent, gentity_t *other ) {
 		other->teleporterTarget = ent->teleporterTarget;
         }
 
-	if(other->client->sess.sessionTeam == TEAM_BLUE){
-	if(g_teamblue_pickupitems.integer == 0){
-	return 1;
-	}
-	}
-	if(other->client->sess.sessionTeam == TEAM_RED){
-	if(g_teamred_pickupitems.integer == 0){
-	return 1;
-	}
-	}
+
 
 	//other->client->ps.stats[STAT_HOLDABLE_ITEM] = ent->item - bg_itemlist;
 
@@ -516,16 +489,7 @@ int Pickup_Ammo (gentity_t *ent, gentity_t *other)
 {
 	int		quantity;
 
-	if(other->client->sess.sessionTeam == TEAM_BLUE){
-	if(g_teamblue_pickupitems.integer == 0){
-	return 1;
-	}
-	}
-	if(other->client->sess.sessionTeam == TEAM_RED){
-	if(g_teamred_pickupitems.integer == 0){
-	return 1;
-	}
-	}
+
 
 	if ( ent->count ) {
 		quantity = ent->count;
@@ -608,16 +572,7 @@ int Pickup_Ammo (gentity_t *ent, gentity_t *other)
 int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 	int		quantity;
 
-	if(other->client->sess.sessionTeam == TEAM_BLUE){
-	if(g_teamblue_pickupitems.integer == 0){
-	return 1;
-	}
-	}
-	if(other->client->sess.sessionTeam == TEAM_RED){
-	if(g_teamred_pickupitems.integer == 0){
-	return 1;
-	}
-	}
+
 
 	if ( ent->count < 0 ) {
 		quantity = 0; // None for you, sir!
@@ -761,16 +716,6 @@ int Pickup_Health (gentity_t *ent, gentity_t *other) {
 	int			max;
 	int			quantity;
 
-	if(other->client->sess.sessionTeam == TEAM_BLUE){
-	if(g_teamblue_pickupitems.integer == 0){
-	return 1 ;
-	}
-	}
-	if(other->client->sess.sessionTeam == TEAM_RED){
-	if(g_teamred_pickupitems.integer == 0){
-	return 1;
-	}
-	}
 
         if( !other->client)
             return RESPAWN_HEALTH;
@@ -811,16 +756,7 @@ int Pickup_Health (gentity_t *ent, gentity_t *other) {
 int Pickup_Armor( gentity_t *ent, gentity_t *other ) {
 	int		upperBound;
 
-	if(other->client->sess.sessionTeam == TEAM_BLUE){
-	if(g_teamblue_pickupitems.integer == 0){
-	return 1;
-	}
-	}
-	if(other->client->sess.sessionTeam == TEAM_RED){
-	if(g_teamred_pickupitems.integer == 0){
-	return 1;
-	}
-	}
+
 
 	other->client->ps.stats[STAT_ARMOR] += ent->item->quantity;
 
@@ -1018,9 +954,22 @@ void Touch_Item2 (gentity_t *ent, gentity_t *other, trace_t *trace, qboolean all
 	int			respawn;
 	qboolean	predict;
 
-
-		if (other->singlebot == 1){
+		if(ent->singlebot){
+		if(!G_NpcFactionProp(NP_PICKUP, ent)){
 		return;		// npc can't pickup
+		}
+		}
+		
+		if(other->client->sess.sessionTeam == TEAM_BLUE){
+		if(g_teamblue_pickupitems.integer == 0){
+		return;
+		}
+		}
+		
+		if(other->client->sess.sessionTeam == TEAM_RED){
+		if(g_teamred_pickupitems.integer == 0){
+		return;
+		}
 		}
 	
 	//instant gib

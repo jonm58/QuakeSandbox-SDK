@@ -373,9 +373,10 @@ int BotValidChatPosition(bot_state_t *bs) {
 	vec3_t point, start, end, mins, maxs;
 	bsp_trace_t trace;
 
-        if(bs->spbot){
+		if(bs->spbot){
+        if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-        }
+        }}
 	//if the bot is dead all positions are valid
 	if (BotIsDead(bs)) return qtrue;
         if (BotIsObserver(bs)) return qtrue;
@@ -417,9 +418,10 @@ int BotChat_EnterGame(bot_state_t *bs) {
 	char name[32];
 	float rnd;
 
-        if(bs->spbot){
+		if(bs->spbot){
+        if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-        }
+        }}
 
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
@@ -455,8 +457,9 @@ int BotChat_ExitGame(bot_state_t *bs) {
 	float rnd;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	//don't chat in teamplay
@@ -491,8 +494,9 @@ int BotChat_StartLevel(bot_state_t *bs) {
 	float rnd;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (BotIsObserver(bs)) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
@@ -526,8 +530,9 @@ int BotChat_EndLevel(bot_state_t *bs) {
 	float rnd;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (BotIsObserver(bs)) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
@@ -589,8 +594,9 @@ int BotChat_Death(bot_state_t *bs) {
 	float rnd;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	rnd = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_CHAT_DEATH, 0, 1);
@@ -691,8 +697,9 @@ int BotChat_Kill(bot_state_t *bs) {
 	float rnd;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	rnd = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_CHAT_KILL, 0, 1);
@@ -756,8 +763,9 @@ int BotChat_EnemySuicide(bot_state_t *bs) {
 	float rnd;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	if (BotNumActivePlayers() <= 1) return qfalse;
@@ -794,8 +802,9 @@ int BotChat_HitTalking(bot_state_t *bs) {
 	float rnd;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	if (BotNumActivePlayers() <= 1) return qfalse;
@@ -837,8 +846,9 @@ int BotChat_HitNoDeath(bot_state_t *bs) {
 	aas_entityinfo_t entinfo;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	lasthurt_client = g_entities[bs->client].client->lasthurt_client;
 	if (!lasthurt_client) return qfalse;
 	if (lasthurt_client == bs->client) return qfalse;
@@ -884,8 +894,9 @@ int BotChat_HitNoKill(bot_state_t *bs) {
 	aas_entityinfo_t entinfo;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	if (BotNumActivePlayers() <= 1) return qfalse;
@@ -924,8 +935,9 @@ int BotChat_Random(bot_state_t *bs) {
 	char name[32];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return qfalse; // spbot no chat
-}
+}}
 	if (bot_nochat.integer) return qfalse;
 	if (BotIsObserver(bs)) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
@@ -1007,9 +1019,11 @@ void BotChatTest(bot_state_t *bs) {
 	char name[32];
 	char *weap;
 	int num, i;
+	
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHAT, 0)){
         return; // spbot no chat
-}
+}}
         if (bot_nochat.integer) return;
 
 	num = trap_BotNumInitialChats(bs->cs, "game_enter");

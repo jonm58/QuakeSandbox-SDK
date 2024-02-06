@@ -120,7 +120,7 @@ void TossClientItems( gentity_t *self ) {
 	weapon = self->s.weapon;
 
         if(!g_npcdrop.integer){
-		if(self->singlebot == 1){
+		if(self->singlebot >= 1){
         return;
 		}
 		}
@@ -554,7 +554,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 
 	//if we're in SP mode and player killed a bot, award score for the kill
 	if(g_singlemode.integer == 1){
-	if ( self->singlebot ) {
+	if ( self->singlebot == 1 ) {
 		if ( self->botspawn && self->botspawn->health && attacker->client ) {
 			AddScore( attacker, self->r.currentOrigin, self->botspawn->health );
 			self->s.time = level.time;
@@ -978,7 +978,7 @@ if(ent->singlebot){
 	G_UseTriggerFragAndDeathEntities ( self, attacker );
 	
 	// Trigger deathtarget and drop loot
-	if ( self->botspawn ) {
+	if ( self->parent ) {
 		G_UseDeathTargets(self->parent, self);
 		G_DropLoot(self->parent, self);
 	}
@@ -1276,7 +1276,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	gentity_t 	*act;
 
 	//in entityplus bots cannot harm other bots (unless it's a telefrag)
-	if ( targ->singlebot == 1 && attacker && attacker->singlebot && mod != MOD_TELEFRAG )
+	if ( !G_NpcFactionProp(NP_HARM, attacker) && attacker->singlebot >= 1 && targ->singlebot == attacker->singlebot && attacker && mod != MOD_TELEFRAG )
 		return;
 
 	if(g_building.integer){

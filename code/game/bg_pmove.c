@@ -1817,8 +1817,12 @@ if( pm->ps->stats[STAT_SWEP] <= 15 ){
 #endif
 }
 
-if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1 || pm->ps->ammo[ pm->ps->weapon ] >=9999 ) || !(pm->ps->stats[STAT_SWEPAMMO] == -1 || pm->ps->stats[STAT_SWEPAMMO] >=9999 )) {
-
+if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1 || pm->ps->ammo[ pm->ps->weapon ] >=9999)) {
+if( !(pm->ps->stats[STAT_SWEPAMMO] == -1 || pm->ps->stats[STAT_SWEPAMMO] >=9999) ){ 
+if( pm->ps->stats[STAT_SWEP] >= 16 ){
+return; 
+}
+}
 
 
 if( pm->ps->stats[STAT_SWEP] >= 16 ){

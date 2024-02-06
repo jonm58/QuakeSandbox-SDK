@@ -70,7 +70,7 @@ BotVoiceChat_GetFlag
 ==================
 */
 void BotVoiceChat_GetFlag(bot_state_t *bs, int client, int mode) {
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 	//
@@ -115,7 +115,7 @@ BotVoiceChat_Offense
 ==================
 */
 void BotVoiceChat_Offense(bot_state_t *bs, int client, int mode) {
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 	if ( gametype == GT_CTF || gametype == GT_CTF_ELIMINATION || gametype == GT_1FCTF ) {
@@ -168,7 +168,7 @@ BotVoiceChat_Defend
 ==================
 */
 void BotVoiceChat_Defend(bot_state_t *bs, int client, int mode) {
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 	if ( gametype == GT_OBELISK || gametype == GT_HARVESTER) {
@@ -218,7 +218,7 @@ BotVoiceChat_DefendFlag
 ==================
 */
 void BotVoiceChat_DefendFlag(bot_state_t *bs, int client, int mode) {
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 	BotVoiceChat_Defend(bs, client, mode);
@@ -230,7 +230,7 @@ BotVoiceChat_Patrol
 ==================
 */
 void BotVoiceChat_Patrol(bot_state_t *bs, int client, int mode) {
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 	//
@@ -260,7 +260,7 @@ void BotVoiceChat_Camp(bot_state_t *bs, int client, int mode) {
 	aas_entityinfo_t entinfo;
 	char netname[MAX_NETNAME];
 	
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 
@@ -320,7 +320,7 @@ void BotVoiceChat_FollowMe(bot_state_t *bs, int client, int mode) {
 	aas_entityinfo_t entinfo;
 	char netname[MAX_NETNAME];
 	
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 
@@ -376,7 +376,7 @@ BotVoiceChat_FollowFlagCarrier
 void BotVoiceChat_FollowFlagCarrier(bot_state_t *bs, int client, int mode) {
 	int carrier;
 
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 
@@ -399,7 +399,7 @@ void BotVoiceChat_ReturnFlag(bot_state_t *bs, int client, int mode) {
 		return;
 	}
 	
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 	//
@@ -425,7 +425,7 @@ BotVoiceChat_StartLeader
 ==================
 */
 void BotVoiceChat_StartLeader(bot_state_t *bs, int client, int mode) {
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 	ClientName(client, bs->teamleader, sizeof(bs->teamleader));
@@ -439,7 +439,7 @@ BotVoiceChat_StopLeader
 void BotVoiceChat_StopLeader(bot_state_t *bs, int client, int mode) {
 	char netname[MAX_MESSAGE_SIZE];
 	
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 
@@ -457,7 +457,7 @@ BotVoiceChat_WhoIsLeader
 void BotVoiceChat_WhoIsLeader(bot_state_t *bs, int client, int mode) {
 	char netname[MAX_MESSAGE_SIZE];
 	
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 
@@ -481,7 +481,7 @@ void BotVoiceChat_WantOnDefense(bot_state_t *bs, int client, int mode) {
 	char netname[MAX_NETNAME];
 	int preference;
 	
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 
@@ -506,7 +506,7 @@ void BotVoiceChat_WantOnOffense(bot_state_t *bs, int client, int mode) {
 	char netname[MAX_NETNAME];
 	int preference;
 	
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
 }
 
@@ -547,7 +547,7 @@ int BotVoiceChatCommand(bot_state_t *bs, int mode, char *voiceChat) {
 	int i, voiceOnly, clientNum, color;
 	char *ptr, buf[MAX_MESSAGE_SIZE], *cmd;
 	
-if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return qfalse; // spbot no chat
 }
 

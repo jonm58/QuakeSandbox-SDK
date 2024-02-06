@@ -1057,6 +1057,7 @@ void QDECL G_Error( const char *fmt, ... ) __attribute__((noreturn));
 void LogExit( const char *string );
 void CheckTeamVote( int team );
 void G_LevelLoadComplete(void);
+qboolean G_NpcFactionProp(int prop, gentity_t* ent);
 
 //
 // g_client.c

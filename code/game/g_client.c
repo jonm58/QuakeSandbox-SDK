@@ -701,7 +701,7 @@ respawn
 void ClientRespawn( gentity_t *ent ) {
 	gentity_t	*tent;
 
-if(ent->singlebot == 1){
+if(ent->singlebot >= 1){
 	//kick fragged bots from game
 	DropClientSilently( ent->client->ps.clientNum );
 	return;
@@ -1436,9 +1436,10 @@ ent->botskill = botskill;
 singlebot = atoi( Info_ValueForKey( userinfo, "singlebot" ) );
 ent->singlebot = singlebot;
 if(ent->singlebot){
+if(!G_NpcFactionProp(NP_PICKUP, ent)){
 ent->client->ps.stats[STAT_NO_PICKUP] = 1;
 ent->wait_to_pickup = 100000000;
-}
+}}
 }
 
 	// N_G: this condition makes no sense to me and I'm not going to

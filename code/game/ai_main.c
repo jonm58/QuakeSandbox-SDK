@@ -131,6 +131,110 @@ void QDECL BotAI_Print(int type, char *fmt, ...) {
 }
 
 
+qboolean NpcFactionProp(bot_state_t* bs, int prop, gentity_t* ent){
+switch(prop) {
+	case NP_CHAT:{
+		switch(bs->spbot) {
+			case NPC_PLAYER: 	return qtrue;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qtrue;
+			case NPC_GUARD: 	return qtrue;
+			case NPC_PARTNER: 	return qtrue;
+		}
+	break;}
+	
+	case NP_CHATLISTEN:{
+		switch(bs->spbot) {
+			case NPC_PLAYER: 	return qtrue;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qtrue;
+			case NPC_GUARD: 	return qtrue;
+			case NPC_PARTNER: 	return qtrue;
+		}
+	break;}
+		
+	case NP_ATTACK:{
+		switch(bs->spbot) {
+			case NPC_ENEMY: 	switch(ent->singlebot) 
+			{
+			case NPC_PLAYER: 	return qtrue;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qtrue;
+			case NPC_GUARD: 	return qtrue;
+			case NPC_PARTNER: 	return qtrue;
+			}
+			case NPC_CITIZEN: 	switch(ent->singlebot) 
+			{
+			case NPC_PLAYER: 	return qfalse;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qfalse;
+			case NPC_GUARD: 	return qfalse;
+			case NPC_PARTNER: 	return qfalse;
+			}
+			case NPC_GUARD: 	switch(ent->singlebot) 
+			{
+			case NPC_PLAYER: 	return qfalse;
+			case NPC_ENEMY: 	return qtrue;
+			case NPC_CITIZEN: 	return qfalse;
+			case NPC_GUARD: 	return qfalse;
+			case NPC_PARTNER: 	return qfalse;			
+			}
+			case NPC_PARTNER: 	switch(ent->singlebot) 
+			{
+			case NPC_PLAYER: 	return qfalse;
+			case NPC_ENEMY: 	return qtrue;
+			case NPC_CITIZEN: 	return qfalse;
+			case NPC_GUARD: 	return qfalse;
+			case NPC_PARTNER: 	return qfalse;			
+			}
+		}	
+	break;}
+		
+	case NP_CONTROL:{
+		switch(bs->spbot) {
+			case NPC_PLAYER: 	return qtrue;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qtrue;
+			case NPC_GUARD: 	return qtrue;
+			case NPC_PARTNER: 	return qtrue;
+		}	
+	break;}
+
+	case NP_SCORE:{
+		switch(bs->spbot) {
+			case NPC_PLAYER: 	return qfalse;
+			case NPC_ENEMY: 	return qtrue;
+			case NPC_CITIZEN: 	return qfalse;
+			case NPC_GUARD: 	return qfalse;
+			case NPC_PARTNER: 	return qfalse;
+		}
+	break;}
+		
+	case NP_GOAL:{
+		switch(bs->spbot) {
+			case NPC_PLAYER: 	return qtrue;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qfalse;
+			case NPC_GUARD: 	return qtrue;
+			case NPC_PARTNER: 	return qtrue;
+		}	
+	break;}
+	
+	case NP_JUMP:{
+		switch(bs->spbot) {
+			case NPC_PLAYER: 	return qtrue;
+			case NPC_ENEMY: 	return qfalse;
+			case NPC_CITIZEN: 	return qtrue;
+			case NPC_GUARD: 	return qtrue;
+			case NPC_PARTNER: 	return qtrue;
+		}	
+	break;}
+	
+}
+return qfalse;
+}
+
+
 /*
 ==================
 BotAI_Trace
@@ -224,9 +328,9 @@ void QDECL BotAI_BotInitialChat( bot_state_t *bs, char *type, ... ) {
 	char	*p;
 	char	*vars[MAX_MATCHVARIABLES];
 	
-if(bs->spbot){
-        return; // spbot no chat
-}
+//if(!NpcFactionProp(bs, NP_CHAT, 0)){
+//        return; // spbot no chat
+//}
 
 	memset(vars, 0, sizeof(vars));
 	va_start(ap, type);

@@ -327,8 +327,9 @@ void BotSayTeamOrder(bot_state_t *bs, int toclient) {
 	// voice chats only
 	char buf[MAX_MESSAGE_SIZE];
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 	trap_BotGetChatMessage(bs->cs, buf, sizeof(buf));
 #else
 	BotSayTeamOrderAlways(bs, toclient);
@@ -342,8 +343,9 @@ BotVoiceChat
 */
 void BotVoiceChat(bot_state_t *bs, int toclient, char *voicechat) {
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 #ifdef MISSIONPACK
 	if (toclient == -1)
 		// voice only say team
@@ -361,8 +363,9 @@ BotVoiceChatOnly
 */
 void BotVoiceChatOnly(bot_state_t *bs, int toclient, char *voicechat) {
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
 #ifdef MISSIONPACK
 	if (toclient == -1)
@@ -381,8 +384,9 @@ BotSayVoiceTeamOrder
 */
 void BotSayVoiceTeamOrder(bot_state_t *bs, int toclient, char *voicechat) {
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
 #ifdef MISSIONPACK
 	BotVoiceChat(bs, toclient, voicechat);
@@ -400,8 +404,9 @@ void BotCTFOrders_BothFlagsNotAtBase(bot_state_t *bs) {
 	char name[MAX_NETNAME], carriername[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 	numteammates = BotSortTeamMatesByBaseTravelTime(bs, teammates, sizeof(teammates));
 	BotSortTeamMatesByTaskPreference(bs, teammates, numteammates);
 	//different orders based on the number of team mates
@@ -518,8 +523,9 @@ void BotCTFOrders_FlagNotAtBase(bot_state_t *bs) {
 	qboolean weAreAttacking;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -681,8 +687,9 @@ void BotCTFOrders_EnemyFlagNotAtBase(bot_state_t *bs) {
 	char name[MAX_NETNAME], carriername[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -790,8 +797,9 @@ void BotDDorders_Standard(bot_state_t *bs) {
 	char name[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -845,8 +853,9 @@ void BotCTFOrders_BothFlagsAtBase(bot_state_t *bs) {
 	qboolean weAreAttacking;
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
         if (bot_nochat.integer>2) return;
 
 	//sort team mates by travel time to base
@@ -1047,8 +1056,9 @@ void BotCreateGroup(bot_state_t *bs, int *teammates, int groupsize) {
 	char name[MAX_NETNAME], leadername[MAX_NETNAME];
 	int i;
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
         if (bot_nochat.integer>2) return;
 
 	// the others in the group will follow the teammates[0]
@@ -1146,8 +1156,9 @@ void Bot1FCTFOrders_FlagAtCenter(bot_state_t *bs) {
 	char name[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -1299,8 +1310,9 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 	char name[MAX_NETNAME], carriername[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -1508,8 +1520,9 @@ void Bot1FCTFOrders_EnemyHasFlag(bot_state_t *bs) {
 	char name[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -1661,8 +1674,9 @@ void Bot1FCTFOrders_EnemyDroppedFlag(bot_state_t *bs) {
 	char name[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -1828,8 +1842,9 @@ void BotObeliskOrders(bot_state_t *bs) {
 	char name[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -1981,8 +1996,9 @@ void BotHarvesterOrders(bot_state_t *bs) {
 	char name[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
@@ -2164,13 +2180,14 @@ void BotTeamAI(bot_state_t *bs) {
 	char netname[MAX_NETNAME];
 
 if(bs->spbot){
+if(!NpcFactionProp(bs, NP_CHATLISTEN, 0)){
         return; // spbot no chat
-}
+}}
 
         if (bot_nochat.integer>2) return;
 
 	//
-	if ( gametype < GT_TEAM || g_ffa_gt == 1 )
+	if ( !TeamPlayIsOn() )
 		return;
 	// make sure we've got a valid team leader
 	if (!BotValidTeamLeader(bs)) {
@@ -2214,6 +2231,21 @@ if(bs->spbot){
 	numteammates = BotNumTeamMates(bs);
 	//give orders
 	switch(gametype) {
+		case GT_FFA:
+		{
+			if (bs->numteammates != numteammates || bs->forceorders) {
+				bs->teamgiveorders_time = FloatTime();
+				bs->numteammates = numteammates;
+				bs->forceorders = qfalse;
+			}
+			//if it's time to give orders
+			if (bs->teamgiveorders_time && bs->teamgiveorders_time < FloatTime() - 5) {
+				BotTeamOrders(bs);
+				//give orders again after 120 seconds
+				bs->teamgiveorders_time = FloatTime() + 120;
+			}
+			break;
+		}
 		case GT_TEAM:
 		{
 			if (bs->numteammates != numteammates || bs->forceorders) {

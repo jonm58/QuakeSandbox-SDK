@@ -1346,9 +1346,9 @@ qboolean IsBot( gentity_t *self ) {
 IsSingleBot
 ==================
 */
-qboolean IsSingleBot( gentity_t *self ) {
+qboolean IsSingleBot( gentity_t *self, int num ) {
 	//return qtrue if client is a bot
-	return (self->singlebot == 1);
+	return (self->singlebot == num);
 }
 
 qboolean IsClientBot( gclient_t *client ) {
