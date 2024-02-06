@@ -1818,13 +1818,16 @@ if( pm->ps->stats[STAT_SWEP] <= 15 ){
 }
 
 if ( !(pm->ps->ammo[ pm->ps->weapon ] == -1 || pm->ps->ammo[ pm->ps->weapon ] >=9999)) {
-if( !(pm->ps->stats[STAT_SWEPAMMO] == -1 || pm->ps->stats[STAT_SWEPAMMO] >=9999) ){ 
+
+
 if( pm->ps->stats[STAT_SWEP] >= 16 ){
-return; 
-}
+
+} else {
+if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){ pm->ps->ammo[ pm->ps->weapon ]-= 1; }
 }
 
-
+}
+if( !(pm->ps->stats[STAT_SWEPAMMO] == -1 || pm->ps->stats[STAT_SWEPAMMO] >=9999) ){ 
 if( pm->ps->stats[STAT_SWEP] >= 16 ){
 if(pm->s->generic3 >= 1 ){ pm->s->generic3 -= 1; }
 if(pm->ps->stats[STAT_SWEPAMMO] >= 1 ){ pm->ps->stats[STAT_SWEPAMMO] -= 1; }
@@ -1834,9 +1837,8 @@ PM_Add_SwepAmmo(pm->ps->clientNum, pm->ps->stats[STAT_SWEP], -1);
 }
 #endif
 } else {
-if(pm->ps->ammo[ pm->ps->weapon ] >= 1 ){ pm->ps->ammo[ pm->ps->weapon ]-= 1; }
-}
 
+}
 }
 
 
