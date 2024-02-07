@@ -2948,7 +2948,9 @@ BotSameTeam
 int BotSameTeam(bot_state_t *bs, int entnum) {
 	if(gametype == GT_FFA){
 	if(g_building.integer || g_singlemode.integer){
+	if(bs->spbot){
 		return 1; 
+	}
 	}
 	}
 	if (bs->client < 0 || bs->client >= MAX_CLIENTS) {

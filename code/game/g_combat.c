@@ -561,11 +561,6 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		}
 	}		
 	}
-	
-	// Trigger deathtarget and drop loot
-	if ( self->botspawn ) {
-		G_UseDeathTargets(self->botspawn, attacker);
-	}
 			
 	self->client->pers.oldmoney = self->client->pers.oldmoney;
 
