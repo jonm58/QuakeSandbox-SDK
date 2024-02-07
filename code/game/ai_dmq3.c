@@ -5464,8 +5464,12 @@ void BotDeathmatchAI(bot_state_t *bs, float thinktime) {
 	}
 	
 	// patrolling AI should never go for items
-	if( bs->patrolpoints && !bs->ltgtype )
+	if( bs->patrolpoints && !bs->ltgtype ){
 		bs->ltgtype = LTG_PATROL;
+	} else if(!bs->ltgtype && bs->spbot){
+		bs->ltgtype = LTG_CAMP;
+	}
+
 	//if not in the intermission and not in observer mode
 	if (!BotIntermission(bs) && !BotIsObserver(bs)) {
 		//do team AI

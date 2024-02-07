@@ -215,7 +215,7 @@ switch(prop) {
 			case NPC_PLAYER: 	return qtrue;
 			case NPC_ENEMY: 	return qfalse;
 			case NPC_CITIZEN: 	return qfalse;
-			case NPC_GUARD: 	return qtrue;
+			case NPC_GUARD: 	return qfalse;
 			case NPC_PARTNER: 	return qtrue;
 		}	
 	break;}
