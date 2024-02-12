@@ -2692,6 +2692,7 @@ if(ci->gender == GENDER_MALE){
 	if ( cent->currentState.number == cg.snap->ps.clientNum) {
 //	CG_PlayerSprites( cent );
 	} else {
+	if(!cg_singlemode.integer)
 	CG_PlayerSprites( cent );
 	}
 
