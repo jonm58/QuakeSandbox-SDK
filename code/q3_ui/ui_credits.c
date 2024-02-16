@@ -303,7 +303,6 @@ static dateImageList_t uie_dateImages[] = {
 	{ 31, 11, { 0, "menu/uie_art/imagenewyear.tga", 1.0, 0, NULL, 1.0, 0 }},
 	{ 1, 0, { 0, "menu/uie_art/imagenewyear.tga", 1.0, 0, NULL, 1.0, 0 }},
 	{ 16, 7, { 0, "menu/uie_art/image1608.tga", 1.0, 0, NULL, 1.0, 0 }},
-	{ 18, 7, { 0, "menu/uie_art/image1808.tga", 1.0, 0, NULL, 1.0, 0 }},
 	{ 22, 2, { 0, "menu/uie_art/image2203.tga", 1.0, 0, NULL, 1.0, 0 }}
 };
 
