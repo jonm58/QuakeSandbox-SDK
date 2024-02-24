@@ -329,7 +329,7 @@ static void UI_SetupMenu_Init( void ) {
 	setupMenuInfo.load.string						= "LOAD/EXEC CONFIG";
 	setupMenuInfo.save.string						= "SAVE CONFIG";
 	setupMenuInfo.defaults.string					= "DEFAULTS";
-	setupMenuInfo.language.string					= "ENGLISH";
+	setupMenuInfo.language.string					= "РУССКИЙ";
 	}
 	if(cl_language.integer == 1){
 	setupMenuInfo.banner.string						= "НАСТРОЙКИ";
@@ -342,7 +342,7 @@ static void UI_SetupMenu_Init( void ) {
 	setupMenuInfo.load.string						= "ЗАГРУЗКА КОНФИГОВ";
 	setupMenuInfo.save.string						= "СОХРАНЕНИЕ КОНФИГОВ";
 	setupMenuInfo.defaults.string					= "СБРОС";
-	setupMenuInfo.language.string					= "РУССКИЙ";
+	setupMenuInfo.language.string					= "ENGLISH";
 	}
 
 	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.banner );

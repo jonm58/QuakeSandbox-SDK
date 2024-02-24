@@ -274,10 +274,10 @@ static creditEntry_t uie_credits[] = {
 	{ CMODE_TEXT, "Quake Sandbox", {"MiLab", 0, 0, 0  } },
 	{ CMODE_TEXT, "Programming", {"HyperNoiRe", 0, 0, 0} },
 	{ CMODE_TEXT, "UI design", {"HyperNoiRe", 0, 0, 0} },
-	{ CMODE_TEXT, "Game design", {"HyperNoiRe", "JustNatsuki", 0, 0} },
+	{ CMODE_TEXT, "Game design", {"HyperNoiRe", "JustNatsuki", "Shen", 0} },
 	{ CMODE_TEXT, "Art", { "JustNatsuki", "HyperNoiRe", 0, 0 } },
 	{ CMODE_TEXT, "Logo", { "HyperNoiRe", 0, 0, 0 } },
-	{ CMODE_TEXT, "Other", { "HyperNoiRe", "JustNatsuki", "Teapxt", 0 } },
+	{ CMODE_TEXT, "Other", { "HyperNoiRe", "JustNatsuki", "Teapxt", "Shen" } },
 	{ CMODE_TEXT, "Promotion", { "HyperNoiRe", 0, 0, 0 } },
 	{ CMODE_QUOTE, 0, {0, 0, 0, 0} }
 };

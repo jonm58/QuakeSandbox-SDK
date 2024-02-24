@@ -413,9 +413,9 @@ static void Main_MenuDraw( void ) {
 
 	} else {
 		//if (uis.debug) {
-		UI_DrawString( 320, 5, "QSandbox v2024.02.19", UI_CENTER|UI_SMALLFONT, color );
+		UI_DrawString( 320, 5, "QSandbox v2024.02.24", UI_CENTER|UI_SMALLFONT, color );
 		//}
-		//UI_DrawString( 320, 460, "MiLab Interactive 2023", UI_CENTER|UI_SMALLFONT, color );
+		//UI_DrawString( 320, 460, "MiLab 2023", UI_CENTER|UI_SMALLFONT, color );
 	}
 }
 
