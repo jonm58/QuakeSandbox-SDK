@@ -214,6 +214,9 @@ void Main_MenuEvent (void* ptr, int event) {
 	switch( ((menucommon_s*)ptr)->id ) {
 	case ID_SINGLEPLAYER:
 		//UI_SPLevelMenu();
+                if(ui_singlemode.integer){
+                trap_Cmd_ExecuteText( EXEC_APPEND, "execscript new_game.as;" );
+                }
 		UI_StartServerMenu( qtrue );
 		break;
 
@@ -413,7 +416,7 @@ static void Main_MenuDraw( void ) {
 
 	} else {
 		//if (uis.debug) {
-		UI_DrawString( 320, 5, "QSandbox v2024.02.24", UI_CENTER|UI_SMALLFONT, color );
+		UI_DrawString( 320, 5, "QSandbox v2024.03.05", UI_CENTER|UI_SMALLFONT, color );
 		//}
 		//UI_DrawString( 320, 460, "MiLab 2023", UI_CENTER|UI_SMALLFONT, color );
 	}

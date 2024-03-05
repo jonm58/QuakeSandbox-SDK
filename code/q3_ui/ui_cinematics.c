@@ -92,6 +92,7 @@ static void UI_CinematicsMenu_Event2( void *ptr, int event ) {
 	n = ((menucommon_s*)ptr)->id - ID_CIN_IDLOGO;
 	//trap_Cmd_ExecuteText( EXEC_APPEND, va( "savegame %s\n", cinematics[n] ) );
 	
+	trap_Cmd_ExecuteText( EXEC_APPEND, va( "exec save0%i.cfg\n", atoi(cinematics[n]) ) );
 	if(atoi(cinematics[n]) == 1){
 	trap_Cvar_Set( "session", 	"0" );
 	trap_Cvar_Set( "session0", 	UI_ArenaScriptAutoChar( "save1_session0" ) );

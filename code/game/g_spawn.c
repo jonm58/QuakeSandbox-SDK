@@ -264,6 +264,8 @@ void SP_target_botremove (gentity_t *ent);
 void SP_target_stats (gentity_t *ent);
 void SP_target_music (gentity_t *ent);
 
+void SP_script_variable (gentity_t *ent);
+
 void SP_light (gentity_t *self);
 void SP_info_null (gentity_t *self);
 void SP_info_notnull (gentity_t *self);
@@ -396,6 +398,8 @@ spawn_t	spawns[] = {
 	{"target_botremove", SP_target_botremove},
 	{"target_stats", SP_target_stats},
 	{"target_music", SP_target_music},
+	
+	{"script_variable", SP_script_variable},
 
 	{"light", SP_light},
 	{"path_corner", SP_path_corner},

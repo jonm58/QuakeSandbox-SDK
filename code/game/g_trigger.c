@@ -257,7 +257,7 @@ This trigger will always fire.  It is activated by the world.
 */
 void SP_trigger_always (gentity_t *ent) {
 	// we must have some delay to make sure our use targets are present
-	ent->nextthink = level.time + 300;
+	ent->nextthink = level.time + 1000;
 	ent->think = trigger_always_think;
 }
 

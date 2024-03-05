@@ -1989,3 +1989,80 @@ void SP_rally_weather_snow( gentity_t *ent ){
 
 	trap_LinkEntity (ent);
 }
+
+/*QUAKED script_variable (.5 .5 .5) (-8 -8 -8) (8 8 8) = != <= >= IMMEDIATELY
+When triggered, this writes a variable with a specified value to memory or compares the value of that variable
+*/
+
+void script_variable_use (gentity_t *self, gentity_t *other, gentity_t *activator) {
+	char buf[MAX_INFO_STRING];
+	char variableInfo[MAX_INFO_STRING];
+	char value[128];
+
+	if ( self->spawnflags & 1 || self->spawnflags & 2)
+	{
+		trap_Cvar_VariableStringBuffer(self->key, value, sizeof( value ));
+		if ( g_debugVariables.integer ) {
+			G_Printf("\nDebugvariables: comparing variable \"%s\" to \"%s\"\n", self->key, self->value);
+			G_Printf("In-memory value for variable = \"%s\"\n", value);
+		}
+		
+		if ( (self->spawnflags & 1) && !strcmp(value, self->value) ) {
+			if ( g_debugVariables.integer ) G_Printf("Variables match, targets will be activated\n");
+			G_UseTargets (self, activator);
+		}
+		
+		if ( (self->spawnflags & 2) && strcmp(value, self->value) ) {
+			if ( g_debugVariables.integer ) G_Printf("Variables do not match, targets will be activated\n");
+			G_UseTargets (self, activator);
+		}
+		
+		if ( (self->spawnflags & 4) && (atoi(value) <= atoi(self->value)) ) {
+			if ( g_debugVariables.integer ) G_Printf("Variables do not match, targets will be activated\n");
+			G_UseTargets (self, activator);
+		}
+		
+		if ( (self->spawnflags & 8) && (atoi(value) >= atoi(self->value)) ) {
+			if ( g_debugVariables.integer ) G_Printf("Variables do not match, targets will be activated\n");
+			G_UseTargets (self, activator);
+		}
+		
+		return;
+	}
+	if ( self->spawnflags & 8192 ){
+	trap_SendConsoleCommand( EXEC_APPEND, va("seta %s %s\n", self->key, self->value) );
+	} else {
+	trap_Cvar_Set( self->key, self->value );
+	}
+	if ( g_debugVariables.integer ) {
+		G_Printf("\nDebugvariables: setting variable \"%s\" to \"%s\"\n", self->key, self->value);
+	}
+}
+
+//used for immediately spawnflag
+void script_variable_think (gentity_t *self) {
+	self->nextthink = 0;
+	script_variable_use( self, NULL, self );
+}
+
+void SP_script_variable (gentity_t *self) {
+	if ( !self->key ) {
+		G_Printf("WARNING: script_variable without key at %s\n", vtos(self->s.origin));
+		G_FreeEntity( self );
+		return;
+	}
+
+	if ( !self->key ) {
+		G_Printf("WARNING: script_variable without value at %s\n", vtos(self->s.origin));
+		G_FreeEntity( self );
+		return;
+	}
+	
+	self->use = script_variable_use;
+
+	if ( ( self->spawnflags & 4096 ) ) {
+		self->nextthink = level.time + FRAMETIME * 3;	//trigger entities next frame so they can spawn first
+		self->think = script_variable_think;
+	}
+}
+

@@ -588,48 +588,56 @@ void Svcmd_SaveSession_f( void )
 	trap_Cvar_Set( "save1_session0_lvl", G_ArenaScriptAutoChar( "save_session0_lvl" ) );
 	trap_Cvar_Set( "save1_epsession", G_ArenaScriptAutoChar( "save_epsession" ) );
 	trap_Cvar_Set( "save1_curmap", G_ArenaScriptAutoChar( "save_curmap" ) );
+	trap_SendConsoleCommand( EXEC_INSERT, "writeconfig save01\n" );
 	}
 	if(atoi(num) == 2){
 	trap_Cvar_Set( "save2_session0", G_ArenaScriptAutoChar( "save_session0" ) );
 	trap_Cvar_Set( "save2_session0_lvl", G_ArenaScriptAutoChar( "save_session0_lvl" ) );
 	trap_Cvar_Set( "save2_epsession", G_ArenaScriptAutoChar( "save_epsession" ) );
 	trap_Cvar_Set( "save2_curmap", G_ArenaScriptAutoChar( "save_curmap" ) );
+	trap_SendConsoleCommand( EXEC_INSERT, "writeconfig save02\n" );
 	}
 	if(atoi(num) == 3){
 	trap_Cvar_Set( "save3_session0", G_ArenaScriptAutoChar( "save_session0" ) );
 	trap_Cvar_Set( "save3_session0_lvl", G_ArenaScriptAutoChar( "save_session0_lvl" ) );
 	trap_Cvar_Set( "save3_epsession", G_ArenaScriptAutoChar( "save_epsession" ) );
 	trap_Cvar_Set( "save3_curmap", G_ArenaScriptAutoChar( "save_curmap" ) );
+	trap_SendConsoleCommand( EXEC_INSERT, "writeconfig save03\n" );
 	}
 	if(atoi(num) == 4){
 	trap_Cvar_Set( "save4_session0", G_ArenaScriptAutoChar( "save_session0" ) );
 	trap_Cvar_Set( "save4_session0_lvl", G_ArenaScriptAutoChar( "save_session0_lvl" ) );
 	trap_Cvar_Set( "save4_epsession", G_ArenaScriptAutoChar( "save_epsession" ) );
 	trap_Cvar_Set( "save4_curmap", G_ArenaScriptAutoChar( "save_curmap" ) );
+	trap_SendConsoleCommand( EXEC_INSERT, "writeconfig save04\n" );
 	}
 	if(atoi(num) == 5){
 	trap_Cvar_Set( "save5_session0", G_ArenaScriptAutoChar( "save_session0" ) );
 	trap_Cvar_Set( "save5_session0_lvl", G_ArenaScriptAutoChar( "save_session0_lvl" ) );
 	trap_Cvar_Set( "save5_epsession", G_ArenaScriptAutoChar( "save_epsession" ) );
 	trap_Cvar_Set( "save5_curmap", G_ArenaScriptAutoChar( "save_curmap" ) );
+	trap_SendConsoleCommand( EXEC_INSERT, "writeconfig save05\n" );
 	}
 	if(atoi(num) == 6){
 	trap_Cvar_Set( "save6_session0", G_ArenaScriptAutoChar( "save_session0" ) );
 	trap_Cvar_Set( "save6_session0_lvl", G_ArenaScriptAutoChar( "save_session0_lvl" ) );
 	trap_Cvar_Set( "save6_epsession", G_ArenaScriptAutoChar( "save_epsession" ) );
 	trap_Cvar_Set( "save6_curmap", G_ArenaScriptAutoChar( "save_curmap" ) );
+	trap_SendConsoleCommand( EXEC_INSERT, "writeconfig save06\n" );
 	}
 	if(atoi(num) == 7){
 	trap_Cvar_Set( "save7_session0", G_ArenaScriptAutoChar( "save_session0" ) );
 	trap_Cvar_Set( "save7_session0_lvl", G_ArenaScriptAutoChar( "save_session0_lvl" ) );
 	trap_Cvar_Set( "save7_epsession", G_ArenaScriptAutoChar( "save_epsession" ) );
 	trap_Cvar_Set( "save7_curmap", G_ArenaScriptAutoChar( "save_curmap" ) );
+	trap_SendConsoleCommand( EXEC_INSERT, "writeconfig save07\n" );
 	}
 	if(atoi(num) == 8){
 	trap_Cvar_Set( "save8_session0", G_ArenaScriptAutoChar( "save_session0" ) );
 	trap_Cvar_Set( "save8_session0_lvl", G_ArenaScriptAutoChar( "save_session0_lvl" ) );
 	trap_Cvar_Set( "save8_epsession", G_ArenaScriptAutoChar( "save_epsession" ) );
 	trap_Cvar_Set( "save8_curmap", G_ArenaScriptAutoChar( "save_curmap" ) );
+	trap_SendConsoleCommand( EXEC_INSERT, "writeconfig save08\n" );
 	}
 }
 
